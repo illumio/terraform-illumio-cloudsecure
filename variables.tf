@@ -33,3 +33,8 @@ variable "create_namespace" {
   description = "Create the Kubernetes namespace if it does not exist."
   type        = bool
 }
+
+variable "helm_version" {
+  description = "The helm chart version"
+  type        = string
+}

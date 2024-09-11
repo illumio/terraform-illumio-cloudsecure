@@ -18,5 +18,6 @@ module "k8s_onboarding_credentials" {
   helm_release_name = var.helm_release_name
   chart             = var.helm_chart
   namespace         = var.helm_namespace
+  helm_version      = var.helm_version
 }
 

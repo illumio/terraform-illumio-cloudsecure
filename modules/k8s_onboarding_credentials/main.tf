@@ -7,9 +7,8 @@ resource "illumio-cloudsecure_k8s_cluster_onboarding_credential" "this" {
 
 resource "helm_release" "helm_cloud_operator" {
   name             = var.helm_release_name
-  repository       = "oci://ghcr.io/illumio/charts/cloud-operator"
   version          = var.helm_version
-  chart            = var.helm_chart
+  chart            = "oci://ghcr.io/illumio/charts/cloud-operator"
   namespace        = var.helm_namespace
   create_namespace = var.create_namespace
 

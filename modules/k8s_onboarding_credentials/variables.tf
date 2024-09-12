@@ -19,11 +19,6 @@ variable "helm_release_name" {
   type        = string
 }
 
-variable "helm_chart" {
-  description = "The Helm chart to deploy."
-  type        = string
-}
-
 variable "helm_namespace" {
   description = "The Kubernetes namespace to deploy to."
   type        = string

@@ -1,7 +1,7 @@
 resource "illumio-cloudsecure_k8s_cluster_onboarding_credential" "this" {
   illumio_region = var.illumio_region
   name           = var.name
-  description = var.description
+  description    = var.description
 }
 
 

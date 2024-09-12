@@ -8,8 +8,11 @@ terraform {
 }
 
 provider "illumio-cloudsecure" {
-  client_id     = "my-client-id"
-  client_secret = "my-secret-id"
+  client_id     = var.illumio_cloudsecure_client_id
+  client_secret = var.illumio_cloudsecure_client_secret
+  # For testing dev
+  api_endpoint   = "dns:///dev.cloud.ilabs.io:443"
+  token_endpoint = "https://dev.cloud.ilabs.io/api/v1/authenticate"
 }
 
 provider "helm" {

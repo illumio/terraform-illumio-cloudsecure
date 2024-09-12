@@ -7,14 +7,14 @@ Create onboarding credentials for Kubernetes clusters
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform] | >= 1.7 |
-| <a name="requirement_helm"></a> [illumio-cloudsecure] | >= 3.15 |
+| <a name="requirement_helm"></a> [helm] | >= 3.15 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_illumio-cloudsecure"></a> [aws] | >= 1.0.9 |
-| <a name="provider_helm"></a> [aws] | >= 2.15.0 |
+| <a name="provider_illumio-cloudsecure"></a> [illumio-cloudsecure] | >= 1.0.9 |
+| <a name="provider_helm"></a> [helm] | >= 2.15.0 |
 
 ## Modules
 

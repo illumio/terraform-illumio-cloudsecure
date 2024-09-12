@@ -24,10 +24,10 @@ module "k8s_onboarding_credentials" {
   illumio_region    = var.illumio_region
   name              = var.name
   description       = var.description
-  helm_release_name = var.helm_release_name
-  helm_chart        = var.helm_chart
-  helm_namespace    = var.helm_namespace
-  create_namespace  = var.create_namespace
+  helm_release_name = "illumio"
+  helm_chart        = "cloud-operator-chart"
+  helm_namespace    = "illumio-cloud"
+  create_namespace  = true
   helm_version      = var.helm_version
 }
 

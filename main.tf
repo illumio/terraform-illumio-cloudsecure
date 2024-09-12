@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    illumio-cloudsecure = {
+      source  = "illumio/illumio-cloudsecure"
+      version = "~> 1.0.9"
+    }
+  }
+}
+
 provider "illumio-cloudsecure" {
   client_id     = "my-client-id"
   client_secret = "my-secret-id"
@@ -16,8 +25,9 @@ module "k8s_onboarding_credentials" {
   name              = var.name
   description       = var.description
   helm_release_name = var.helm_release_name
-  chart             = var.helm_chart
-  namespace         = var.helm_namespace
+  helm_chart        = var.helm_chart
+  helm_namespace    = var.helm_namespace
+  create_namespace  = var.create_namespace
   helm_version      = var.helm_version
 }
 

@@ -33,7 +33,7 @@ No modules.
 | <a name="input_illumio_region"></a> illumio_region | Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: aws-ap-southeast-2, aws-eu-west-2, aws-us-west-2. |	string	| n/a	| yes |
 | <a name="input_name"></a> name |	Display name for the onboarding credential.	| string |	n/a	| yes |
 |<a name="input_description"></a> description |	Description of the onboarding credential. |	string |	null	|no|
-|<a name>"input_helm_version"></a> helm_version | Version of the helm chart | string | n/a | yes|
+|<a name"input_helm_version"></a> helm_version | Version of the helm chart | string | n/a | yes|
 
 ## Outputs
 

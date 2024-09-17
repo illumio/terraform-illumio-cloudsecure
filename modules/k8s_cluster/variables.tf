@@ -1,5 +1,5 @@
 variable "illumio_region" {
-  description = "The Illumio region where the cluster is located."
+  description = "Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`."
   type        = string
 }
 

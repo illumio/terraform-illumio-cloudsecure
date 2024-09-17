@@ -13,7 +13,7 @@ variable "name" {
 variable "description" {
   description = "The description of the onboarding credential."
   type        = string
-  default     = "Credential to onboard dev clusters in us-west-2 illumio region"
+  default     = "Credential to onboard dev clusters in aws-us-west-2 illumio region"
 }
 
 variable "illumio_cloudsecure_client_id" {

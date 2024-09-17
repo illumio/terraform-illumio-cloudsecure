@@ -4,30 +4,9 @@ terraform {
       source  = "illumio/illumio-cloudsecure"
       version = "~> 1.0.9"
     }
+    helm = {
+      source = "hashicorp/helm"
+      version = "~>2.15.0"
+    }
   }
 }
-
-provider "illumio-cloudsecure" {
-  client_id     = var.illumio_cloudsecure_client_id
-  client_secret = var.illumio_cloudsecure_client_secret
-}
-
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config" # Adjust this path as needed
-  }
-}
-
-
-module "k8s_onboarding_credentials" {
-  source            = "./modules/k8s_onboarding_credentials"
-  illumio_region    = var.illumio_region
-  name              = var.name
-  description       = var.description
-  helm_release_name = var.helm_release_name
-  helm_chart        = "cloud-operator-chart"
-  helm_namespace    = "illumio-cloud"
-  create_namespace  = true
-  helm_version      = var.helm_version
-}
-

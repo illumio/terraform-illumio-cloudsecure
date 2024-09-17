@@ -23,20 +23,18 @@ module "k8s_onboarding_credentials" {
 ### Requirements
 | Name | Version |
 |------|---------|
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~>2.15.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | ~> 1.0.9 |
 
 ### Providers
 | Name | Version |
 |------|---------|
 | <a name="provider_illumio-cloudsecure"></a> illumio-cloudsecure | ~> 1.0.9 |
-|<a name="provider_helm"></a> helm |	>= 1.0.0|
 
 
 ### Modules
 | Name | Source | Version |
 |------|---------|-------|
-|<a name="module_k8s_onboarding_credentials"></a> k8_cluster |	./modules/k8_cluster| n/a|
+|<a name="k8s_cluster"></a> k8s_cluster |	./modules/k8_cluster| n/a|
 
 ### Resources
 No resources.

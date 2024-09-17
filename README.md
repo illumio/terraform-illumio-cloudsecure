@@ -25,26 +25,6 @@ module "k8s_clsuter" {
 |------|---------|
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | ~> 1.0.9 |
 
-### Providers
-| Name | Version |
-|------|---------|
-| <a name="provider_illumio-cloudsecure"></a> illumio-cloudsecure | ~> 1.0.9 |
-
-
-### Modules
-| Name | Source | Version |
-|------|---------|-------|
-|<a name="k8s_cluster"></a> k8s_cluster |	./modules/k8_cluster| n/a|
-
-### Resources
-No resources.
-
-### Inputs
-No inputs.
-
-### Outputs
-No outputs.
-
 ### License
 This project is licensed under the Mozilla Public License Version 2.0. See the LICENSE file for details.
 

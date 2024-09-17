@@ -7,10 +7,10 @@ Onboard K8 clusters to CloudSecure
 
 ## Usage
 
-### Example: K8s Cluster Onboarding Credential
+### Example: K8s Cluster Onboarding
 ```
-module "k8s_onboarding_credentials" {
-  source            = "./modules/k8s_onboarding_credentials"
+module "k8s_clsuter" {
+  source            = "./modules/k8s_cluster"
   illumio_region    = var.illumio_region
   name              = var.name
   description       = var.description

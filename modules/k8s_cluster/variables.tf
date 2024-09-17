@@ -26,8 +26,8 @@ variable "create_namespace" {
   default     = true
 }
 
-variable "version" {
+variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.0.9"
+  default     = "v0.0.3"
 }

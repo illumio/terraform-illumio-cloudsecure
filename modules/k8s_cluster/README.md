@@ -27,18 +27,17 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_create_namespace"></a> [create\_namespace](#input\_create\_namespace) | Create the Kubernetes namespace if it does not exist. | `bool` | n/a | yes |
-| <a name="input_description"></a> [description](#input\_description) | The description of the onboarding credential. | `string` | `null` | no |
-| <a name="input_helm_namespace"></a> [helm\_namespace](#input\_helm\_namespace) | The Kubernetes namespace to deploy to. | `string` | n/a | yes |
-| <a name="input_helm_release_name"></a> [helm\_release\_name](#input\_helm\_release\_name) | The name of the Helm release. | `string` | n/a | yes |
-| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The helm chart version | `string` | n/a | yes |
-| <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | The Illumio region where the cluster is located. | `string` | n/a | yes |
-| <a name="input_name"></a> [name](#input\_name) | The name of the onboarding credential. | `string` | n/a | yes |
+| <a name="input_create_namespace"></a> [create\_namespace](#input\_create\_namespace) | If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist. | `bool` | `true` | no |
+| <a name="input_description"></a> [description](#input\_description) | The description of the CloudSecure onboarding credential used to onboard the k8s cluster. | `string` | `null` | no |
+| <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`. | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | The name of the cloud-secure deployment in the k8s cluster and of the CloudSecure onboarding credential used to onboard the k8s cluster. | `string` | n/a | yes |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | The k8s namespace where cloud-operator is to be deployed into. | `string` | `"illumio-cloud"` | no |
+| <a name="input_version"></a> [version](#input\_version) | The version of cloud-operator to be deployed into the k8s cluster. | `string` | `"v0.0.3"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The client\_id to use to onboard k8s clusters. |
-| <a name="output_client_secret"></a> [client\_secret](#output\_client\_secret) | The client\_secret to use to onboard k8s clusters. |
+| <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The client\_id that was used to onboard the k8s cluster, and may be used to onboard other clusters. |
+| <a name="output_client_secret"></a> [client\_secret](#output\_client\_secret) | The client\_secret that was used to onboard the k8s cluster, and may be used to onboard other clusters. |
 <!-- END_TF_DOCS -->

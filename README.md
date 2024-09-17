@@ -14,7 +14,7 @@ module "k8s_onboarding_credentials" {
   illumio_region    = var.illumio_region
   name              = var.name
   description       = var.description
-  version           = var.version
+  version           = var.operator_version
   namespace         = var.namespace
   create_namespace  = var.create_namespace
 }

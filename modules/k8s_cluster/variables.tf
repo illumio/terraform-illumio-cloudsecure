@@ -11,7 +11,7 @@ variable "name" {
 variable "description" {
   description = "The description of the CloudSecure onboarding credential used to onboard the k8s cluster."
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "operator_namespace" {

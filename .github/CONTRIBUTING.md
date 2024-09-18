@@ -51,4 +51,4 @@ When submitting a new nested module, please follow the [standard module structur
 
       * provider: Fix handling of optional attributed #24
       ```
-
+5. Verify that the [HashiCorp Terraform Registry](___) publishes the new release.

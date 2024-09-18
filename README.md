@@ -1,3 +1,4 @@
+<!-- BEGIN_TF_DOCS -->
 # Illumio Terraform Modules
 
 This repository contains Terraform modules for managing Illumio CloudSecure resources. Each submodule is designed to handle specific aspects of Illumio CloudSecure, making it easier to manage and deploy resources in a consistent and reusable manner.
@@ -10,13 +11,14 @@ Onboard K8 clusters to CloudSecure
 ### Example: K8s Cluster Onboarding
 ```
 module "k8s_clsuter" {
-  source            = "./modules/k8s_cluster"
-  illumio_region    = var.illumio_region
-  name              = var.name
-  description       = var.description
-  version           = var.operator_version
-  namespace         = var.namespace
-  create_namespace  = var.create_namespace
+  source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v0.0.3"
+  illumio_region = "aws-us-west-2"
+  name           = "dev-cluster-1"
+
+  # Optional variables
+  description      = "Development Cluster 1"
+  namespace        = "illumio-cloud" # default
+  create_namespace = true # default
 }
 ```
 
@@ -30,3 +32,4 @@ This project is licensed under the Mozilla Public License Version 2.0. See the L
 
 ### Authors
 This project is maintained by the Illumio Team.
+<!-- END_TF_DOCS -->

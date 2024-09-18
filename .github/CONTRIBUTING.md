@@ -20,12 +20,35 @@ Before reporting any bugs, please do a quick search to see if it has already bee
 
 While reporting a bug, please provide a minimal example to reproduce the issue. Include `.tf` files, **making sure to remove any secrets**. If applicable, include the `crash.log` file as well.
 
-## Testing
-
-When submitting a new resource or datasource, please follow the current convention of including acceptance tests that set up, verify, and tear down the target resource. When making changes to existing resources or datasources, update the corresponding tests and add any unit tests you deem necessary to ensure the changes are working as expected and have not introduced regressions.
-
-Refer to the Terraform [testing guideline](https://www.terraform.io/docs/extend/testing/index.html) for instructions on testing resources and datasources.
-
 ## Documentation
 
-Documentation is an important aspect of the project. Changes to resources or datasources should be reflected in their respective docs files. Make sure to update the [CHANGELOG](../CHANGELOG.md) describing your changes. This project follows [HashiCorp's Changelog Specification](https://developer.hashicorp.com/terraform/plugin/best-practices/versioning#changelog-specification).
+When submitting a new nested module, please follow the [standard module structure](https://developer.hashicorp.com/terraform/language/modules/develop/structure) and especially add examples and documentation. When making changes to existing nested modules, update the corresponding example and documentation.
+
+## Release Checklist
+
+1. Choose a version number for the new release. Follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) format `vX.Y.Z`, e.g. `v1.2.3`.
+2. Use the provided shell script to replace the desired versions of the `cloud-operator` and/or `illumio/illumio-cloudsecure`.
+   1. `./version_updating.sh . "old_string" "new_string"`
+      1. Updating `illumio/illumio-cloudsecure` from 1.0.9 -> 1.0.10 would be `./version_updating.sh . "1.0.4" "1.0.5"`
+      2. Updating `cloud-operator` from v0.0.3 -> v0.0.3 would be `./version_updating.sh . "v0.0.1" "v0.0.2"`
+3. Create a new git tag using the desired version number. Ex: `git tag v0.0.3`
+4. Create a [new GitHub release](https://github.com/illumio/terraform-illumio-cloudsecure) from that commit. Summarize the changes in this release.
+   1.  Click `Generate release notes` to generate the `What's Changed` section.
+   2. Edit the generated `What's Changed` section to follow the [Changelog Specification](https://developer.hashicorp.com/terraform/plugin/best-practices/versioning#changelog-specification), esp. to follow the same [categories](https://developer.hashicorp.com/terraform/plugin/best-practices/versioning#categorization) for subsections. Link to the PR(s) for each item. For example:
+
+      ```
+      ## What's Changed
+
+      ### BREAKING CHANGES:
+
+      * provider: Bump API version to v2 #12
+
+      ### FEATURES:
+
+      * **New Resource:** `azure_account` #14
+
+      ### BUG FIXES:
+
+      * provider: Fix handling of optional attributed #24
+      ```
+

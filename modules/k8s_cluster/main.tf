@@ -8,8 +8,8 @@ resource "helm_release" "helm_cloud_operator" {
   name             = var.name
   version          = var.operator_version
   chart            = "oci://ghcr.io/illumio/charts/cloud-operator"
-  namespace        = var.namespace
-  create_namespace = var.create_namespace
+  namespace        = var.operator_namespace
+  create_namespace = var.create_operator_namespace
 
   set {
     name  = "onboardingSecret.clientId"

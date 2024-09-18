@@ -14,13 +14,13 @@ variable "description" {
   default     = null
 }
 
-variable "namespace" {
+variable "operator_namespace" {
   description = "The k8s namespace where cloud-operator is to be deployed into."
   type        = string
   default     = "illumio-cloud"
 }
 
-variable "create_namespace" {
+variable "create_operator_namespace" {
   description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
   type        = bool
   default     = true

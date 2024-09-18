@@ -4,3 +4,5 @@ repos:
     hooks:
       - id: terraform-docs-go
         args: ["markdown", "table", "--output-file", "README.md", "./modules"]
+        files: ^modules/.*/$
+

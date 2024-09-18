@@ -28,7 +28,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_create_operator_namespace"></a> [create\_operator\_namespace](#input\_create\_operator\_namespace) | If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist. | `bool` | `true` | no |
-| <a name="input_description"></a> [description](#input\_description) | The description of the CloudSecure onboarding credential used to onboard the k8s cluster. | `string` | `null` | no |
+| <a name="input_descriptions"></a> [description](#input\_description) | The description of the CloudSecure onboarding credential used to onboard the k8s cluster. | `string` | `null` | no |
 | <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the cloud-secure deployment in the k8s cluster and of the CloudSecure onboarding credential used to onboard the k8s cluster. | `string` | n/a | yes |
 | <a name="input_operator_namespace"></a> [operator\_namespace](#input\_operator\_namespace) | The k8s namespace where cloud-operator is to be deployed into. | `string` | `"illumio-cloud"` | no |

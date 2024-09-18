@@ -10,15 +10,15 @@ Onboard K8 clusters to CloudSecure
 
 ### Example: K8s Cluster Onboarding
 ```
-module "k8s_clsuter" {
-  source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v0.0.3"
+module "k8s_cluster" {
+  source         = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v0.0.3"
   illumio_region = "aws-us-west-2"
   name           = "dev-cluster-1"
 
   # Optional variables
   description      = "Development Cluster 1"
-  namespace        = "illumio-cloud" # default
-  create_namespace = true # default
+  operator_namespace        = "illumio-cloud" # default
+  create_operator_namespace = true # default
 }
 ```
 

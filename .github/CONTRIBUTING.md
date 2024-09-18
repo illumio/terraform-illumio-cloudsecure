@@ -29,26 +29,23 @@ When submitting a new nested module, please follow the [standard module structur
 1. Choose a version number for the new release. Follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) format `vX.Y.Z`, e.g. `v1.2.3`.
 2. Use the provided shell script to replace the desired versions of the `cloud-operator` and/or `illumio/illumio-cloudsecure`.
    1. `./version_updating.sh . "old_string" "new_string"`
-      1. Updating `illumio/illumio-cloudsecure` from 1.0.9 -> 1.0.10 would be `./version_updating.sh . "1.0.4" "1.0.5"`
-      2. Updating `cloud-operator` from v0.0.3 -> v0.0.3 would be `./version_updating.sh . "v0.0.1" "v0.0.2"`
-3. Create a new git tag using the desired version number. Ex: `git tag v0.0.3`
-4. Create a [new GitHub release](https://github.com/illumio/terraform-illumio-cloudsecure) from that commit. Summarize the changes in this release.
+      1. Updating `illumio/illumio-cloudsecure` from 1.0.4 to 1.0.5 would be `./version_updating.sh . "1.0.4" "1.0.5"`
+      2. Updating `cloud-operator` from v0.0.1 to v0.0.2 would be `./version_updating.sh . "v0.0.1" "v0.0.2"`
+1. Create a [new GitHub release](https://github.com/illumio/terraform-illumio-cloudsecure) with a new git tag named after the `vX.Y.Z` version, e.g. `v1.2.3`. Summarize the changes in this release.
    1.  Click `Generate release notes` to generate the `What's Changed` section.
    2. Edit the generated `What's Changed` section to follow the [Changelog Specification](https://developer.hashicorp.com/terraform/plugin/best-practices/versioning#changelog-specification), esp. to follow the same [categories](https://developer.hashicorp.com/terraform/plugin/best-practices/versioning#categorization) for subsections. Link to the PR(s) for each item. For example:
 
       ```
       ## What's Changed
-
+      
       ### BREAKING CHANGES:
 
-      * provider: Bump API version to v2 #12
-
+      * modules/aws_account: Remove required `description` variable #12
       ### FEATURES:
 
-      * **New Resource:** `azure_account` #14
-
+      * **New Module:** `modules/azure_account` #14
       ### BUG FIXES:
-
-      * provider: Fix handling of optional attributed #24
+      
+      * module/k8s_cluster: Fix handling of incorrect `namespace` variable value #24
       ```
 5. Verify that the [HashiCorp Terraform Registry](___) publishes the new release.

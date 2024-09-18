@@ -1,0 +1,3 @@
+# Vulnerability Disclosure
+
+The Illumio team and community take security bugs in all Illumio projects seriously. If you believe you have found a potential security vulnerability in one of the nested modules, the Illumio CloudSecure Terraform provider, or the Illumio CloudSecure product, please reach out directly to the [Illumio Security Team](mailto:security@illumio.com). **Do not file a public GitHub Issue.**

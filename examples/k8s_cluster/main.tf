@@ -10,7 +10,7 @@ provider "illumio-cloudsecure" {
 }
 
 module "k8s_cluster" {
-  source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v0.0.3"
+  source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v1.0.0"
   illumio_region    = var.illumio_region
   name              = var.name
   description       = var.description

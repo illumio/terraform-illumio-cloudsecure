@@ -1,5 +1,5 @@
 # Illumio Terraform Submodules
-Terraform submodules that add functionality to Illumios terraform provider.
+Terraform submodules that add functionality to Illumios terraform provider. See the modules directory for the various sub modules usage.
 
 
 ## Availible Features

@@ -48,4 +48,4 @@ When submitting a new nested module, please follow the [standard module structur
       
       * module/k8s_cluster: Fix handling of incorrect `namespace` variable value #24
       ```
-5. Verify that the [HashiCorp Terraform Registry](___) publishes the new release.
+2. Verify that the [HashiCorp Terraform Registry](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest) publishes the new release.

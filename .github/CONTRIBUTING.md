@@ -2,7 +2,7 @@
 
 ## GitHub Workflow
 
-on-Illumio contributors to the project should follow this workflow:
+Non-Illumio contributors to the project should follow this workflow:
 
 1. Fork the repo
 2. Create a new branch on the fork

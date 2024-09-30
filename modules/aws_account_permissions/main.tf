@@ -136,10 +136,22 @@ resource "aws_iam_role_policy" "IllumioCloudAWSProtectionPolicy" {
   })
 }
 
+locals {
+  # Extract just the bucket ARN (without paths) for ListBucket actions
+  flow_logs_bucket_list = [
+    for bucket_arn in var.flow_logs_bucket_arns : regex("^arn:aws:s3:::[^/]+", bucket_arn)
+  ]
+
+  # Use the full ARN with path for GetObject actions
+  flow_logs_bucket_read = [
+    for bucket_arn in var.flow_logs_bucket_arns : "${bucket_arn}*"
+  ]
+}
+
 resource "aws_iam_role_policy" "IllumioCloudBucketListPolicy" {
-  count = length(var.flow_logs_buckets)>0 ? 1 : 0
-  name = "IllumioCloudBucketListPolicy"
-  role = aws_iam_role.illumio_cloud_integration_role.id
+  count = length(local.flow_logs_bucket_list) > 0 ? 1 : 0
+  name  = "IllumioCloudBucketListPolicy"
+  role  = aws_iam_role.illumio_cloud_integration_role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -150,21 +162,22 @@ resource "aws_iam_role_policy" "IllumioCloudBucketListPolicy" {
         "s3:ListBucketVersion",
         "s3:GetBucketLocation"
       ]
-      Resource = var.flow_logs_buckets
+      Resource = local.flow_logs_bucket_list
     }]
   })
 }
+
 resource "aws_iam_role_policy" "IllumioCloudBucketReadPolicy" {
-  count = length(var.flow_logs_buckets) > 0 ? 1 : 0
-  name = "IllumioCloudBucketReadPolicy"
-  role = aws_iam_role.illumio_cloud_integration_role.id
+  count = length(local.flow_logs_bucket_read) > 0 ? 1 : 0
+  name  = "IllumioCloudBucketReadPolicy"
+  role  = aws_iam_role.illumio_cloud_integration_role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
       Sid    = "IllumioBucketReadAccess"
       Action = ["s3:GetObject"]
-      Resource = [for bucket in var.flow_logs_buckets : "${bucket}/*"]
+      Resource = local.flow_logs_bucket_read
     }]
   })
 }

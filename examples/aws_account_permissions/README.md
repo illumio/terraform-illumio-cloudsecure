@@ -22,13 +22,14 @@ No resources.
 
 ## Inputs
 
-| Name                                                                                                                                        | Description                                                                            | Type | Default                         | Required |
-|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|------|---------------------------------|:--------:|
-| <a name="input_illumio_cloudsecure_client_id"></a> [illumio\_cloudsecure\_client\_id](#input\_illumio\_cloudsecure\_client\_id)             | The OAuth 2 client identifier used to authenticate against the CloudSecure Config API. | `string` | n/a                             | yes |
-| <a name="input_illumio_cloudsecure_client_secret"></a> [illumio\_cloudsecure\_client\_secret](#input\_illumio\_cloudsecure\_client\_secret) | The OAuth 2 client secret used to authenticate against the CloudSecure Config API.     | `string` | n/a                             | yes |
-| <a name="input_name"></a> [name](#input\_name)                                                                                              | Display name for the AWS account.                                                      | `string` | `"us"`                          | no |
-| <a name="input_iam_role_name"></a> [iam\_role\_name](#input\_iam\_role\_name)                                                               | AWS role name for Illumio permissions                                                  | `string` | `"IllumioCloudIntegrationRole"` | no |
-| <a name="input_access_mode"></a> [access\_mode](#input\_access\_mode)                                                                       | Access mode, must be "ReadWrite" or "Read".                                            | `string` | `"ReadWrite"`                   | no |
+| Name                                                                                                                                        | Description                                                                            | Type | Default                        | Required |
+|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|------|--------------------------------|:--------:|
+| <a name="input_illumio_cloudsecure_client_id"></a> [illumio\_cloudsecure\_client\_id](#input\_illumio\_cloudsecure\_client\_id)             | The OAuth 2 client identifier used to authenticate against the CloudSecure Config API. | `string` | n/a                            |   yes    |
+| <a name="input_illumio_cloudsecure_client_secret"></a> [illumio\_cloudsecure\_client\_secret](#input\_illumio\_cloudsecure\_client\_secret) | The OAuth 2 client secret used to authenticate against the CloudSecure Config API.     | `string` | n/a                            |   yes    |
+| <a name="input_name"></a> [name](#input\_name)                                                                                              | Display name for the AWS account.                                                      | `string` | `"us"`                         |    no    |
+| <a name="input_iam_role_name"></a> [iam\_role\_name](#input\_iam\_role\_name)                                                               | AWS role name for Illumio permissions                                                  | `string` | `"IllumioCloudIntegrationRole"` |    no    |
+| <a name="input_access_mode"></a> [access\_mode](#input\_access\_mode)                                                                       | Access mode, must be "ReadWrite" or "Read".                                            | `string` | `"ReadWrite"`                  |    no    |
+| <a name="input_flow_logs_bucket_arns"></a> [flow\_logs\_bucket\_arns](#input\_flow\_logs\_bucket\_arns)                                     | List of flow logs buckets arns including paths                                         | `string` | []                             |    no    |
 
 
 

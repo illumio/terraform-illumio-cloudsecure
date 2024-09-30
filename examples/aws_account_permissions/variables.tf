@@ -28,3 +28,9 @@ variable "illumio_cloudsecure_client_secret" {
   sensitive   = true
   description = "The OAuth 2 client secret used to authenticate against the CloudSecure Config API."
 }
+
+variable "flow_logs_bucket_arns" {
+    description = "List of S3 bucket arns (with path if needed) having flow logs"
+    type        = list(string)
+    default     = []
+}

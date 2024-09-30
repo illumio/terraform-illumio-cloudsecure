@@ -18,15 +18,6 @@ variable "access_mode" {
   }
 }
 
-variable "name" {
-  description = "Name of the AWS account."
-  type        = string
-  validation {
-    condition     = length(var.name) > 1
-    error_message = "The account name cannot be empty."
-  }
-}
-
 variable "illumio_cloudsecure_client_id" {
   type        = string
   description = "The OAuth 2 client identifier used to authenticate against the CloudSecure Config API."

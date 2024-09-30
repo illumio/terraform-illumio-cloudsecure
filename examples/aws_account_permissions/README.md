@@ -3,7 +3,7 @@
 
 | Name                                                                                                    | Version   |
 |---------------------------------------------------------------------------------------------------------|-----------|
-| <a name="requirement_aws"></a> [helm](#requirement\_helm)                                               | ~> 3.0    |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws)                                                 | ~> 3.0    |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | ~> 1.0.10 |
 
 ## Providers

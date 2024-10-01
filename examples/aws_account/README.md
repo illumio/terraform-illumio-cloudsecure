@@ -33,4 +33,4 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of the IAM role created for the Illumio CloudSecure integration. |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of the IAM role granted to the CloudSecure account. |

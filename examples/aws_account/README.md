@@ -13,7 +13,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_account_permissions"></a> [aws\_account\_permissions](#module\_aws\_account\_permissions) | github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account_permissions | v1.0.0 |
+| <a name="module_aws_account_permissions"></a> [aws\_account\_permissions](#module\_aws\_account\_permissions) | github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account_permissions | v1.0.1 |
 
 ## Resources
 

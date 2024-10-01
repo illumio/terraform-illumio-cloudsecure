@@ -17,10 +17,3 @@ variable "access_mode" {
     error_message = "Must be Read or ReadWrite"
   }
 }
-
-
-variable "flow_logs_bucket_arns" {
-  description = "List of S3 buckets having flow logs"
-  type        = list(string)
-  default     = []
-}

@@ -8,23 +8,40 @@ variable "iam_role_name" {
   }
 }
 
-variable "access_mode" {
+variable "mode" {
   description = "integration mode Read/ReadWrite."
   type        = string
   default     = "ReadWrite"
   validation {
-    condition     = contains(["Read", "ReadWrite"], var.access_mode)
+    condition     = contains(["Read", "ReadWrite"], var.mode)
     error_message = "Must be Read or ReadWrite"
+  }
+}
+
+variable "name" {
+  description = "The name of this account in CloudSecure."
+  type        = string
+  validation {
+    condition     = length(var.name) > 1
+    error_message = "The name value must not be empty."
   }
 }
 
 variable "illumio_cloudsecure_client_id" {
   type        = string
   description = "The OAuth 2 client identifier used to authenticate against the CloudSecure Config API."
+  validation {
+    condition     = length(var.name) > 1
+    error_message = "The illumio_cloudsecure_client_id value must not be empty."
+  }
 }
 
 variable "illumio_cloudsecure_client_secret" {
   type        = string
   sensitive   = true
   description = "The OAuth 2 client secret used to authenticate against the CloudSecure Config API."
+  validation {
+    condition     = length(var.name) > 1
+    error_message = "The illumio_cloudsecure_client_secret value must not be empty."
+  }
 }

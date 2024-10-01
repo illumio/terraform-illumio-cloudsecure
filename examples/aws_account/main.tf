@@ -8,7 +8,7 @@ provider "illumio-cloudsecure" {
 }
 
 module "aws_account_permissions" {
-  source        = "../../modules/aws_account"
+  source        = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account_permissions?ref=v1.0.0"
   iam_role_name = var.iam_role_name
   mode          = var.mode
   name          = var.name

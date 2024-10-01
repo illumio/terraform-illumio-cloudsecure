@@ -99,7 +99,7 @@ resource "aws_iam_role_policy" "IllumioCloudAWSIntegrationPolicy" {
   })
 }
 resource "aws_iam_role_policy" "IllumioCloudAWSProtectionPolicy" {
-  count = var.access_mode == "ReadWrite" ? 1 : 0
+  count = var.mode == "ReadWrite" ? 1 : 0
   name = "IllumioCloudAWSProtectionPolicy"
   role = aws_iam_role.illumio_cloud_integration_role.id
   policy = jsonencode({
@@ -141,7 +141,7 @@ resource "aws_iam_role" "illumio_cloud_integration_role" {
       {
         Effect    = "Allow"
         Principal = {
-          AWS = "arn:${data.aws_partition.current.partition}:iam::137706418270:root"
+          AWS = "arn:${data.aws_partition.current.partition}:iam::${var.illumio_cloudsecure_account_id}:root"
         }
         Action    = "sts:AssumeRole"
         Condition = {
@@ -156,4 +156,20 @@ resource "aws_iam_role" "illumio_cloud_integration_role" {
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/SecurityAudit"
   ]
+}
+
+# Data source to get the AWS account ID.
+data "aws_caller_identity" "current" {}
+
+# Data source to get the AWS org
+data "aws_organizations_organization" "current" {}
+
+// Onboards this AWS account with CloudSecure.
+resource "illumio-cloudsecure_aws_account" "account" {
+  account_id       = data.aws_caller_identity.current.account_id
+  mode             = var.mode
+  name             = var.name
+  organization_id  = data.aws_organizations_organization.current.id
+  role_arn         = aws_iam_role.illumio_cloud_integration_role.arn
+  role_external_id = random_uuid.role_secret.result
 }

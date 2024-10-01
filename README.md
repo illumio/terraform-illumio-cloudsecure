@@ -32,7 +32,7 @@ module "k8s_cluster" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | ~> 1.0.9 |
+| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | ~> 1.0.11 |
 
 ## Providers
 

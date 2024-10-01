@@ -1,9 +1,3 @@
-# ---------------------------------------------------------------------------------------------------------------------
-# Required PARAMETERS
-# These variables have default values and can be modified based on the requirement.
-# ---------------------------------------------------------------------------------------------------------------------
-
-
 variable "iam_role_name" {
   description = "Customize the name of IAM role for Illumio AWS integration"
   type        = string

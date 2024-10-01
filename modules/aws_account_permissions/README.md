@@ -33,7 +33,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_mode"></a> [access\_mode](#input\_access\_mode) | integration mode Read/ReadWrite. | `string` | `"ReadWrite"` | no |
-| <a name="input_flow_logs_bucket_arns"></a> [flow\_logs\_bucket\_arns](#input\_flow\_logs\_bucket\_arns) | List of S3 buckets having flow logs | `list(string)` | `[]` | no |
 | <a name="input_iam_role_name"></a> [iam\_role\_name](#input\_iam\_role\_name) | Customize the name of IAM role for Illumio AWS integration | `string` | `"IllumioCloudIntegrationRole"` | no |
 
 ## Outputs

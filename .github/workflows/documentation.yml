@@ -16,7 +16,7 @@ jobs:
         recursive: true
         recursive-path: modules
         output-file: README.md
-        output-method: replace
+        output-method: inject
         git-push: "true"
 
     - name: Generate README.md for each example and push changes back to PR branch
@@ -26,5 +26,5 @@ jobs:
         recursive: true
         recursive-path: examples
         output-file: README.md
-        output-method: replace
+        output-method: inject
         git-push: "true"

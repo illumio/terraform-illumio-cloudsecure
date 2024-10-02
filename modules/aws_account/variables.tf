@@ -13,8 +13,8 @@ variable "illumio_cloudsecure_account_id" {
   type        = string
   default     = "712001342241"
   validation {
-    condition     = length(var.illumio_cloudsecure_account_id) > 1
-    error_message = "The illumio_cloudsecure_account_id value must not be empty."
+    condition     = length(var.illumio_cloudsecure_account_id) == 12
+    error_message = "The illumio_cloudsecure_account_id value must be a 12-digit number."
   }
 }
 

@@ -19,9 +19,10 @@ data "aws_partition" "current" {}
 
 resource "random_uuid" "role_secret" {}
 
-resource "aws_iam_role_policy" "IllumioCloudAWSIntegrationPolicy" {
-  name = "IllumioCloudAWSIntegrationPolicy"
-  role = aws_iam_role.illumio_cloud_integration_role.id
+resource "aws_iam_role_policy" "read" {
+  name = var.iam_name_prefix + "Policy"
+  tags = var.tags
+  role = aws_iam_role.role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -98,10 +99,11 @@ resource "aws_iam_role_policy" "IllumioCloudAWSIntegrationPolicy" {
     ]
   })
 }
-resource "aws_iam_role_policy" "IllumioCloudAWSProtectionPolicy" {
+resource "aws_iam_role_policy" "protection" {
   count = var.mode == "ReadWrite" ? 1 : 0
-  name = "IllumioCloudAWSProtectionPolicy"
-  role = aws_iam_role.illumio_cloud_integration_role.id
+  name = var.iam_name_prefix + "ProtectionPolicy"
+  tags = var.tags
+  role = aws_iam_role.role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -133,8 +135,9 @@ resource "aws_iam_role_policy" "IllumioCloudAWSProtectionPolicy" {
   })
 }
 
-resource "aws_iam_role" "illumio_cloud_integration_role" {
-  name = var.iam_role_name
+resource "aws_iam_role" "role" {
+  name = var.iam_name_prefix + "Role"
+  tags = var.tags
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -161,7 +164,7 @@ resource "aws_iam_role" "illumio_cloud_integration_role" {
 # Data source to get the AWS account ID.
 data "aws_caller_identity" "current" {}
 
-# Data source to get the AWS org
+# Data source to get the AWS org.
 data "aws_organizations_organization" "current" {}
 
 // Onboards this AWS account with CloudSecure.
@@ -170,6 +173,6 @@ resource "illumio-cloudsecure_aws_account" "account" {
   mode             = var.mode
   name             = var.name
   organization_id  = data.aws_organizations_organization.current.id
-  role_arn         = aws_iam_role.illumio_cloud_integration_role.arn
+  role_arn         = aws_iam_role.role.arn
   role_external_id = random_uuid.role_secret.result
 }

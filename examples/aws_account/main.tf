@@ -7,7 +7,7 @@ provider "illumio-cloudsecure" {
   client_secret = var.illumio_cloudsecure_client_secret
 }
 
-module "aws_account" {
+module "aws_account_dev" {
   source        = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.1.0"
   name          = "Test Account"
   tags = {

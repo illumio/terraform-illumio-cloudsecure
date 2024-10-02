@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
   client_secret = var.illumio_cloudsecure_client_secret
 }
 
-module "k8s_cluster" {
+module "k8s_cluster_dev" {
   source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v1.1.0"
   illumio_region    = "aws-us-west-2"
   name              = "example-release"

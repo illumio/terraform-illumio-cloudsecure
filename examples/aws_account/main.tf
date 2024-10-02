@@ -11,7 +11,7 @@ module "aws_account_dev" {
   source        = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.1.0"
   name          = "Test Account"
   tags = {
-      Name  = "CloudSecure Test Account"
+      Name  = "CloudSecure Account Policy"
       Owner = "Engineering"
   }
 }

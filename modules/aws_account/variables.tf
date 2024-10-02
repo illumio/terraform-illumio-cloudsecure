@@ -8,16 +8,6 @@ variable "iam_name_prefix" {
   }
 }
 
-variable "mode" {
-  description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
-  type        = string
-  default     = "ReadWrite"
-  validation {
-    condition     = contains(["Read", "ReadWrite"], var.mode)
-    error_message = "The mode value must be \"ReadWrite\" or \"Read\"."
-  }
-}
-
 variable "illumio_cloudsecure_account_id" {
   description = "The CloudSecure AWS account ID that is given the IAM role."
   type        = string
@@ -25,6 +15,16 @@ variable "illumio_cloudsecure_account_id" {
   validation {
     condition     = length(var.illumio_cloudsecure_account_id) > 1
     error_message = "The illumio_cloudsecure_account_id value must not be empty."
+  }
+}
+
+variable "mode" {
+  description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
+  type        = string
+  default     = "ReadWrite"
+  validation {
+    condition     = contains(["Read", "ReadWrite"], var.mode)
+    error_message = "The mode value must be \"ReadWrite\" or \"Read\"."
   }
 }
 

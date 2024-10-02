@@ -92,7 +92,17 @@ resource "aws_iam_role_policy" "read" {
           "tag:GetTagKeys",
           "tag:GetTagValues",
           "xray:BatchGetTraces",
-          "xray:GetTraceSummaries"
+          "xray:GetTraceSummaries",
+          "networkmanager:ListCoreNetworks",
+          "networkmanager:GetCoreNetwork",
+          "networkmanager:ListAttachments",
+          "networkmanager:GetVpcAttachment",
+          "networkmanager:GetSiteToSiteVpnAttachment",
+          "networkmanager:GetConnectAttachment",
+          "networkmanager:GetTransitGatewayRouteTableAttachment",
+          "networkmanager:ListPeerings",
+          "networkmanager:GetTransitGatewayPeering",
+          "networkmanager:GetTransitGatewayRegistrations"
         ],
         Resource = "*"
       }

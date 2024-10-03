@@ -8,7 +8,7 @@ provider "illumio-cloudsecure" {
 }
 
 module "aws_account_dev" {
-  source        = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.1.0"
+  source        = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.1.1"
   name          = "Test Account"
   tags = {
       Name  = "CloudSecure Account Policy"

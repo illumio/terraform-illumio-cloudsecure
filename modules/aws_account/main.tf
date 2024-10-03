@@ -20,8 +20,7 @@ data "aws_partition" "current" {}
 resource "random_uuid" "role_secret" {}
 
 resource "aws_iam_role_policy" "read" {
-  name = var.iam_name_prefix + "Policy"
-  tags = var.tags
+  name = "${var.iam_name_prefix}Policy"
   role = aws_iam_role.role.id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -111,8 +110,7 @@ resource "aws_iam_role_policy" "read" {
 }
 resource "aws_iam_role_policy" "protection" {
   count = var.mode == "ReadWrite" ? 1 : 0
-  name = var.iam_name_prefix + "ProtectionPolicy"
-  tags = var.tags
+  name = "${var.iam_name_prefix}ProtectionPolicy"
   role = aws_iam_role.role.id
   policy = jsonencode({
     Version = "2012-10-17"
@@ -146,7 +144,7 @@ resource "aws_iam_role_policy" "protection" {
 }
 
 resource "aws_iam_role" "role" {
-  name = var.iam_name_prefix + "Role"
+  name = "${var.iam_name_prefix}Role"
   tags = var.tags
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

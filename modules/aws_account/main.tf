@@ -17,7 +17,12 @@ terraform {
 
 data "aws_partition" "current" {}
 
-resource "random_uuid" "role_secret" {}
+resource "random_password" "role_secret" {
+  length  = 36
+  special = false
+  upper   = false
+  min_numeric = 6
+}
 
 resource "aws_iam_role_policy" "read" {
   name = "${var.iam_name_prefix}Policy"
@@ -157,7 +162,7 @@ resource "aws_iam_role" "role" {
         Action    = "sts:AssumeRole"
         Condition = {
           StringEquals = {
-            "sts:ExternalId" = random_uuid.role_secret.result
+            "sts:ExternalId" = random_password.role_secret.result
           }
         }
       }
@@ -182,5 +187,5 @@ resource "illumio-cloudsecure_aws_account" "account" {
   name             = var.name
   organization_id  = data.aws_organizations_organization.current.id
   role_arn         = aws_iam_role.role.arn
-  role_external_id = random_uuid.role_secret.result
+  role_external_id = random_password.role_secret.result
 }

@@ -91,6 +91,7 @@ resource "aws_iam_role_policy" "read" {
     ]
   })
 }
+
 resource "aws_iam_role_policy" "protection" {
   count = var.mode == "ReadWrite" ? 1 : 0
   name = "${var.iam_name_prefix}ProtectionPolicy"

@@ -1,4 +1,4 @@
-output "role_arn" {
-  value       = aws_iam_role.role.arn
-  description = "The ARN of the IAM role granted to the CloudSecure account."
+output "role_id" {
+  value       = aws_iam_role.role.id
+  description = "The ID of the IAM role granted to the CloudSecure account."
 }

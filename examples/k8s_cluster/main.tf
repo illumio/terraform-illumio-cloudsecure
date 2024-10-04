@@ -10,8 +10,8 @@ provider "illumio-cloudsecure" {
 }
 
 module "k8s_cluster_dev" {
-  source            = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v1.1.1"
-  illumio_region    = "aws-us-west-2"
-  name              = "example-release"
-  description       = "Dev cluster in aws-us-west-2"
+  source         = "github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster?ref=v1.2.0"
+  illumio_region = "aws-us-west-2"
+  name           = "example-release"
+  description    = "Dev cluster in aws-us-west-2"
 }

@@ -15,3 +15,11 @@ module "aws_account_dev" {
     Owner = "Engineering"
   }
 }
+
+module "aws_flow_logs_s3_buckets" {
+  role_id        = aws_account_dev.role_id
+  s3_bucket_arns = [
+    "arn:aws:s3:::vpc1",
+    "arn:aws:s3:::vpc2"
+  ]
+}

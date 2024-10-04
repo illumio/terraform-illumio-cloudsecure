@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_k8s_cluster_dev"></a> [k8s\_cluster\_dev](#module\_k8s\_cluster\_dev) | github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster | v1.1.1 |
+| <a name="module_k8s_cluster_dev"></a> [k8s\_cluster\_dev](#module\_k8s\_cluster\_dev) | github.com/illumio/terraform-illumio-cloudsecure//modules/k8s_cluster | v1.2.0 |
 
 ## Resources
 

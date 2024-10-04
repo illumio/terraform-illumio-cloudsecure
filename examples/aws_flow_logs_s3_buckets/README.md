@@ -15,6 +15,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account | v1.2.0 |
+| <a name="module_aws_flow_logs_s3_buckets"></a> [aws\_flow\_logs\_s3\_buckets](#module\_aws\_flow\_logs\_s3\_buckets) |  | n/a |
 
 ## Resources
 

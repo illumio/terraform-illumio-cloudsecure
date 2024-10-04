@@ -11,7 +11,7 @@ resource "aws_iam_role_policy" "s3_bucket_read" {
           "s3:ListBucketVersion",
           "s3:GetBucketLocation"
         ],
-        Resource = var.s3_bucket_arns
+        Resource = [for arn in var.s3_bucket_arns : regex("^[^/]+", arn)]
       },
       {
         Effect   = "Allow"

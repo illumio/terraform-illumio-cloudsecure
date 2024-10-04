@@ -28,7 +28,7 @@ locals {
 }
 
 data "aws_iam_role" "illumio_cloud_integration_role" {
-  name = var.role_arn
+  name = var.role_name
 }
 
 resource "aws_iam_role_policy" "IllumioCloudBucketListPolicy" {

@@ -7,11 +7,11 @@ variable "flow_logs_bucket_arns" {
   }
 }
 
-variable "role_arn" {
-  description = "The ARN of the IAM role granted to the CloudSecure account."
+variable "role_name" {
+  description = "The name of the IAM role granted to the CloudSecure account."
   type        = string
   validation {
-    condition     = length(var.role_arn) > 1
-    error_message = "The role_arn value must not be empty."
+    condition     = length(var.role_name) > 1
+    error_message = "The role_name value must not be empty."
   }
 }

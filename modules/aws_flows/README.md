@@ -33,7 +33,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_flow_logs_bucket_arns"></a> [flow\_logs\_bucket\_arns](#input\_flow\_logs\_bucket\_arns) | List of S3 buckets having flow logs | `list(string)` | n/a | yes |
-| <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | The ARN of the IAM role granted to the CloudSecure account. | `string` | n/a | yes |
+| <a name="input_role_name"></a> [role\_name](#input\_role\_name) | The name of the IAM role granted to the CloudSecure account. | `string` | n/a | yes |
 
 ## Outputs
 

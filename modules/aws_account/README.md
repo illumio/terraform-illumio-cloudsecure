@@ -47,4 +47,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of the IAM role granted to the CloudSecure account. |
+| <a name="output_role_name"></a> [role\_name](#output\_role\_name) | The name of the IAM role granted to the CloudSecure account. |
 <!-- END_TF_DOCS -->

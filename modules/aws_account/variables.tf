@@ -3,7 +3,7 @@ variable "iam_name_prefix" {
   type        = string
   default     = "IllumioCloudIntegration"
   validation {
-    condition     = length(var.iam_name_prefix) > 1
+    condition     = length(var.iam_name_prefix) > 0
     error_message = "The iam_name_prefix value must not be empty."
   }
 }
@@ -32,7 +32,7 @@ variable "name" {
   description = "The name of this account in CloudSecure."
   type        = string
   validation {
-    condition     = length(var.name) > 1
+    condition     = length(var.name) > 0
     error_message = "The name value must not be empty."
   }
 }

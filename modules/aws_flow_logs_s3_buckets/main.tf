@@ -1,4 +1,5 @@
 resource "aws_iam_role_policy" "s3_bucket_read" {
+  count  = length(var.s3_bucket_arns) > 0 ? 1 : 0
   name   = "${var.iam_name_prefix}BucketReadPolicy"
   role   = var.role_id
   policy = jsonencode({

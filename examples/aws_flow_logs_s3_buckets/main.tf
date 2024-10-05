@@ -17,7 +17,7 @@ module "aws_account_dev" {
 }
 
 module "aws_flow_logs_s3_buckets" {
-  source = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.2.1"
+  source         = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_flow_logs_s3_buckets?ref=v1.2.1"
   role_id        = aws_account_dev.role_id
   s3_bucket_arns = [
     "arn:aws:s3:::vpc1",

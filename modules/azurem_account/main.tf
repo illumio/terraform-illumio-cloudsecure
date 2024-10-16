@@ -89,7 +89,7 @@ resource "azurerm_role_definition" "illumio_fw_role" {
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
   principal_id         = azuread_service_principal.illumio_sp.object_id
-  role_definition_name = azurerm_role_definition.illumio_fw_role[count.index].name
+  role_definition_name = azurerm_role_definition.illumio_fw_role.name
   scope                = "${local.subscription_scope}/${var.subscription_id}"
 }
 
@@ -125,7 +125,7 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
   principal_id         = azuread_service_principal.illumio_sp.object_id
-  role_definition_name = azurerm_role_definition.illumio_nsg_role[count.index].name
+  role_definition_name = azurerm_role_definition.illumio_nsg_role.name
   scope                = "${local.subscription_scope}/${var.subscription_id}"
 }
 

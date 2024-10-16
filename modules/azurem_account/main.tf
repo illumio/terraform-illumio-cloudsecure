@@ -1,8 +1,7 @@
 # Local Variables
 locals {
-  subscription_scope      = "/subscriptions"
-  tenant_scope            = "/providers/Microsoft.Management/managementGroups"
-  reader_role             = "Reader"
+  subscription_scope = "/subscriptions"
+  reader_role        = "Reader"
 }
 
 data "azuread_client_config" "current" {}
@@ -11,25 +10,27 @@ data "azuread_client_config" "current" {}
 resource "azuread_application" "illumio_app" {
   display_name = var.application_name
   owners       = [data.azuread_client_config.current.object_id]
+  tags         = var.tags
 }
 
 # Service Principal for the Application
 resource "azuread_service_principal" "illumio_sp" {
   client_id = azuread_application.illumio_app.client_id
+  tags      = var.tags
 }
 
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
-  application_id = azuread_application.illumio_app.application_id
-  display_name          = var.application_secret_name
-  end_date_relative     = "${var.secret_expiration_days}d"
+  application_id    = azuread_application.illumio_app.application_id
+  display_name      = var.application_secret_name
+  end_date_relative = "${var.secret_expiration_days}d"
 }
 
 # Assigning Role for Subscription/Tenant Scope
 resource "azurerm_role_assignment" "illumio_reader_role" {
-  principal_id           = azuread_service_principal.illumio_sp.object_id
-  role_definition_name   = local.reader_role
-  scope                  = var.subscription_id != "" ? "${local.subscription_scope}/${var.subscription_id}" : "${local.tenant_scope}/${var.tenant_id}"
+  principal_id         = azuread_service_principal.illumio_sp.object_id
+  role_definition_name = local.reader_role
+  scope                = "${local.subscription_scope}/${var.subscription_id}"
 
   depends_on = [
     azuread_service_principal.illumio_sp
@@ -57,7 +58,7 @@ resource "azurerm_role_definition" "illumio_fw_role" {
         "Microsoft.Network/firewallPolicies/ruleGroups/read",
         "Microsoft.Network/ipGroups/read"
       ],
-        var.mode == "ReadWrite" ? [
+      var.mode == "ReadWrite" ? [
         "Microsoft.Network/azureFirewalls/applicationRuleCollections/write",
         "Microsoft.Network/azureFirewalls/applicationRuleCollections/delete",
         "Microsoft.Network/azureFirewalls/natRuleCollections/write",
@@ -81,15 +82,15 @@ resource "azurerm_role_definition" "illumio_fw_role" {
     )
   }
 
-  assignable_scopes = [var.subscription_id != "" ? "${local.subscription_scope}/${var.subscription_id}" : "${local.tenant_scope}/${var.tenant_id}"]
-  scope = ""
+  assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
+  scope             = ""
 }
 
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
-  principal_id  = azuread_service_principal.illumio_sp.object_id
+  principal_id         = azuread_service_principal.illumio_sp.object_id
   role_definition_name = azurerm_role_definition.illumio_fw_role[count.index].name
-  scope         = var.subscription_id != "" ? "${local.subscription_scope}/${var.subscription_id}" : "${local.tenant_scope}/${var.tenant_id}"
+  scope                = "${local.subscription_scope}/${var.subscription_id}"
 }
 
 # Role Definitions for NSG
@@ -107,7 +108,7 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
         "Microsoft.Network/networksecuritygroups/providers/Microsoft.Insights/logDefinitions/read",
         "Microsoft.Network/networkWatchers/securityGroupView/action"
       ],
-        var.mode == "ReadWrite" ? [
+      var.mode == "ReadWrite" ? [
         "Microsoft.Network/networkSecurityGroups/write",
         "Microsoft.Network/networkSecurityGroups/delete",
         "Microsoft.Network/networkSecurityGroups/securityRules/write",
@@ -117,13 +118,23 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
     )
   }
 
-  assignable_scopes = [var.subscription_id != "" ? "${local.subscription_scope}/${var.subscription_id}" : "${local.tenant_scope}/${var.tenant_id}"]
-  scope = ""
+  assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
+  scope             = ""
 }
 
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
-  principal_id  = azuread_service_principal.illumio_sp.object_id
+  principal_id         = azuread_service_principal.illumio_sp.object_id
   role_definition_name = azurerm_role_definition.illumio_nsg_role[count.index].name
-  scope         = var.subscription_id != "" ? "${local.subscription_scope}/${var.subscription_id}" : "${local.tenant_scope}/${var.tenant_id}"
+  scope                = "${local.subscription_scope}/${var.subscription_id}"
+}
+
+
+resource "illumio-cloudsecure_azure_subscription" "subscription" {
+  client_id       = azuread_application.illumio_app.client_id
+  client_secret   = azuread_application_password.illumio_secret.value
+  name            = var.name
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  mode            = var.mode
 }

@@ -11,8 +11,8 @@ variable "application_secret_name" {
   type    = string
   default = "Illumio-CloudSecure-Secret"
   validation {
-      condition     = length(var.application_secret_name) > 0
-      error_message = "The secret_name value must not be empty."
+    condition     = length(var.application_secret_name) > 0
+    error_message = "The secret_name value must not be empty."
   }
 }
 
@@ -22,6 +22,16 @@ variable "firewall_role_name" {
   validation {
     condition     = length(var.firewall_role_name) > 0
     error_message = "The role_name value must not be empty."
+  }
+}
+
+variable "illumio_cloudsecure_account_id" {
+  description = "The CloudSecure AWS account ID that is given the IAM role."
+  type        = string
+  default     = "712001342241"
+  validation {
+    condition     = length(var.illumio_cloudsecure_account_id) == 12
+    error_message = "The illumio_cloudsecure_account_id value must be a 12-digit number."
   }
 }
 
@@ -35,18 +45,27 @@ variable "mode" {
   }
 }
 
+variable "name" {
+  description = "The name of this account in CloudSecure."
+  type        = string
+  validation {
+    condition     = length(var.name) > 0
+    error_message = "The name value must not be empty."
+  }
+}
+
 variable "nsg_role_name" {
-    type    = string
-    default = "Illumio Network Security Administrator"
-    validation {
-        condition     = length(var.nsg_role_name) > 0
-        error_message = "The nsg_role_name value must not be empty."
-    }
+  type    = string
+  default = "Illumio Network Security Administrator"
+  validation {
+    condition     = length(var.nsg_role_name) > 0
+    error_message = "The nsg_role_name value must not be empty."
+  }
 }
 
 variable "secret_expiration_days" {
-  type    = number
-  default = 365
+  type        = number
+  default     = 365
   description = "The number of days the secret will be valid."
   validation {
     condition     = var.secret_expiration_days > 0
@@ -55,12 +74,22 @@ variable "secret_expiration_days" {
 }
 
 variable "subscription_id" {
-  type    = string
+  type        = string
   description = "The subscription ID of the Azure account."
+  validation {
+    condition     = length(var.subscription_id) > 0
+    error_message = "The subscription ID value must not be empty."
+  }
+}
+
+variable "tags" {
+  description = "The optional tags added to every configured AWS resource."
+  type        = map(string)
+  default     = {}
 }
 
 variable "tenant_id" {
-  type    = string
+  type        = string
   description = "The tenant ID of the Azure account."
   validation {
     condition     = length(var.tenant_id) > 0

@@ -25,16 +25,6 @@ variable "firewall_role_name" {
   }
 }
 
-variable "illumio_cloudsecure_account_id" {
-  description = "The CloudSecure AWS account ID that is given the IAM role."
-  type        = string
-  default     = "712001342241"
-  validation {
-    condition     = length(var.illumio_cloudsecure_account_id) == 12
-    error_message = "The illumio_cloudsecure_account_id value must be a 12-digit number."
-  }
-}
-
 variable "mode" {
   description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
   type        = string

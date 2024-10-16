@@ -19,11 +19,17 @@ resource "azuread_service_principal" "illumio_sp" {
   tags      = var.tags
 }
 
+resource "time_rotating" "example" {
+  rotation_days = var.secret_expiration_days
+}
+
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
   application_id    = azuread_application.illumio_app.id
   display_name      = var.application_secret_name
-  end_date_relative = "${var.secret_expiration_days}d"
+  rotate_when_changed = {
+    rotation = time_rotating.example.id
+  }
 }
 
 # Assigning Role for Subscription/Tenant Scope

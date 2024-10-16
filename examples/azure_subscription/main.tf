@@ -7,7 +7,7 @@ provider "illumio-cloudsecure" {
   client_secret = var.illumio_cloudsecure_client_secret
 }
 
-module "aws_account_dev" {
+module "azure_subscription_dev" {
   source = "github.com/illumio/terraform-illumio-cloudsecure//modules/azure_subscription?ref=v1.3.0"
   name   = "Test Azure Subscription"
   mode                   = "ReadWrite"

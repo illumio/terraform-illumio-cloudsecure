@@ -15,7 +15,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | github.com/illumio/terraform-illumio-cloudsecure//modules/azure_subscription | v1.3.0 |
+| <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | github.com/illumio/terraform-illumio-cloudsecure//modules/azure_subscription | v1.3.0 |
 
 ## Resources
 

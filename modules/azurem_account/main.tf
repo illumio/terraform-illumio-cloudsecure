@@ -25,8 +25,8 @@ resource "time_rotating" "example" {
 
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
-  application_id    = azuread_application.illumio_app.id
-  display_name      = var.application_secret_name
+  application_id = azuread_application.illumio_app.id
+  display_name   = var.application_secret_name
   rotate_when_changed = {
     rotation = time_rotating.example.id
   }
@@ -94,9 +94,9 @@ resource "azurerm_role_definition" "illumio_fw_role" {
 
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
-  principal_id         = azuread_service_principal.illumio_sp.object_id
-  role_definition_name = azurerm_role_definition.illumio_fw_role.name
-  scope                = "${local.subscription_scope}/${var.subscription_id}"
+  principal_id       = azuread_service_principal.illumio_sp.object_id
+  role_definition_id = azurerm_role_definition.illumio_fw_role.role_definition_resource_id
+  scope              = "${local.subscription_scope}/${var.subscription_id}"
 }
 
 # Role Definitions for NSG
@@ -130,17 +130,23 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
 
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
-  principal_id         = azuread_service_principal.illumio_sp.object_id
-  role_definition_name = azurerm_role_definition.illumio_nsg_role.name
-  scope                = "${local.subscription_scope}/${var.subscription_id}"
+  principal_id       = azuread_service_principal.illumio_sp.object_id
+  role_definition_id = azurerm_role_definition.illumio_nsg_role.role_definition_resource_id
+  scope              = "${local.subscription_scope}/${var.subscription_id}"
 }
 
 
 resource "illumio-cloudsecure_azure_subscription" "subscription" {
   client_id       = azuread_application.illumio_app.client_id
-  client_secret   = azuread_application_password.illumio_secret.value
+  client_secret   = base64encode(azuread_application_password.illumio_secret.value)
   name            = var.name
   subscription_id = var.subscription_id
   tenant_id       = var.tenant_id
   mode            = var.mode
+
+  depends_on = [
+    azurerm_role_assignment.illumio_reader_role,
+    azurerm_role_assignment.illumio_fw_assignment,
+    azurerm_role_assignment.illumio_nsg_assignment
+  ]
 }

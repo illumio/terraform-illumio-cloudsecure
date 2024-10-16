@@ -74,8 +74,8 @@ variable "subscription_id" {
 
 variable "tags" {
   description = "The optional tags added to every configured AWS resource."
-  type        = map(string)
-  default     = {}
+  type        = set(string)
+  default     = []
 }
 
 variable "tenant_id" {

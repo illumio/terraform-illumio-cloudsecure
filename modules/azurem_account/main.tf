@@ -83,7 +83,7 @@ resource "azurerm_role_definition" "illumio_fw_role" {
   }
 
   assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
-  scope             = ""
+  scope             = "${local.subscription_scope}/${var.subscription_id}"
 }
 
 # Assigning Role for Firewall
@@ -119,7 +119,7 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
   }
 
   assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
-  scope             = ""
+  scope             = "${local.subscription_scope}/${var.subscription_id}"
 }
 
 # Assigning Role for NSG

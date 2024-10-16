@@ -21,7 +21,7 @@ resource "azuread_service_principal" "illumio_sp" {
 
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
-  application_id    = azuread_application.illumio_app.application_id
+  application_id    = azuread_application.illumio_app.id
   display_name      = var.application_secret_name
   end_date_relative = "${var.secret_expiration_days}d"
 }

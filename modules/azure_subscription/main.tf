@@ -8,35 +8,38 @@ data "azuread_client_config" "current" {}
 
 # Azure AD Application
 resource "azuread_application" "illumio_app" {
-  display_name = var.application_name
+  display_name = "${var.iam_name_prefix}App"
+  description  = "Illumio CloudSecure Azure Subscription Integration"
   owners       = [data.azuread_client_config.current.object_id]
   tags         = var.tags
 }
 
 # Service Principal for the Application
 resource "azuread_service_principal" "illumio_sp" {
-  client_id = azuread_application.illumio_app.client_id
-  tags      = var.tags
+  client_id   = azuread_application.illumio_app.client_id
+  description = "Service Principal for Illumio CloudSecure Azure Subscription Integration"
+  tags        = var.tags
 }
 
-resource "time_rotating" "example" {
+resource "time_rotating" "secret_rotation" {
   rotation_days = var.secret_expiration_days
 }
 
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
   application_id = azuread_application.illumio_app.id
-  display_name   = var.application_secret_name
+  display_name   = "${var.iam_name_prefix}Secret"
   rotate_when_changed = {
-    rotation = time_rotating.example.id
+    rotation = time_rotating.secret_rotation.id
   }
 }
 
 # Assigning Role for Subscription/Tenant Scope
 resource "azurerm_role_assignment" "illumio_reader_role" {
   principal_id         = azuread_service_principal.illumio_sp.object_id
+  description          = "Illumio Reader role assignment"
   role_definition_name = local.reader_role
-  scope                = "${local.subscription_scope}/${var.subscription_id}"
+  scope                = "${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"
 
   depends_on = [
     azuread_service_principal.illumio_sp
@@ -45,7 +48,7 @@ resource "azurerm_role_assignment" "illumio_reader_role" {
 
 # Role Definitions for Firewall
 resource "azurerm_role_definition" "illumio_fw_role" {
-  name        = var.firewall_role_name
+  name        = "${var.iam_name_prefix}FirewallRole"
   description = "Illumio Firewall Administrator role"
 
   permissions {
@@ -88,20 +91,21 @@ resource "azurerm_role_definition" "illumio_fw_role" {
     )
   }
 
-  assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
-  scope             = "${local.subscription_scope}/${var.subscription_id}"
+  assignable_scopes = ["${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"]
+  scope             = "${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"
 }
 
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
   principal_id       = azuread_service_principal.illumio_sp.object_id
+  description        = "Illumio Firewall role assignment"
   role_definition_id = azurerm_role_definition.illumio_fw_role.role_definition_resource_id
-  scope              = "${local.subscription_scope}/${var.subscription_id}"
+  scope              = "${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"
 }
 
 # Role Definitions for NSG
 resource "azurerm_role_definition" "illumio_nsg_role" {
-  name        = var.nsg_role_name
+  name        = "${var.iam_name_prefix}NSGRole"
   description = "Illumio Network Security Administrator role"
 
   permissions {
@@ -124,15 +128,16 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
     )
   }
 
-  assignable_scopes = ["${local.subscription_scope}/${var.subscription_id}"]
-  scope             = "${local.subscription_scope}/${var.subscription_id}"
+  assignable_scopes = ["${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"]
+  scope             = "${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"
 }
 
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
   principal_id       = azuread_service_principal.illumio_sp.object_id
+  description        = "Illumio NSG role assignment"
   role_definition_id = azurerm_role_definition.illumio_nsg_role.role_definition_resource_id
-  scope              = "${local.subscription_scope}/${var.subscription_id}"
+  scope              = "${local.subscription_scope}/${data.azurerm_subscription.current.subscription_id}"
 }
 
 

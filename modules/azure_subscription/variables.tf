@@ -1,3 +1,13 @@
+variable "iam_name_prefix" {
+  description = "The prefix given to all AWS IAM resource names."
+  type        = string
+  default     = "IllumioCloudIntegration"
+  validation {
+    condition     = length(var.iam_name_prefix) > 0
+    error_message = "The iam_name_prefix value must not be empty."
+  }
+}
+
 variable "mode" {
   description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
   type        = string
@@ -16,6 +26,7 @@ variable "name" {
     error_message = "The name value must not be empty."
   }
 }
+
 variable "secret_expiration_days" {
   type        = number
   default     = 365

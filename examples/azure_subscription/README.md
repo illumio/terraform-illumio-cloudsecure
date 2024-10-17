@@ -6,6 +6,7 @@
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.1.0 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.12.1 |
 
 ## Providers
 

@@ -27,13 +27,13 @@ variable "name" {
   }
 }
 
-variable "secret_expiration_days" {
+variable "azure_secret_expiration_days" {
   type        = number
   default     = 365
-  description = "The number of days the secret will be valid."
+  description = "The number of days the Azure service principal secret remains valid before requiring renewal."
   validation {
-    condition     = var.secret_expiration_days > 0
-    error_message = "The secret_expiration_days value must be greater than 0."
+    condition     = var.azure_secret_expiration_days > 0
+    error_message = "The azure_secret_expiration_days value must be greater than 0."
   }
 }
 

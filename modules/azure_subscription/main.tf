@@ -16,7 +16,7 @@ resource "azuread_service_principal" "illumio_sp" {
 }
 
 resource "time_rotating" "secret_rotation" {
-  rotation_days = var.secret_expiration_days
+  rotation_days = var.azure_secret_expiration_days
 }
 
 # Application Password

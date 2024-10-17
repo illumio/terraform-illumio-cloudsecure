@@ -40,12 +40,3 @@ variable "tags" {
   type        = set(string)
   default     = []
 }
-
-variable "tenant_id" {
-  type        = string
-  description = "The tenant ID of the Azure account."
-  validation {
-    condition     = length(var.tenant_id) > 0
-    error_message = "The tenant ID value must not be empty."
-  }
-}

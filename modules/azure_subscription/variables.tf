@@ -43,16 +43,6 @@ variable "name" {
     error_message = "The name value must not be empty."
   }
 }
-
-variable "nsg_role_name" {
-  type    = string
-  default = "Illumio Network Security Administrator"
-  validation {
-    condition     = length(var.nsg_role_name) > 0
-    error_message = "The nsg_role_name value must not be empty."
-  }
-}
-
 variable "secret_expiration_days" {
   type        = number
   default     = 365

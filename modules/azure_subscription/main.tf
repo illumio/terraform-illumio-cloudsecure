@@ -136,6 +136,8 @@ resource "azurerm_role_assignment" "illumio_nsg_assignment" {
 }
 
 
+data "azurerm_subscription" "current" {}
+
 resource "illumio-cloudsecure_azure_subscription" "subscription" {
   client_id       = azuread_application.illumio_app.client_id
   client_secret   = base64encode(azuread_application_password.illumio_secret.value)

@@ -26,15 +26,6 @@ variable "secret_expiration_days" {
   }
 }
 
-variable "subscription_id" {
-  type        = string
-  description = "The subscription ID of the Azure account."
-  validation {
-    condition     = length(var.subscription_id) > 0
-    error_message = "The subscription ID value must not be empty."
-  }
-}
-
 variable "tags" {
   description = "The optional tags added to every configured AWS resource."
   type        = set(string)

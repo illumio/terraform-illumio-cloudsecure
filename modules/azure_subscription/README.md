@@ -44,9 +44,7 @@ No modules.
 | <a name="input_mode"></a> [mode](#input\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". | `string` | `"ReadWrite"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of this account in CloudSecure. | `string` | n/a | yes |
 | <a name="input_secret_expiration_days"></a> [secret\_expiration\_days](#input\_secret\_expiration\_days) | The number of days the secret will be valid. | `number` | `365` | no |
-| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The subscription ID of the Azure account. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured AWS resource. | `set(string)` | `[]` | no |
-| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | The tenant ID of the Azure account. | `string` | n/a | yes |
 
 ## Outputs
 

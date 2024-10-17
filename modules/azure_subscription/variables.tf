@@ -1,5 +1,5 @@
 variable "iam_name_prefix" {
-  description = "The prefix given to all AWS IAM resource names."
+  description = "The prefix given to all Azure resource names."
   type        = string
   default     = "IllumioCloudIntegration"
   validation {
@@ -19,7 +19,7 @@ variable "mode" {
 }
 
 variable "name" {
-  description = "The name of this account in CloudSecure."
+  description = "The name of this subscription in CloudSecure."
   type        = string
   validation {
     condition     = length(var.name) > 0
@@ -38,7 +38,7 @@ variable "secret_expiration_days" {
 }
 
 variable "tags" {
-  description = "The optional tags added to every configured AWS resource."
+  description = "The optional tags added to every configured Azure resource."
   type        = set(string)
   default     = []
 }

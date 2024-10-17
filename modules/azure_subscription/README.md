@@ -35,6 +35,7 @@ No modules.
 | [illumio-cloudsecure_azure_subscription.subscription](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/azure_subscription) | resource |
 | [time_rotating.example](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating) | resource |
 | [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 
 ## Inputs
 

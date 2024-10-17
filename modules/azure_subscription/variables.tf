@@ -1,30 +1,3 @@
-variable "application_name" {
-  type    = string
-  default = "Illumio-CloudSecure-Access"
-  validation {
-    condition     = length(var.application_name) > 0
-    error_message = "The name value must not be empty."
-  }
-}
-
-variable "application_secret_name" {
-  type    = string
-  default = "Illumio-CloudSecure-Secret"
-  validation {
-    condition     = length(var.application_secret_name) > 0
-    error_message = "The secret_name value must not be empty."
-  }
-}
-
-variable "firewall_role_name" {
-  type    = string
-  default = "Illumio Firewall Administrator"
-  validation {
-    condition     = length(var.firewall_role_name) > 0
-    error_message = "The role_name value must not be empty."
-  }
-}
-
 variable "mode" {
   description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
   type        = string

@@ -41,12 +41,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_application_name"></a> [application\_name](#input\_application\_name) | n/a | `string` | `"Illumio-CloudSecure-Access"` | no |
-| <a name="input_application_secret_name"></a> [application\_secret\_name](#input\_application\_secret\_name) | n/a | `string` | `"Illumio-CloudSecure-Secret"` | no |
-| <a name="input_firewall_role_name"></a> [firewall\_role\_name](#input\_firewall\_role\_name) | n/a | `string` | `"Illumio Firewall Administrator"` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". | `string` | `"ReadWrite"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of this account in CloudSecure. | `string` | n/a | yes |
-| <a name="input_nsg_role_name"></a> [nsg\_role\_name](#input\_nsg\_role\_name) | n/a | `string` | `"Illumio Network Security Administrator"` | no |
 | <a name="input_secret_expiration_days"></a> [secret\_expiration\_days](#input\_secret\_expiration\_days) | The number of days the secret will be valid. | `number` | `365` | no |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The subscription ID of the Azure account. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured AWS resource. | `set(string)` | `[]` | no |

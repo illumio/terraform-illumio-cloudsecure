@@ -41,10 +41,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_azure_secret_expiration_days"></a> [azure\_secret\_expiration\_days](#input\_azure\_secret\_expiration\_days) | The number of days the Azure service principal secret remains valid before requiring renewal. | `number` | `365` | no |
 | <a name="input_iam_name_prefix"></a> [iam\_name\_prefix](#input\_iam\_name\_prefix) | The prefix given to all Azure resource names. | `string` | `"IllumioCloudIntegration"` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". | `string` | `"ReadWrite"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of this subscription in CloudSecure. | `string` | n/a | yes |
-| <a name="input_secret_expiration_days"></a> [secret\_expiration\_days](#input\_secret\_expiration\_days) | The number of days the secret will be valid. | `number` | `365` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured Azure resource. | `set(string)` | `[]` | no |
 
 ## Outputs

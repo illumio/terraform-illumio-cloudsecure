@@ -140,8 +140,8 @@ resource "illumio-cloudsecure_azure_subscription" "subscription" {
   client_id       = azuread_application.illumio_app.client_id
   client_secret   = base64encode(azuread_application_password.illumio_secret.value)
   name            = var.name
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  subscription_id = data.azurerm_subscription.current.subscription_id
+  tenant_id       = data.azurerm_subscription.current.tenant_id
   mode            = var.mode
 
   depends_on = [

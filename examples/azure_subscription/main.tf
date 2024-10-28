@@ -10,8 +10,9 @@ provider "illumio-cloudsecure" {
 }
 
 module "azure_subscription_dev" {
-  source = "github.com/illumio/terraform-illumio-cloudsecure//modules/azure_subscription?ref=v1.3.0"
-  name   = "Test Azure Subscription"
+  source                 = "illumio/cloudsecure/illumio//modules/azure_subscription"
+  version                = "1.3.0"
+  name                   = "Test Azure Subscription"
   mode                   = "ReadWrite"
   secret_expiration_days = 365
   subscription_id        = "1681e851-ba2d-410b-a66a-9511887e1c1a" # Azure Subscription ID

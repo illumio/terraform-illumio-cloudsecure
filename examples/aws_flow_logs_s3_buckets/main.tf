@@ -8,16 +8,18 @@ provider "illumio-cloudsecure" {
 }
 
 module "aws_account_dev" {
-  source = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_account?ref=v1.2.4"
-  name   = "Test Account"
-  tags   = {
+  source  = "illumio/cloudsecure/illumio//modules/aws_account"
+  version = "1.3.0"
+  name    = "Test Account"
+  tags    = {
     Name  = "CloudSecure Account Policy"
     Owner = "Engineering"
   }
 }
 
 module "aws_flow_logs_s3_buckets" {
-  source         = "github.com/illumio/terraform-illumio-cloudsecure//modules/aws_flow_logs_s3_buckets?ref=v1.2.4"
+  source         = "illumio/cloudsecure/illumio//modules/aws_flow_logs_s3_buckets"
+  version        = "1.3.0"
   role_id        = aws_account_dev.role_id
   s3_bucket_arns = [
     "arn:aws:s3:::vpc1",

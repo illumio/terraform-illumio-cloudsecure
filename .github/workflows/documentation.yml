@@ -10,7 +10,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Generate README.md for each Terraform nested module and push changes back to PR branch
-      uses: terraform-docs/gh-actions@v1.4.0
+      uses: terraform-docs/gh-actions@1.3.0
       with:
         working-dir: .
         recursive: true
@@ -20,7 +20,7 @@ jobs:
         git-push: "true"
 
     - name: Generate README.md for each example and push changes back to PR branch
-      uses: terraform-docs/gh-actions@v1.4.0
+      uses: terraform-docs/gh-actions@1.3.0
       with:
         working-dir: .
         recursive: true

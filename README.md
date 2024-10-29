@@ -11,9 +11,9 @@ Terraform submodules that add functionality to Illumio's CloudSecure Terraform p
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.0.11 |
+| Name | Version  |
+|------|----------|
+| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.2.0 |
 
 ## Providers
 

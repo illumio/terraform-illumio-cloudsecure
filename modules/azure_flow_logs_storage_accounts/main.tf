@@ -1,14 +1,7 @@
 data "azurerm_subscription" "current" {}
 
-locals {
-  storage_accounts_map = {
-    for sa in var.storage_accounts : "${sa.name}-${sa.resource_group_name}" => sa
-  }
-}
-
-# Retrieve storage account scopes (for existing storage accounts)
 data "azurerm_storage_account" "account" {
-  for_each          = local.storage_accounts_map
+  for_each            = var.storage_accounts
   name                = each.value.name
   resource_group_name = each.value.resource_group_name
 }
@@ -34,16 +27,15 @@ resource "azurerm_role_definition" "illumio_storage_reader" {
 
 
 resource "azurerm_role_assignment" "illumio_storage_reader_assignment" {
-  for_each = data.azurerm_storage_account.account
+  for_each           = data.azurerm_storage_account.account
   principal_id       = var.service_principal_client_id
   description        = "Illumio NSG role assignment"
   role_definition_id = azurerm_role_definition.illumio_storage_reader.role_definition_resource_id
   scope              = each.value.id
 }
 
-
 resource "illumio-cloudsecure_azure_flow_logs_storage_account" "storage_accounts" {
-  for_each = data.azurerm_storage_account.account
+  for_each                    = data.azurerm_storage_account.account
   subscription_id             = data.azurerm_subscription.current.subscription_id
   storage_account_resource_id = each.value.id
   depends_on = [

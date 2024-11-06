@@ -2,7 +2,7 @@ terraform {
   required_providers {
     illumio-cloudsecure = {
       source  = "illumio/illumio-cloudsecure"
-      version = ">= 1.1.0"
+      version = ">= 1.2.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -13,7 +13,7 @@ terraform {
       version = ">= 3.0"
     }
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
       version = ">= 0.12.1"
     }
   }

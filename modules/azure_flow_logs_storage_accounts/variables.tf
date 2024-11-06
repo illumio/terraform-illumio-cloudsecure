@@ -9,7 +9,7 @@ variable "iam_name_prefix" {
 }
 
 variable "service_principal_client_id" {
-  type = string
+  type        = string
   description = "The client ID of the service principal used to access the storage accounts."
   validation {
     condition     = length(var.service_principal_client_id) > 0
@@ -18,10 +18,16 @@ variable "service_principal_client_id" {
 }
 
 variable "storage_accounts" {
-  type    = list(object({
-    name = string
+  type = set(object({
+    name                = string
     resource_group_name = string
   }))
-  description = "The list of storage accounts to be monitored."
-  default = []
+  description = "The set of storage accounts to retrieve information for."
+  default     = []
+}
+
+variable "tags" {
+  type        = list(string)
+  description = "The list of tags to apply to the Azure resources."
+  default     = []
 }

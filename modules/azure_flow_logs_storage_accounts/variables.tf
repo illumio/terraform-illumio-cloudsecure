@@ -25,9 +25,3 @@ variable "storage_accounts" {
   description = "The set of storage accounts to retrieve information for."
   default     = []
 }
-
-variable "tags" {
-  type        = list(string)
-  description = "The list of tags to apply to the Azure resources."
-  default     = []
-}

@@ -34,7 +34,6 @@ No modules.
 | <a name="input_iam_name_prefix"></a> [iam\_name\_prefix](#input\_iam\_name\_prefix) | The prefix given to all Azure resource names. | `string` | `"IllumioCloudIntegration"` | no |
 | <a name="input_service_principal_client_id"></a> [service\_principal\_client\_id](#input\_service\_principal\_client\_id) | The client ID of the service principal used to access the storage accounts. | `string` | n/a | yes |
 | <a name="input_storage_accounts"></a> [storage\_accounts](#input\_storage\_accounts) | The set of storage accounts to retrieve information for. | <pre>set(object({<br/>    name                = string<br/>    resource_group_name = string<br/>  }))</pre> | `[]` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | The list of tags to apply to the Azure resources. | `list(string)` | `[]` | no |
 
 ## Outputs
 

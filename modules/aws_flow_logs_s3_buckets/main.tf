@@ -11,7 +11,6 @@ resource "aws_iam_role_policy" "s3_bucket_list" {
   policy = jsonencode({
     Version   = "2012-10-17"
     Statement = concat([
-      # Allow for entire bucket arns
       {
         Effect = "Allow"
         Action = [

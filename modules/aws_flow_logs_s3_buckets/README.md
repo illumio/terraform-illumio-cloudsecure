@@ -21,6 +21,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [aws_iam_role_policy.s3_bucket_list](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy.s3_bucket_read](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [illumio-cloudsecure_aws_flow_logs_s3_bucket.bucket_example](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/aws_flow_logs_s3_bucket) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |

@@ -23,5 +23,8 @@ variable "storage_accounts" {
     resource_group_name = string
   }))
   description = "The set of storage accounts containing flow logs."
-  default     = []
+  validation {
+      condition     = length(var.storage_accounts) > 0
+      error_message = "The storage_accounts value must not be empty."
+  }
 }

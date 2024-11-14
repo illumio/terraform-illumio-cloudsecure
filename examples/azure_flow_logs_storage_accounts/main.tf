@@ -36,10 +36,19 @@ module "azure_flow_logs_storage_accounts" {
   source                      = "illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts"
   version                     = "1.4.0"
   service_principal_client_id = module.azure_subscription_dev.service_principal_client_id
+
   storage_accounts = [
     {
-      name                = "bucket_name"
-      resource_group_name = "bucket_resource_group_name"
+      name                = "welcomegsk"
+      resource_group_name = "demo1"
+    },
+    {
+      name                = "secondstorage"
+      resource_group_name = "demo2"
+    },
+    {
+      name                = "thirdstorage"
+      resource_group_name = "demo3"
     }
   ]
 }

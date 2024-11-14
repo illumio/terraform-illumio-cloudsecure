@@ -1,7 +1,9 @@
 data "azurerm_subscription" "current" {}
 
 data "azurerm_storage_account" "account" {
-  for_each            = var.storage_accounts
+  for_each   = {
+    for index, sa in var.storage_accounts : "${sa.resource_group_name}_${sa.name}"  => sa
+  }
   name                = each.value.name
   resource_group_name = each.value.resource_group_name
 }

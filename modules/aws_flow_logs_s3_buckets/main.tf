@@ -1,26 +1,65 @@
+locals {
+  all_arns_suffixed = [for arn in var.s3_bucket_arns : replace("${arn}/*", "//*", "/*")]
+  arns_without_path = tolist(toset([for bucket in var.s3_bucket_arns : bucket if can(regex("^[^/]+$", bucket))]))
+  arns_with_path_suffix = [for arn in var.s3_bucket_arns : arn if !can(regex("^[^/]+$", arn))]
+  arns_of_buckets_with_path_suffix = [for arn in local.arns_with_path_suffix : regex("^[^/]+", arn)]
+}
+
+resource "aws_iam_role_policy" "s3_bucket_list" {
+  name   = "${var.iam_name_prefix}BucketListPolicy"
+  role   = var.role_id
+  policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = concat([
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+        ],
+        Resource = local.arns_without_path
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetBucketLocation"
+        ],
+        Resource = local.arns_of_buckets_with_path_suffix
+      }
+    ],
+    [
+      for arn in local.arns_with_path_suffix : {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+        ],
+        Resource = regex("^[^/]+", arn)
+        Condition = {
+          StringLike = {
+            "s3:prefix" = [
+              replace("${regex("/.*/.*", arn)}/*", "//*", "/*")
+            ]
+          }
+        }
+      }
+    ])
+  })
+}
+
 resource "aws_iam_role_policy" "s3_bucket_read" {
   name   = "${var.iam_name_prefix}BucketReadPolicy"
   role   = var.role_id
   policy = jsonencode({
     Version   = "2012-10-17"
-    Statement = [
+    Statement = concat([
       {
-        Effect   = "Allow"
-        Action   = [
-          "s3:ListBucket",
-          "s3:ListBucketVersion",
-          "s3:GetBucketLocation"
-        ],
-        Resource = [for arn in var.s3_bucket_arns : regex("^[^/]+", arn)]
-      },
-      {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "s3:GetObject"
         ],
-        Resource = [for arn in var.s3_bucket_arns : replace("${arn}/*", "//*", "/*")]
+        Resource = local.all_arns_suffixed
       }
-    ]
+    ])
   })
 }
 

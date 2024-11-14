@@ -3,10 +3,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.2.0 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.12.1 |
 
 ## Providers
 
@@ -16,6 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_azure_flow_logs_storage_accounts"></a> [azure\_flow\_logs\_storage\_accounts](#module\_azure\_flow\_logs\_storage\_accounts) | illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts | 1.4.0 |
 | <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.4.0 |
 
 ## Resources

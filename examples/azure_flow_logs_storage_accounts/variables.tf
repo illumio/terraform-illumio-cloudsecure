@@ -17,6 +17,7 @@ variable "illumio_cloudsecure_client_secret" {
   }
 }
 
+
 variable "azure_subscription_id" {
   type        = string
   description = "The Azure Subscription ID."

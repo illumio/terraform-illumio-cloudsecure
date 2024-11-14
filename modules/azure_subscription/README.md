@@ -52,8 +52,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_azure_secret_expiration_days"></a> [azure\_secret\_expiration\_days](#output\_azure\_secret\_expiration\_days) | The number of days the Azure service principal secret remains valid before requiring renewal. |
 | <a name="output_iam_name_prefix"></a> [iam\_name\_prefix](#output\_iam\_name\_prefix) | The prefix given to all Azure resource names. |
 | <a name="output_mode"></a> [mode](#output\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". |
-| <a name="output_secret_expiration_days"></a> [secret\_expiration\_days](#output\_secret\_expiration\_days) | The number of days the Azure service principal secret remains valid before requiring renewal. |
 | <a name="output_service_principal_id"></a> [service\_principal\_id](#output\_service\_principal\_id) | The ID of the service principal created for Illumio CloudSecure. |
 <!-- END_TF_DOCS -->

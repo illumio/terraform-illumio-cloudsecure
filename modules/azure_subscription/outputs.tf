@@ -13,7 +13,7 @@ output "mode" {
   description = "The account's access mode, must be \"ReadWrite\" (default) or \"Read\"."
 }
 
-output "secret_expiration_days" {
+output "azure_secret_expiration_days" {
   value       = var.azure_secret_expiration_days
   description = "The number of days the Azure service principal secret remains valid before requiring renewal."
 }

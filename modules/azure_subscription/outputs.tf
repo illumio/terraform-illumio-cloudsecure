@@ -1,4 +1,4 @@
-output "service_principal_id" {
+output "service_principal_client_id" {
   value       = azuread_service_principal.illumio_sp.object_id
   description = "The ID of the service principal created for Illumio CloudSecure."
 }

@@ -27,7 +27,7 @@ module "azure_subscription_dev" {
 module "azure_flow_logs_storage_accounts" {
   source                      = "illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts"
   version                     = "1.4.0"
-  service_principal_client_id = module.azure_subscription_dev.service_principal_id
+  service_principal_client_id = module.azure_subscription_dev.service_principal_client_id
   storage_accounts = [
     {
       name                = "bucket_name"

@@ -25,7 +25,6 @@ resource "azurerm_role_definition" "illumio_storage_reader" {
   scope             = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
 }
 
-
 resource "azurerm_role_assignment" "illumio_storage_reader_assignment" {
   for_each           = data.azurerm_storage_account.account
   principal_id       = var.service_principal_client_id

@@ -10,39 +10,43 @@ resource "aws_iam_role_policy" "s3_bucket_list" {
   role   = var.role_id
   policy = jsonencode({
     Version   = "2012-10-17"
-    Statement = concat([
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-          "s3:GetBucketLocation"
-        ],
-        Resource = local.arns_without_path
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetBucketLocation"
-        ],
-        Resource = local.arns_of_buckets_with_path_suffix
-      }
-    ],
-    [
-      for arn in local.arns_with_path_suffix : {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-        ],
-        Resource = regex("^[^/]+", arn)
-        Condition = {
-          StringLike = {
-            "s3:prefix" = [
-              replace("${regex("/.*/.*", arn)}/*", "//*", "/*")
-            ]
+    Statement = concat(
+        length(local.arns_without_path) > 0 ? [
+        {
+          Effect = "Allow"
+          Action = [
+            "s3:ListBucket",
+            "s3:GetBucketLocation"
+          ],
+          Resource = local.arns_without_path
+        }
+      ] : [],
+        length(local.arns_of_buckets_with_path_suffix) > 0 ? [
+        {
+          Effect = "Allow"
+          Action = [
+            "s3:GetBucketLocation"
+          ],
+          Resource = local.arns_of_buckets_with_path_suffix
+        }
+      ] : [],
+        length(local.arns_with_path_suffix) > 0 ? [
+        for arn in local.arns_with_path_suffix : {
+          Effect = "Allow"
+          Action = [
+            "s3:ListBucket",
+          ],
+          Resource = regex("^[^/]+", arn)
+          Condition = {
+            StringLike = {
+              "s3:prefix" = [
+                replace("${regex("/.*/.*", arn)}/*", "//*", "/*")
+              ]
+            }
           }
         }
-      }
-    ])
+      ] : []
+    )
   })
 }
 

@@ -40,7 +40,7 @@ resource "aws_iam_role_policy" "s3_bucket_list" {
           Condition = {
             StringLike = {
               "s3:prefix" = [
-                replace("${regex("/.*/.*", arn)}/*", "//*", "/*")
+                trimprefix(replace("${regex("/.*/.*", arn)}/*", "//*", "/*"), "/")
               ]
             }
           }

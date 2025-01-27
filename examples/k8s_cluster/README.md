@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_k8s_cluster_dev"></a> [k8s\_cluster\_dev](#module\_k8s\_cluster\_dev) | illumio/cloudsecure/illumio//modules/k8s_cluster | 1.4.1 |
+| <a name="module_k8s_cluster_dev"></a> [k8s\_cluster\_dev](#module\_k8s\_cluster\_dev) | illumio/cloudsecure/illumio//modules/k8s_cluster | 1.4.2 |
 
 ## Resources
 

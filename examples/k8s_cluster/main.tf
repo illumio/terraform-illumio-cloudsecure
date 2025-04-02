@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/config"  # Adjust this path as needed
+    config_path = "~/.kube/config" # Adjust this path as needed
   }
 }
 
@@ -10,9 +10,10 @@ provider "illumio-cloudsecure" {
 }
 
 module "k8s_cluster_dev" {
-  source         = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version        = "1.4.3"
-  illumio_region = "aws-us-west-2"
-  name           = "example-release"
-  description    = "Dev cluster in aws-us-west-2"
+  source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
+  version          = "1.4.3"
+  operator_version = "v1.0.5"
+  illumio_region   = "aws-us-west-2"
+  name             = "example-release"
+  description      = "Dev cluster in aws-us-west-2"
 }

@@ -1,5 +1,17 @@
+variable "create_operator_namespace" {
+  description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
+  type        = bool
+  default     = true
+}
+
+variable "enable_falco" {
+  description = "If true, deploys the Falco agent along with cloud-operator to collect network flows."
+  type        = bool
+  default     = false
+}
+
 variable "illumio_region" {
-  description = "Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`."
+  description = "Illumio Region where the k8s cluster will be onboarded. An Illumio Region is a designated cloud region where the CloudSecure cloud-operator deployed in the k8s cluster connects after onboarding. Choose the Illumio Region nearest to the k8s cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`."
   type        = string
 }
 
@@ -12,12 +24,6 @@ variable "operator_namespace" {
   description = "The k8s namespace where cloud-operator is to be deployed into."
   type        = string
   default     = "illumio-cloud"
-}
-
-variable "create_operator_namespace" {
-  description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
-  type        = bool
-  default     = true
 }
 
 variable "operator_version" {

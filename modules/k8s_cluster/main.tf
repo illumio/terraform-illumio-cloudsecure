@@ -18,4 +18,9 @@ resource "helm_release" "helm_cloud_operator" {
     name  = "clusterCredsSecret.clientSecret"
     value = illumio-cloudsecure_k8s_cluster.this.client_secret
   }
+
+  set {
+    name  = "falco.enabled"
+    value = var.enable_falco
+  }
 }

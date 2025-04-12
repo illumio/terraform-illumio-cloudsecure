@@ -4,14 +4,8 @@ variable "illumio_region" {
 }
 
 variable "name" {
-  description = "The name of the cloud-secure deployment in the k8s cluster and of the CloudSecure onboarding credential used to onboard the k8s cluster."
+  description = "The name of the cloud-secure deployment in the k8s cluster."
   type        = string
-}
-
-variable "description" {
-  description = "The description of the CloudSecure onboarding credential used to onboard the k8s cluster."
-  type        = string
-  default     = ""
 }
 
 variable "operator_namespace" {

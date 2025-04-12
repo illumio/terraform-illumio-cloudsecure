@@ -29,7 +29,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_create_operator_namespace"></a> [create\_operator\_namespace](#input\_create\_operator\_namespace) | If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist. | `bool` | `true` | no |
-| <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | Illumio Region where the k8s cluster can be onboarded using this credential. An Illumio Region is a designated cloud region where the CloudSecure k8s operators in onboarded k8s clusters connect after onboarding. Choose the Illumio Region nearest to each cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`. | `string` | n/a | yes |
+| <a name="input_enable_falco"></a> [enable\_falco](#input\_enable\_falco) | If true, deploys the Falco agent along with cloud-operator to collect network flows. | `bool` | `false` | no |
+| <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | Illumio Region where the k8s cluster will be onboarded. An Illumio Region is a designated cloud region where the CloudSecure cloud-operator deployed in the k8s cluster connects after onboarding. Choose the Illumio Region nearest to the k8s cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the cloud-secure deployment in the k8s cluster. | `string` | n/a | yes |
 | <a name="input_operator_namespace"></a> [operator\_namespace](#input\_operator\_namespace) | The k8s namespace where cloud-operator is to be deployed into. | `string` | `"illumio-cloud"` | no |
 | <a name="input_operator_version"></a> [operator\_version](#input\_operator\_version) | The version of cloud-operator to be deployed into the k8s cluster. | `string` | `"v1.1.1"` | no |
@@ -38,6 +39,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The client\_id that was used to onboard the k8s cluster, and may be used to onboard other clusters. |
-| <a name="output_client_secret"></a> [client\_secret](#output\_client\_secret) | The client\_secret that was used to onboard the k8s cluster, and may be used to onboard other clusters. |
+| <a name="output_id"></a> [id](#output\_id) | The CloudSecure identifier of the onboarded k8s cluster. |
 <!-- END_TF_DOCS -->

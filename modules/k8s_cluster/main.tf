@@ -1,7 +1,5 @@
-resource "illumio-cloudsecure_k8s_cluster_onboarding_credential" "this" {
+resource "illumio-cloudsecure_k8s_cluster" "this" {
   illumio_region = var.illumio_region
-  name           = var.name
-  description    = var.description
 }
 
 resource "helm_release" "helm_cloud_operator" {
@@ -12,12 +10,17 @@ resource "helm_release" "helm_cloud_operator" {
   create_namespace = var.create_operator_namespace
 
   set {
-    name  = "onboardingSecret.clientId"
-    value = illumio-cloudsecure_k8s_cluster_onboarding_credential.this.client_id
+    name  = "clusterCredsSecret.clientId"
+    value = illumio-cloudsecure_k8s_cluster.this.client_id
   }
 
   set {
-    name  = "onboardingSecret.clientSecret"
-    value = illumio-cloudsecure_k8s_cluster_onboarding_credential.this.client_secret
+    name  = "clusterCredsSecret.clientSecret"
+    value = illumio-cloudsecure_k8s_cluster.this.client_secret
+  }
+
+  set {
+    name  = "falco.enabled"
+    value = var.enable_falco
   }
 }

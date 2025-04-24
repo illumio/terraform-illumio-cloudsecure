@@ -11,9 +11,13 @@ provider "illumio-cloudsecure" {
 
 module "k8s_cluster_dev" {
   source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version          = "1.4.3"
-  operator_version = "v1.1.3"
+  version          = "1.5.0"
   illumio_region   = "aws-us-west-2"
   name             = "example-release"
-  description      = "Dev cluster in aws-us-west-2"
+
+  # Optional attributes
+  create_operator_namespace = true
+  enable_falco              = false
+  operator_namespace        = "illumio-cloud"
+  operator_version          = "v1.1.3"
 }

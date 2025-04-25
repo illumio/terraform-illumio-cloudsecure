@@ -19,5 +19,5 @@ module "k8s_cluster_dev" {
   create_operator_namespace = true
   enable_falco              = false
   operator_namespace        = "illumio-cloud"
-  operator_version          = "v1.1.2"
+  operator_version          = "v1.1.3"
 }

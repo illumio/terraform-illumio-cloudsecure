@@ -14,8 +14,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_azure_flow_logs_storage_accounts"></a> [azure\_flow\_logs\_storage\_accounts](#module\_azure\_flow\_logs\_storage\_accounts) | illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts | 1.4.3 |
-| <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.4.3 |
+| <a name="module_azure_flow_logs_storage_accounts"></a> [azure\_flow\_logs\_storage\_accounts](#module\_azure\_flow\_logs\_storage\_accounts) | illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts | 1.5.1 |
+| <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.5.1 |
 
 ## Resources
 

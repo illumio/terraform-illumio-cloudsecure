@@ -35,7 +35,6 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | The name of the cloud-secure deployment in the k8s cluster. | `string` | n/a | yes |
 | <a name="input_operator_namespace"></a> [operator\_namespace](#input\_operator\_namespace) | The k8s namespace where cloud-operator is to be deployed into. | `string` | `"illumio-cloud"` | no |
 | <a name="input_operator_version"></a> [operator\_version](#input\_operator\_version) | The version of cloud-operator to be deployed into the k8s cluster. | `string` | `"v1.1.3"` | no |
-| <a name="input_https_proxy"></a> [https_proxy](#input_https_proxy) | The HTTPS proxy to be used by the cloud-operator. If not set, no proxy will be used. | `string` | `""` | no |
 
 ## Outputs
 

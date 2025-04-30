@@ -30,6 +30,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_create_operator_namespace"></a> [create\_operator\_namespace](#input\_create\_operator\_namespace) | If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist. | `bool` | `true` | no |
 | <a name="input_enable_falco"></a> [enable\_falco](#input\_enable\_falco) | If true, deploys the Falco agent along with cloud-operator to collect network flows. | `bool` | `false` | no |
+| <a name="input_https_proxy"></a> [https\_proxy](#input\_https\_proxy) | The HTTPS proxy to be used by the cloud-operator. If not set, no proxy will be used. | `string` | `""` | no |
 | <a name="input_illumio_region"></a> [illumio\_region](#input\_illumio\_region) | Illumio Region where the k8s cluster will be onboarded. An Illumio Region is a designated cloud region where the CloudSecure cloud-operator deployed in the k8s cluster connects after onboarding. Choose the Illumio Region nearest to the k8s cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the cloud-secure deployment in the k8s cluster. | `string` | n/a | yes |
 | <a name="input_operator_namespace"></a> [operator\_namespace](#input\_operator\_namespace) | The k8s namespace where cloud-operator is to be deployed into. | `string` | `"illumio-cloud"` | no |

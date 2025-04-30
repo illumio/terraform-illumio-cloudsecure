@@ -23,4 +23,9 @@ resource "helm_release" "helm_cloud_operator" {
     name  = "falco.enabled"
     value = var.enable_falco
   }
+
+  set {
+    name  = "httpsProxy"
+    value = var.https_proxy
+  }
 }

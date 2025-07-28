@@ -19,7 +19,7 @@ provider "illumio-cloudsecure" {
 
 module "azure_subscription_dev" {
   source                 = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version                = "1.5.1"
+  version                = "1.5.2"
   name                   = "Test Azure Subscription"
   mode                   = "ReadWrite"
   secret_expiration_days = 365
@@ -34,7 +34,7 @@ module "azure_subscription_dev" {
 
 module "azure_flow_logs_storage_accounts" {
   source                      = "illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts"
-  version                     = "1.5.1"
+  version                     = "1.5.2"
   service_principal_client_id = module.azure_subscription_dev.service_principal_client_id
 
   storage_accounts = [

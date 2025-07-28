@@ -25,7 +25,7 @@ resource "helm_release" "helm_cloud_operator" {
   }
 
   set {
-    name  = "httpsProxy"
-    value = "env.httpsProxy"
+    name  = "env.httpsProxy"
+    value = var.https_proxy
   }
 }

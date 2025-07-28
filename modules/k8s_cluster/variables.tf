@@ -13,7 +13,8 @@ variable "enable_falco" {
 variable "https_proxy" {
   description = "The URL of the HTTPS proxy to be used by cloud-operator to connect to Illumio CloudSecure. If not set, no proxy will be used."
   type        = string
-  default     = ""
+  nullable    = true
+  default     = null
 }
 
 variable "illumio_region" {

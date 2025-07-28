@@ -11,7 +11,7 @@ variable "enable_falco" {
 }
 
 variable "https_proxy" {
-  description = "The HTTPS proxy to be used by the cloud-operator. If not set, no proxy will be used."
+  description = "The URL of the HTTPS proxy to be used by cloud-operator to connect to Illumio CloudSecure. If not set, no proxy will be used."
   type        = string
   default     = ""
 }
@@ -35,5 +35,5 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.1.3"
+  default     = "v1.3.0"
 }

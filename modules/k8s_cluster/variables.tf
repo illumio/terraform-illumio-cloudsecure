@@ -10,6 +10,13 @@ variable "enable_falco" {
   default     = false
 }
 
+variable "https_proxy" {
+  description = "The URL of the HTTPS proxy to be used by cloud-operator to connect to Illumio CloudSecure. If not set, no proxy will be used."
+  type        = string
+  nullable    = true
+  default     = null
+}
+
 variable "illumio_region" {
   description = "Illumio Region where the k8s cluster will be onboarded. An Illumio Region is a designated cloud region where the CloudSecure cloud-operator deployed in the k8s cluster connects after onboarding. Choose the Illumio Region nearest to the k8s cluster to maximize performance and security. Must be one of: `aws-ap-southeast-2`, `aws-eu-west-2`, `aws-us-west-2`, `aws-us-west-1`, `aws-eu-west-2`, `azure-us-east-2`, `azure-germany-west-central`, `azure-us-west-2`."
   type        = string
@@ -29,5 +36,5 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.1.3"
+  default     = "v1.3.0"
 }

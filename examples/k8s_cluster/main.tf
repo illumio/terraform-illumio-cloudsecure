@@ -11,7 +11,7 @@ provider "illumio-cloudsecure" {
 
 module "k8s_cluster_dev" {
   source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version          = "1.5.2"
+  version          = "1.5.3"
   illumio_region   = "aws-us-west-2"
   name             = "example-release"
 
@@ -20,5 +20,5 @@ module "k8s_cluster_dev" {
   enable_falco              = false
   https_proxy               = "http://proxy.example.com:8080"
   operator_namespace        = "illumio-cloud"
-  operator_version          = "v1.1.3"
+  operator_version          = "v1.3.1"
 }

@@ -20,5 +20,5 @@ module "k8s_cluster_dev" {
   enable_falco              = false
   https_proxy               = "http://proxy.example.com:8080"
   operator_namespace        = "illumio-cloud"
-  operator_version          = "v1.1.3"
+  operator_version          = "v1.3.1"
 }

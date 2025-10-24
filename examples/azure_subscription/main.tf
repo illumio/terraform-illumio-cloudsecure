@@ -19,7 +19,7 @@ provider "illumio-cloudsecure" {
 
 module "azure_subscription_dev" {
   source                 = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version                = "1.5.3"
+  version                = "1.5.4"
   name                   = "Test Azure Subscription"
   mode                   = "ReadWrite"
   secret_expiration_days = 365

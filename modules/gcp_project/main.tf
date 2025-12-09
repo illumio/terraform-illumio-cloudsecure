@@ -1,0 +1,109 @@
+resource "time_static" "timestamp" {}
+
+locals {
+  # GCP Service Account names must be lowercase and use hyphens
+  sa_name = "illumio-sa-${time_static.timestamp.unix}"
+  # Role IDs must use underscores
+  role_prefix = "illumio"
+}
+
+# Enable required APIs
+resource "google_project_service" "required_apis" {
+  for_each = toset([
+    "iamcredentials.googleapis.com",
+    "cloudresourcemanager.googleapis.com"
+  ])
+
+  project            = var.project_id
+  service            = each.key
+  disable_on_destroy = false
+}
+
+# Service Account
+resource "google_service_account" "illumio_sa" {
+  account_id   = local.sa_name
+  display_name = "Illumio CloudSecure Service Account"
+  project      = var.project_id
+}
+
+# Custom Role: API Enable
+resource "google_project_iam_custom_role" "api_enable_role" {
+  role_id     = "${local.role_prefix}_api_enable_role_${time_static.timestamp.unix}"
+  title       = "Illumio API Enable Role"
+  description = "Role to allow enabling specific services"
+  permissions = [
+    "serviceusage.services.enable",
+    "serviceusage.services.list",
+    "serviceusage.services.get",
+  ]
+  project = var.project_id
+}
+
+# Bind API Enable Role
+resource "google_project_iam_member" "api_enable_binding" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.api_enable_role.id
+  member  = "serviceAccount:${google_service_account.illumio_sa.email}"
+}
+
+# Predefined Roles
+resource "google_project_iam_member" "predefined_roles" {
+  for_each = toset([
+    "roles/iam.securityReviewer",
+    "roles/compute.viewer",
+    "roles/cloudasset.viewer"
+  ])
+
+  project = var.project_id
+  role    = each.key
+  member  = "serviceAccount:${google_service_account.illumio_sa.email}"
+}
+
+# Impersonation
+resource "google_service_account_iam_member" "impersonation" {
+  service_account_id = google_service_account.illumio_sa.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${var.illumio_service_account_email}"
+}
+
+# Conditional Write Role
+resource "google_project_iam_custom_role" "write_role" {
+  count = var.mode == "ReadWrite" ? 1 : 0
+
+  role_id     = "${local.role_prefix}_write_role_${time_static.timestamp.unix}"
+  title       = "Illumio Write Role"
+  description = "Role to allow write operations for Illumio CloudSecure"
+  permissions = [
+    "compute.firewalls.create",
+    "compute.firewalls.delete",
+    "compute.firewalls.get",
+    "compute.firewalls.update",
+    "compute.networks.updatePolicy",
+  ]
+  project = var.project_id
+}
+
+# Bind Write Role
+resource "google_project_iam_member" "write_role_binding" {
+  count = var.mode == "ReadWrite" ? 1 : 0
+
+  project = var.project_id
+  role    = google_project_iam_custom_role.write_role[0].id
+  member  = "serviceAccount:${google_service_account.illumio_sa.email}"
+}
+
+# CloudSecure Registration
+resource "illumio-cloudsecure_gcp_project" "project" {
+  project_id            = var.project_id
+  name                  = var.name
+  mode                  = var.mode
+  organization_id       = var.organization_id
+  service_account_email = google_service_account.illumio_sa.email
+
+  depends_on = [
+    google_service_account_iam_member.impersonation,
+    google_project_iam_member.predefined_roles,
+    google_project_iam_member.api_enable_binding,
+    google_project_iam_member.write_role_binding
+  ]
+}

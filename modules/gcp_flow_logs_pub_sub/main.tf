@@ -60,9 +60,10 @@ resource "google_pubsub_topic_iam_member" "flow_access_binding" {
 # ------------------------------------------------------------------------------
 
 resource "illumio-cloudsecure_gcp_flow_logs_pub_sub" "flow_logs" {
-  project_id   = var.project_id
-  destinations = var.pubsub_topics # Pass the original full URIs as requested
-  type         = "GCPFlow"
+  for_each = var.pubsub_topics
+
+  project_id                = var.project_id
+  pub_sub_topic_resource_id = each.value
 
   depends_on = [
     google_project_iam_member.pubsub_access_binding,

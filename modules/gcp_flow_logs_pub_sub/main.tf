@@ -59,11 +59,11 @@ resource "google_pubsub_topic_iam_member" "flow_access_binding" {
 # 3. CloudSecure Registration
 # ------------------------------------------------------------------------------
 
-resource "illumio-cloudsecure_gcp_flow_logs_pub_sub" "flow_logs" {
+resource "illumio-cloudsecure_gcp_flow_logs_pubsub_topic" "flow_logs" {
   for_each = var.pubsub_topics
 
-  project_id                = var.project_id
-  pub_sub_topic_resource_id = each.value
+  project_id      = var.project_id
+  pubsub_topic_id = each.value
 
   depends_on = [
     google_project_iam_member.pubsub_access_binding,

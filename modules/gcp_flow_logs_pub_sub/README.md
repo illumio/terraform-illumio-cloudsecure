@@ -28,7 +28,7 @@ No modules.
 | [google_project_iam_custom_role.pubsub_access_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_member.pubsub_access_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_pubsub_topic_iam_member.flow_access_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_topic_iam_member) | resource |
-| [illumio-cloudsecure_gcp_flow_logs_pub_sub.flow_logs](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/gcp_flow_logs_pub_sub) | resource |
+| [illumio-cloudsecure_gcp_flow_logs_pubsub_topic.flow_logs](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/gcp_flow_logs_pubsub_topic) | resource |
 | [time_static.timestamp](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) | resource |
 
 ## Inputs

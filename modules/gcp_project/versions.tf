@@ -6,8 +6,7 @@ terraform {
     }
     illumio-cloudsecure = {
       source  = "illumio/illumio-cloudsecure"
-      # TODO: need to update version after provider release
-      version = ">= 1.6.1"
+      version = ">= 1.7.0"
     }
     time = {
       source  = "hashicorp/time"

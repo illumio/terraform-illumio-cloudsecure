@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "gcp_project_dev" {
   source = "illumio/cloudsecure/illumio//modules/gcp_project"
-  version = "1.6.1"
+  version = "1.6.1"  # TODO: update after provider release
   project_id      = var.gcp_project_id
   organization_id = var.gcp_org_id
   name            = "Example GCP Project"

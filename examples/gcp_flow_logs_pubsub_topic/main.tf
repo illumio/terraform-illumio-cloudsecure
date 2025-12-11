@@ -24,7 +24,7 @@ module "gcp_flow_logs_pubsub_topic_dev" {
   project_id            = var.gcp_project_id
   service_account_email = module.gcp_project_dev.service_account_email
   pubsub_topics         = [
-    "//pubsub.googleapis.com/projects/my-project/topics/vpc-flow-logs-topic-1",
-    "//pubsub.googleapis.com/projects/my-project/topics/vpc-flow-logs-topic-2"
+    "projects/my-project/topics/vpc-flow-logs-topic-1",
+    "projects/my-project/topics/vpc-flow-logs-topic-2"
   ]
 }

@@ -17,8 +17,8 @@ module "gcp_project_dev" {
   mode            = "ReadWrite"
 }
 
-module "gcp_flow_logs_dev" {
-  source = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pub_sub"
+module "gcp_flow_logs_pubsub_topic_dev" {
+  source = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
   version = "1.6.1" # TODO: update after provider release
 
   project_id            = var.gcp_project_id

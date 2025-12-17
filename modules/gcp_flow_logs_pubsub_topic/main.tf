@@ -14,10 +14,10 @@ resource "google_project_iam_custom_role" "pubsub_access_role" {
   project = var.project_id
 }
 
-resource "google_project_iam_member" "pubsub_access_binding" {
+resource "google_project_iam_binding" "pubsub_access_binding" {
   project = var.project_id
   role    = google_project_iam_custom_role.pubsub_access_role.id
-  member  = "serviceAccount:${var.service_account_email}"
+  members = ["serviceAccount:${var.service_account_email}"]
 }
 
 # ------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ resource "illumio-cloudsecure_gcp_flow_logs_pubsub_topic" "flow_logs" {
   pubsub_topic_id = each.value
 
   depends_on = [
-    google_project_iam_member.pubsub_access_binding,
+    google_project_iam_binding.pubsub_access_binding,
     google_pubsub_topic_iam_binding.flow_access_binding
   ]
 }

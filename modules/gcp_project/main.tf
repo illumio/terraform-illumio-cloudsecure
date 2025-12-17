@@ -51,10 +51,10 @@ resource "google_project_iam_member" "predefined_roles" {
 }
 
 # Impersonation
-resource "google_service_account_iam_member" "impersonation" {
+resource "google_service_account_iam_binding" "impersonation" {
   service_account_id = google_service_account.illumio_sa.name
   role               = "roles/iam.serviceAccountTokenCreator"
-  member             = "serviceAccount:${var.illumio_service_account_email}"
+  members            = ["serviceAccount:${var.illumio_service_account_email}"]
 }
 
 # Conditional Write Role
@@ -92,7 +92,7 @@ resource "illumio-cloudsecure_gcp_project" "project" {
   service_account_email = google_service_account.illumio_sa.email
 
   depends_on = [
-    google_service_account_iam_member.impersonation,
+    google_service_account_iam_binding.impersonation,
     google_project_iam_member.predefined_roles,
     google_project_iam_binding.api_enable_binding,
     google_project_iam_binding.write_role_binding

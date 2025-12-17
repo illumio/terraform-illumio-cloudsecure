@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# 1. Project Role (IllumioPubSubAccessRole)
+# 1. Project Role (PubSubAccessRole)
 # ------------------------------------------------------------------------------
 
 resource "google_project_iam_custom_role" "pubsub_access_role" {
@@ -21,7 +21,7 @@ resource "google_project_iam_binding" "pubsub_access_binding" {
 }
 
 # ------------------------------------------------------------------------------
-# 2. Topic Role (IllumioFlowAccessRole)
+# 2. Topic Role (FlowAccessRole)
 # ------------------------------------------------------------------------------
 
 resource "google_project_iam_custom_role" "flow_access_role" {

@@ -5,5 +5,5 @@ output "project_role_id" {
 
 output "topic_role_id" {
   value       = google_project_iam_custom_role.flow_access_role.id
-  description = "The ID of the custom IAM role created for attaching subscriptions to topics."
+  description = "The ID of the custom IAM role created for attaching subscriptions to GCP Pub/Sub topics."
 }

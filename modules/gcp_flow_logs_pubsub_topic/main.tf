@@ -1,21 +1,10 @@
-resource "time_static" "timestamp" {}
-
-locals {
-  # Clean topic URIs by removing the prefix if present
-  # From: //pubsub.googleapis.com/projects/myproject/topics/mytopic
-  # To:   projects/myproject/topics/mytopic
-  topic_paths = [
-    for topic in var.pubsub_topics : replace(topic, "//pubsub.googleapis.com/", "")
-  ]
-}
-
 # ------------------------------------------------------------------------------
 # 1. Project Role (IllumioPubSubAccessRole)
 # ------------------------------------------------------------------------------
 
 resource "google_project_iam_custom_role" "pubsub_access_role" {
-  role_id     = "IllumioPubSubAccessRole_${time_static.timestamp.unix}"
-  title       = "Illumio PubSub Access Role"
+  role_id     = "${var.iam_name_prefix}PubSubAccessRole"
+  title       = "Illumio Pub/Sub Access Role"
   description = "Role to allow Pub/Sub subscription management for Illumio CloudSecure"
   permissions = [
     "pubsub.subscriptions.create",
@@ -36,7 +25,7 @@ resource "google_project_iam_member" "pubsub_access_binding" {
 # ------------------------------------------------------------------------------
 
 resource "google_project_iam_custom_role" "flow_access_role" {
-  role_id     = "IllumioFlowAccessRole_${time_static.timestamp.unix}"
+  role_id     = "${var.iam_name_prefix}FlowAccessRole"
   title       = "Illumio Flow Access Role"
   description = "Role to allow attaching subscriptions to Pub/Sub topics for Illumio CloudSecure"
   permissions = [
@@ -46,13 +35,13 @@ resource "google_project_iam_custom_role" "flow_access_role" {
 }
 
 # Bind the Topic Role to EACH topic individually
-resource "google_pubsub_topic_iam_member" "flow_access_binding" {
-  for_each = toset(local.topic_paths)
+resource "google_pubsub_topic_iam_binding" "flow_access_binding" {
+  for_each = var.pubsub_topic_ids
 
+  project = var.project_id
   topic   = each.value
   role    = google_project_iam_custom_role.flow_access_role.id
-  member  = "serviceAccount:${var.service_account_email}"
-  project = var.project_id
+  members = ["serviceAccount:${var.service_account_email}"]
 }
 
 # ------------------------------------------------------------------------------
@@ -60,13 +49,13 @@ resource "google_pubsub_topic_iam_member" "flow_access_binding" {
 # ------------------------------------------------------------------------------
 
 resource "illumio-cloudsecure_gcp_flow_logs_pubsub_topic" "flow_logs" {
-  for_each = var.pubsub_topics
+  for_each = var.pubsub_topic_ids
 
   project_id      = var.project_id
   pubsub_topic_id = each.value
 
   depends_on = [
     google_project_iam_member.pubsub_access_binding,
-    google_pubsub_topic_iam_member.flow_access_binding
+    google_pubsub_topic_iam_binding.flow_access_binding
   ]
 }

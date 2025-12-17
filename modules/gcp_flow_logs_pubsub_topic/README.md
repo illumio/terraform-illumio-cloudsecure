@@ -21,9 +21,9 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [google_project_iam_binding.pubsub_access_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_binding) | resource |
 | [google_project_iam_custom_role.flow_access_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.pubsub_access_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
-| [google_project_iam_member.pubsub_access_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_pubsub_topic_iam_binding.flow_access_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_topic_iam_binding) | resource |
 | [illumio-cloudsecure_gcp_flow_logs_pubsub_topic.flow_logs](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/gcp_flow_logs_pubsub_topic) | resource |
 

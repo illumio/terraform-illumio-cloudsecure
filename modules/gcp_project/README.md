@@ -46,5 +46,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_service_account_email"></a> [service\_account\_email](#output\_service\_account\_email) | The email of the created service account created for Illumio CloudSecure under the provided GCP Project ID. |
+| <a name="output_service_account_email"></a> [service\_account\_email](#output\_service\_account\_email) | The email of the Service Account created for Illumio CloudSecure under the GCP Project. |
 <!-- END_TF_DOCS -->

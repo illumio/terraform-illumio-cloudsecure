@@ -38,8 +38,5 @@ No modules.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_project_role_id"></a> [project\_role\_id](#output\_project\_role\_id) | The ID of the custom IAM role created for Pub/Sub subscription management. |
-| <a name="output_topic_role_id"></a> [topic\_role\_id](#output\_topic\_role\_id) | The ID of the custom IAM role created for attaching subscriptions to GCP Pub/Sub topics. |
+No outputs.
 <!-- END_TF_DOCS -->

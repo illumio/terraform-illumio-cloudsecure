@@ -1,5 +1,5 @@
 provider "google" {
-  project = var.gcp_project_id
+  project = "my-project-id"
 }
 
 provider "illumio-cloudsecure" {
@@ -8,20 +8,20 @@ provider "illumio-cloudsecure" {
 }
 
 module "gcp_project_dev" {
-  source = "illumio/cloudsecure/illumio//modules/gcp_project"
-  version = "1.7.0"
+  source  = "illumio/cloudsecure/illumio//modules/gcp_project"
+  version = "1.6.0"
 
-  project_id      = var.gcp_project_id
-  organization_id = var.gcp_org_id
+  project_id      = "my-project-id"
+  organization_id = "123456789012"
   name            = "Example GCP Project"
   mode            = "ReadWrite"
 }
 
 module "gcp_flow_logs_pubsub_topic_dev" {
-  source = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
-  version = "1.7.0"
+  source  = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
+  version = "1.6.0"
 
-  project_id            = var.gcp_project_id
+  project_id            = "my-project-id"
   service_account_email = module.gcp_project_dev.service_account_email
   pubsub_topic_ids      = [
     "projects/my-project/topics/vpc-flow-logs-topic-1",

@@ -1,5 +1,5 @@
 provider "google" {
-  project = var.gcp_project_id
+  project = "my-project-id"
 }
 
 provider "illumio-cloudsecure" {
@@ -8,10 +8,11 @@ provider "illumio-cloudsecure" {
 }
 
 module "gcp_project_dev" {
-  source = "illumio/cloudsecure/illumio//modules/gcp_project"
-  version = "1.7.0"
-  project_id      = var.gcp_project_id
-  organization_id = var.gcp_org_id
+  source  = "illumio/cloudsecure/illumio//modules/gcp_project"
+  version = "1.6.0"
+
+  project_id      = "my-project-id"
+  organization_id = "123456789012"
   name            = "Example GCP Project"
   mode            = "ReadWrite"
 }

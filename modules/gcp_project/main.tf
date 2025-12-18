@@ -31,14 +31,14 @@ resource "google_project_iam_custom_role" "api_enable_role" {
 }
 
 # Bind API Enable Role
-resource "google_project_iam_binding" "api_enable_binding" {
+resource "google_project_iam_binding" "api_enable_role_binding" {
   project = var.project_id
   role    = google_project_iam_custom_role.api_enable_role.id
   members = ["serviceAccount:${google_service_account.illumio_sa.email}"]
 }
 
-# Predefined Roles
-resource "google_project_iam_member" "predefined_roles" {
+# Bind Predefined Roles
+resource "google_project_iam_member" "predefined_role_binding" {
   for_each = toset([
     "roles/iam.securityReviewer",
     "roles/compute.viewer",
@@ -50,8 +50,8 @@ resource "google_project_iam_member" "predefined_roles" {
   member  = "serviceAccount:${google_service_account.illumio_sa.email}"
 }
 
-# Impersonation
-resource "google_service_account_iam_binding" "impersonation" {
+# Bind Impersonation Role
+resource "google_service_account_iam_binding" "impersonation_role_binding" {
   service_account_id = google_service_account.illumio_sa.name
   role               = "roles/iam.serviceAccountTokenCreator"
   members            = ["serviceAccount:${var.illumio_service_account_email}"]
@@ -92,9 +92,9 @@ resource "illumio-cloudsecure_gcp_project" "project" {
   service_account_email = google_service_account.illumio_sa.email
 
   depends_on = [
-    google_service_account_iam_binding.impersonation,
-    google_project_iam_member.predefined_roles,
-    google_project_iam_binding.api_enable_binding,
+    google_project_iam_binding.api_enable_role_binding,
+    google_project_iam_member.predefined_role_binding,
+    google_service_account_iam_binding.impersonation_role_binding,
     google_project_iam_binding.write_role_binding
   ]
 }

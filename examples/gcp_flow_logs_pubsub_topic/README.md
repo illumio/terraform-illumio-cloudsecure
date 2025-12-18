@@ -3,8 +3,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
-| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.0.11 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 7.14.0 |
+| <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.7.0 |
 
 ## Providers
 
@@ -14,8 +14,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.0 |
-| <a name="module_aws_flow_logs_s3_buckets"></a> [aws\_flow\_logs\_s3\_buckets](#module\_aws\_flow\_logs\_s3\_buckets) | illumio/cloudsecure/illumio//modules/aws_flow_logs_s3_buckets | 1.6.0 |
+| <a name="module_gcp_flow_logs_pubsub_topic_dev"></a> [gcp\_flow\_logs\_pubsub\_topic\_dev](#module\_gcp\_flow\_logs\_pubsub\_topic\_dev) | illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic | 1.6.0 |
+| <a name="module_gcp_project_dev"></a> [gcp\_project\_dev](#module\_gcp\_project\_dev) | illumio/cloudsecure/illumio//modules/gcp_project | 1.6.0 |
 
 ## Resources
 

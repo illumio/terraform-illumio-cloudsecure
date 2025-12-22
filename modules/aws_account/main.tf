@@ -35,6 +35,8 @@ resource "aws_iam_role_policy" "read" {
           "ec2:SearchTransitGatewayMulticastGroups",
           "ecs:Describe*",
           "ecs:List*",
+          "eks:DescribeAddon",
+          "eks:ListAddons",
           "elasticache:Describe*",
           "elasticache:List*",
           "elasticfilesystem:DescribeAccessPoints",
@@ -114,6 +116,7 @@ resource "aws_iam_role_policy" "protection" {
           "ec2:RevokeSecurityGroupEgress",
           "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
           "ec2:ModifySecurityGroupRules",
+          "ec2:ModifyNetworkInterfaceAttribute",
           "ec2:DescribeTags",
           "ec2:CreateTags",
           "ec2:DeleteTags",
@@ -125,7 +128,9 @@ resource "aws_iam_role_policy" "protection" {
         Resource = [
           "arn:aws:ec2:*:*:security-group-rule/*",
           "arn:aws:ec2:*:*:security-group/*",
-          "arn:aws:ec2:*:*:network-acl/*"
+          "arn:aws:ec2:*:*:network-acl/*",
+          "arn:aws:ec2:*:*:vpc/*",
+          "arn:aws:ec2:*:*:network-interface/*"
         ]
       }
     ]

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     illumio-cloudsecure = {
       source  = "illumio/illumio-cloudsecure"
-      version = ">= 1.4.0"
+      version = ">= 1.7.2"
     }
     helm = {
       source = "hashicorp/helm"

@@ -22,6 +22,12 @@ variable "illumio_region" {
   type        = string
 }
 
+variable "log_level" {
+  description = "The verbosity of the logs produced by cloud-operator. Must be one of: `Debug`, `Info`, `Warn`, or `Error`."
+  type        = string
+  default     = "Info"
+}
+
 variable "name" {
   description = "The name of the cloud-secure deployment in the k8s cluster."
   type        = string

@@ -1,5 +1,6 @@
 resource "illumio-cloudsecure_k8s_cluster" "this" {
   illumio_region = var.illumio_region
+  log_level      = var.log_level
 }
 
 resource "helm_release" "helm_cloud_operator" {

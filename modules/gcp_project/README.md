@@ -29,6 +29,9 @@ No modules.
 | [google_project_service.required_apis](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_service_account.illumio_sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_service_account_iam_binding.impersonation_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_binding) | resource |
+| [google_tags_tag_binding.sa_tags](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/tags_tag_binding) | resource |
+| [google_tags_tag_key.keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/tags_tag_key) | resource |
+| [google_tags_tag_value.values](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/tags_tag_value) | resource |
 | [illumio-cloudsecure_gcp_project.project](https://registry.terraform.io/providers/illumio/illumio-cloudsecure/latest/docs/resources/gcp_project) | resource |
 
 ## Inputs
@@ -41,6 +44,7 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | The name of this project in CloudSecure. | `string` | n/a | yes |
 | <a name="input_organization_id"></a> [organization\_id](#input\_organization\_id) | The GCP Organization ID. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP Project ID. | `string` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured GCP resource. | `set(string)` | `[]` | no |
 
 ## Outputs
 

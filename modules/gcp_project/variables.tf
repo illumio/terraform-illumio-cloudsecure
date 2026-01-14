@@ -51,3 +51,8 @@ variable "project_id" {
   }
 }
 
+variable "tags" {
+  description = "The optional tags added to every configured GCP resource."
+  type        = set(string)
+  default     = []
+}

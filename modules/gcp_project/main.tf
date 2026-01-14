@@ -98,3 +98,32 @@ resource "illumio-cloudsecure_gcp_project" "project" {
     google_project_iam_binding.write_role_binding
   ]
 }
+
+# Create Tag Keys for the Project
+resource "google_tags_tag_key" "keys" {
+  for_each = var.tags
+
+  parent      = "projects/${var.project_id}"
+  short_name  = each.key
+  description = "Managed by Terraform Illumio CloudSecure module"
+
+  # Depends on the API being enabled
+  depends_on = [google_project_service.required_apis]
+}
+
+# Create Tag Values for the Keys
+resource "google_tags_tag_value" "values" {
+  for_each = var.tags
+
+  parent      = google_tags_tag_key.keys[each.key].id
+  short_name  = each.value
+  description = "Managed by Terraform Illumio CloudSecure module"
+}
+
+# Bind Tags to the Service Account
+resource "google_tags_tag_binding" "sa_tags" {
+  for_each = var.tags
+
+  parent    = "//iam.googleapis.com/${google_service_account.illumio_sa.id}"
+  tag_value = google_tags_tag_value.values[each.key].id
+}

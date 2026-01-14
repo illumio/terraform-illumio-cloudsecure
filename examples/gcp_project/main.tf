@@ -15,4 +15,9 @@ module "gcp_project_dev" {
   organization_id = "123456789012"
   name            = "Example GCP Project"
   mode            = "ReadWrite"
+  
+  tags            = {
+    "Environment" = "Dev"
+    "Owner"       = "John Doe"
+  }
 }

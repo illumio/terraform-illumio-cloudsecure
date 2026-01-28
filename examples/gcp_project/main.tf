@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "gcp_project_dev" {
   source  = "illumio/cloudsecure/illumio//modules/gcp_project"
-  version = "1.6.2"
+  version = "1.6.3"
 
   project_id      = "my-project-id"
   organization_id = "123456789012"

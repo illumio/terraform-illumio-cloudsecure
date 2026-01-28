@@ -1,3 +1,12 @@
+variable "cilium_namespaces" {
+  description = "The namespaces in which Cilium may be deployed."
+  type        = list(string)
+  default     = [
+    "kube-system",
+    "gke-managed-dpv2-observability"
+  ]
+}
+
 variable "create_operator_namespace" {
   description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
   type        = bool
@@ -33,6 +42,18 @@ variable "name" {
   type        = string
 }
 
+variable "openshift_ovnk_namespace" {
+  description = "The namespace in which OpenShift OVN-k is deployed."
+  type        = string
+  default     = "openshift-ovn-kubernetes"
+}
+
+variable "openshift_worker_node_cidrs" {
+  description = "The list of IP address CIDRs of the OpenShift cluster's worker nodes. Used to restrict access from only those nodes to the IPFIX collector on UDP port 4739 in the NetworkPolicy. If empty, defaults to allowing ingress traffic to UDP port 4739 from any address. This is a safe default only on clusters that are not running OpenShift with OVN-k, because port 4739 is not open in that case."
+  type        = list(string)
+  default     = []
+}
+
 variable "operator_namespace" {
   description = "The k8s namespace where cloud-operator is to be deployed into."
   type        = string
@@ -42,5 +63,5 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.3.6"
+  default     = "v1.3.11"
 }

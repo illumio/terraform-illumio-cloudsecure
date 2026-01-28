@@ -42,6 +42,18 @@ variable "name" {
   type        = string
 }
 
+variable "openshift_ovnk_namespace" {
+  description = "The namespace in which OpenShift OVN-k is deployed."
+  type        = string
+  default     = "openshift-ovn-kubernetes"
+}
+
+variable "openshift_worker_node_cidrs" {
+  description = "The list of IP address CIDRs of the OpenShift cluster's worker nodes. Used to restrict access from only those nodes to the IPFIX collector on UDP port 4739 in the NetworkPolicy."
+  type        = list(string)
+  default     = []
+}
+
 variable "operator_namespace" {
   description = "The k8s namespace where cloud-operator is to be deployed into."
   type        = string

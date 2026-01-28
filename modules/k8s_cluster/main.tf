@@ -26,6 +26,10 @@ resource "helm_release" "helm_cloud_operator" {
     {
       name  = "env.httpsProxy"
       value = var.https_proxy
+    },
+    {
+      name  = "openshift.ovnkNamespace"
+      value = var.openshift_ovnk_namespace
     }
   ]
 
@@ -33,6 +37,10 @@ resource "helm_release" "helm_cloud_operator" {
     {
       name  = "cilium.namespaces"
       value = var.cilium_namespaces
+    },
+    {
+      name  = "openshift.workerNodeCidrs"
+      value = var.openshift_worker_node_cidrs
     }
   ]
 }

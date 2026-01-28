@@ -14,8 +14,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.2 |
-| <a name="module_aws_flow_logs_s3_buckets"></a> [aws\_flow\_logs\_s3\_buckets](#module\_aws\_flow\_logs\_s3\_buckets) | illumio/cloudsecure/illumio//modules/aws_flow_logs_s3_buckets | 1.6.2 |
+| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.3 |
+| <a name="module_aws_flow_logs_s3_buckets"></a> [aws\_flow\_logs\_s3\_buckets](#module\_aws\_flow\_logs\_s3\_buckets) | illumio/cloudsecure/illumio//modules/aws_flow_logs_s3_buckets | 1.6.3 |
 
 ## Resources
 

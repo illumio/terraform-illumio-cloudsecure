@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.15 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 3.0.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.7.2 |
 
 ## Providers

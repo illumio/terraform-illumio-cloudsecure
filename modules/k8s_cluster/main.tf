@@ -15,15 +15,15 @@ resource "helm_release" "helm_cloud_operator" {
       name  = "clusterCredsSecret.clientId"
       value = illumio-cloudsecure_k8s_cluster.this.client_id
     },
-    set {
+    {
       name  = "clusterCredsSecret.clientSecret"
       value = illumio-cloudsecure_k8s_cluster.this.client_secret
     },
-    set {
+    {
       name  = "falco.enabled"
       value = var.enable_falco
     },
-    set {
+    {
       name  = "env.httpsProxy"
       value = var.https_proxy
     }

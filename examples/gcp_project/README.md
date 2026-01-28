@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_gcp_project_dev"></a> [gcp\_project\_dev](#module\_gcp\_project\_dev) | illumio/cloudsecure/illumio//modules/gcp_project | 1.6.2 |
+| <a name="module_gcp_project_dev"></a> [gcp\_project\_dev](#module\_gcp\_project\_dev) | illumio/cloudsecure/illumio//modules/gcp_project | 1.6.3 |
 
 ## Resources
 

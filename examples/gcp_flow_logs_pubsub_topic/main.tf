@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "gcp_project_dev" {
   source  = "illumio/cloudsecure/illumio//modules/gcp_project"
-  version = "1.6.2"
+  version = "1.6.3"
 
   project_id      = "my-project-id"
   organization_id = "123456789012"
@@ -19,7 +19,7 @@ module "gcp_project_dev" {
 
 module "gcp_flow_logs_pubsub_topic_dev" {
   source  = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
-  version = "1.6.2"
+  version = "1.6.3"
 
   project_id            = "my-project-id"
   service_account_email = module.gcp_project_dev.service_account_email

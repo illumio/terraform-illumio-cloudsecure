@@ -11,7 +11,7 @@ provider "illumio-cloudsecure" {
 
 module "k8s_cluster_dev" {
   source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version          = "1.6.2"
+  version          = "1.6.3"
   illumio_region   = "aws-us-west-2"
   name             = "example-release"
 

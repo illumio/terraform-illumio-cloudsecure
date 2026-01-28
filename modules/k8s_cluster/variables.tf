@@ -49,7 +49,7 @@ variable "openshift_ovnk_namespace" {
 }
 
 variable "openshift_worker_node_cidrs" {
-  description = "The list of IP address CIDRs of the OpenShift cluster's worker nodes. Used to restrict access from only those nodes to the IPFIX collector on UDP port 4739 in the NetworkPolicy. If empty, defaults to allowing ingress traffic to UDP port 4739 from any address.  This is a safe default only on clusters that are not running OpenShift with OVN-k, because port 4739 is not open in that case."
+  description = "The list of IP address CIDRs of the OpenShift cluster's worker nodes. Used to restrict access from only those nodes to the IPFIX collector on UDP port 4739 in the NetworkPolicy. If empty, defaults to allowing ingress traffic to UDP port 4739 from any address. This is a safe default only on clusters that are not running OpenShift with OVN-k, because port 4739 is not open in that case."
   type        = list(string)
   default     = []
 }

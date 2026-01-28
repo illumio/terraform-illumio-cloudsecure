@@ -28,4 +28,11 @@ resource "helm_release" "helm_cloud_operator" {
       value = var.https_proxy
     }
   ]
+
+  set_list = [
+    {
+      name  = "cilium.namespaces"
+      value = var.cilium_namespaces
+    }
+  ]
 }

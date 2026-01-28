@@ -1,3 +1,12 @@
+variable "cilium_namespaces" {
+  description = "The namespaces in which Cilium may be deployed."
+  type        = list(string)
+  default     = [
+    "kube-system",
+    "gke-managed-dpv2-observability"
+  ]
+}
+
 variable "create_operator_namespace" {
   description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
   type        = bool

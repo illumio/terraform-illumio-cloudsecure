@@ -12,6 +12,7 @@ resource "azuread_application" "illumio_app" {
 resource "azuread_service_principal" "illumio_sp" {
   client_id   = azuread_application.illumio_app.client_id
   description = "Service Principal for Illumio CloudSecure Azure Subscription Integration"
+  owners      = [data.azuread_client_config.current.object_id]
   tags        = var.tags
 }
 

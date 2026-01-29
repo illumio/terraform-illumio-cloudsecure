@@ -157,10 +157,11 @@ resource "aws_iam_role" "role" {
       }
     ]
   })
+}
 
-  managed_policy_arns = [
-    "arn:aws:iam::aws:policy/SecurityAudit"
-  ]
+resource "aws_iam_role_policy_attachment" "attachment" {
+  role       = aws_iam_role.role.name
+  policy_arn = "arn:aws:iam::aws:policy/SecurityAudit"
 }
 
 # Data source to get the AWS account ID.

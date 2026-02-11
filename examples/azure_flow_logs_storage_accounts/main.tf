@@ -34,7 +34,7 @@ module "azure_subscription_dev" {
 
 module "azure_flow_logs_storage_accounts" {
   source                      = "illumio/cloudsecure/illumio//modules/azure_flow_logs_storage_accounts"
-  version                     = "1.6.4"
+  version                     = "1.6.5"
   service_principal_client_id = module.azure_subscription_dev.service_principal_client_id
 
   storage_accounts = [

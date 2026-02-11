@@ -16,7 +16,7 @@ module "k8s_cluster_dev" {
   name             = "example-release"
 
   # Optional attributes
-  cilium_namespaces.        = ["kube-system", "gke-managed-dpv2-observability"]
+  cilium_namespaces           = ["kube-system", "gke-managed-dpv2-observability"]
   create_operator_namespace   = true
   enable_falco                = false
   https_proxy                 = "http://proxy.example.com:8080"

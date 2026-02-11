@@ -16,10 +16,6 @@ resource "helm_release" "helm_cloud_operator" {
       value = illumio-cloudsecure_k8s_cluster.this.client_id
     },
     {
-      name  = "clusterCredsSecret.clientSecret"
-      value = illumio-cloudsecure_k8s_cluster.this.client_secret
-    },
-    {
       name  = "falco.enabled"
       value = var.enable_falco
     },
@@ -30,6 +26,13 @@ resource "helm_release" "helm_cloud_operator" {
     {
       name  = "openshift.ovnkNamespace"
       value = var.openshift_ovnk_namespace
+    }
+  ]
+
+  set_sensitive = [
+    {
+      name  = "clusterCredsSecret.clientSecret"
+      value = illumio-cloudsecure_k8s_cluster.this.client_secret
     }
   ]
 

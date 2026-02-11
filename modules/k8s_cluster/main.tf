@@ -36,14 +36,18 @@ resource "helm_release" "helm_cloud_operator" {
     }
   ]
 
-  set_list = [
-    {
-      name  = "cilium.namespaces"
-      value = var.cilium_namespaces
-    },
-    {
-      name  = "openshift.workerNodeCidrs"
-      value = var.openshift_worker_node_cidrs
-    }
-  ]
+  set_list = flatten([
+    length(var.cilium_namespaces) > 0 ? [
+      {
+        name  = "cilium.namespaces"
+        value = var.cilium_namespaces
+      }
+    ] : [],
+    length(var.openshift_worker_node_cidrs) > 0 ? [
+      {
+        name  = "openshift.workerNodeCidrs"
+        value = var.openshift_worker_node_cidrs
+      }
+    ] : []
+  ])
 }

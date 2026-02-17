@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "aws_account_dev" {
   source  = "illumio/cloudsecure/illumio//modules/aws_account"
-  version = "1.6.5"
+  version = "1.6.6"
   name    = "Test Account"
   tags    = {
     Name  = "CloudSecure Account Policy"

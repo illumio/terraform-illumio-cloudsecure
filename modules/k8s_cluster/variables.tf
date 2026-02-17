@@ -87,9 +87,19 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.3.11"
+  default     = "v1.3.12"
   validation {
     condition     = length(var.operator_version) > 0
     error_message = "The operator_version value must not be empty."
+  }
+}
+
+variable "stats_log_period" {
+  description = "The interval between log entries with statistics about the network flows and resource mutations that were sent to the server."
+  type        = string
+  default     = "30m"
+  validation {
+    condition     = can(regex("^[0-9]+(ns|us|ms|s|m|h)$", var.stats_log_period))
+    error_message = "The stats_log_period value must be a valid Go duration string (e.g., 1h, 30m, 10s)."
   }
 }

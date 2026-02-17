@@ -11,7 +11,7 @@ provider "illumio-cloudsecure" {
 
 module "k8s_cluster_dev" {
   source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version          = "1.6.5"
+  version          = "1.6.6"
   illumio_region   = "aws-us-west-2"
   name             = "example-release"
 
@@ -24,5 +24,6 @@ module "k8s_cluster_dev" {
   openshift_ovnk_namespace    = "openshift-ovn-kubernetes"
   openshift_worker_node_cidrs = ["10.4.0.0/16"]
   operator_namespace          = "illumio-cloud"
-  operator_version            = "v1.3.11"
+  operator_version            = "v1.3.12"
+  stats_log_period            = "2m"
 }

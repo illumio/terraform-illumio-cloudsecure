@@ -24,6 +24,10 @@ resource "helm_release" "helm_cloud_operator" {
       value = var.https_proxy
     },
     {
+      name  = "env.statsLogPeriod"
+      value = var.stats_log_period
+    },
+    {
       name  = "openshift.ovnkNamespace"
       value = var.openshift_ovnk_namespace
     }

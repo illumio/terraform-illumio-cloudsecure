@@ -25,4 +25,5 @@ module "k8s_cluster_dev" {
   openshift_worker_node_cidrs = ["10.4.0.0/16"]
   operator_namespace          = "illumio-cloud"
   operator_version            = "v1.3.12"
+  stats_log_period            = "2m"
 }

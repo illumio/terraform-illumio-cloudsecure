@@ -11,12 +11,13 @@ provider "illumio-cloudsecure" {
 
 module "k8s_cluster_dev" {
   source           = "illumio/cloudsecure/illumio//modules/k8s_cluster"
-  version          = "1.6.6"
+  version          = "1.6.7"
   illumio_region   = "aws-us-west-2"
   name             = "example-release"
 
   # Optional attributes
   cilium_namespaces           = ["kube-system", "gke-managed-dpv2-observability"]
+  cluster_name                = "test-cluster-12"
   create_operator_namespace   = true
   enable_falco                = false
   https_proxy                 = "http://proxy.example.com:8080"

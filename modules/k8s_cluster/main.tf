@@ -12,6 +12,10 @@ resource "helm_release" "helm_cloud_operator" {
 
   set = [
     {
+      name = "cluster.name"
+      value = var.cluster_name
+    },
+    {
       name  = "clusterCredsSecret.clientId"
       value = illumio-cloudsecure_k8s_cluster.this.client_id
     },

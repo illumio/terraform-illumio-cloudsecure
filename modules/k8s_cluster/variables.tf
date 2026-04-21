@@ -11,6 +11,13 @@ variable "cilium_namespaces" {
   }
 }
 
+variable "cluster_name" {
+  description = "The name of the k8s cluster to be displayed in Illumio CloudSecure. If empty, defaults to the name of the cluster returned by the cloud provider's API, if configured."
+  type        = string
+  nullable    = true
+  default     = null
+}
+
 variable "create_operator_namespace" {
   description = "If true, creates the k8s namespace where cloud-operator is to be deployed if it does not exist."
   type        = bool
@@ -87,7 +94,7 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.3.12"
+  default     = "v1.3.13"
   validation {
     condition     = length(var.operator_version) > 0
     error_message = "The operator_version value must not be empty."

@@ -1,7 +1,36 @@
 data "azuread_client_config" "current" {}
 
+locals {
+  use_existing_app            = var.existing_client_id != null
+  client_id                   = local.use_existing_app ? var.existing_client_id : azuread_application.illumio_app[0].client_id
+  client_secret               = local.use_existing_app ? var.existing_client_secret : azuread_application_password.illumio_secret[0].value
+  service_principal_object_id = local.use_existing_app ? data.azuread_service_principal.existing[0].object_id : azuread_service_principal.illumio_sp[0].object_id
+}
+
+# Enforce both-or-neither for existing_client_id / existing_client_secret at plan time.
+resource "terraform_data" "validate_existing_credentials" {
+  input = {
+    id_set     = var.existing_client_id != null
+    secret_set = var.existing_client_secret != null
+  }
+
+  lifecycle {
+    precondition {
+      condition     = (var.existing_client_id == null) == (var.existing_client_secret == null)
+      error_message = "existing_client_id and existing_client_secret must both be set or both be null."
+    }
+  }
+}
+
+# Look up the pre-existing service principal when the caller supplies an app registration.
+data "azuread_service_principal" "existing" {
+  count     = local.use_existing_app ? 1 : 0
+  client_id = var.existing_client_id
+}
+
 # Azure AD Application
 resource "azuread_application" "illumio_app" {
+  count        = local.use_existing_app ? 0 : 1
   display_name = "${var.iam_name_prefix}App"
   description  = "Illumio CloudSecure Azure Subscription Integration"
   owners       = [data.azuread_client_config.current.object_id]
@@ -10,28 +39,31 @@ resource "azuread_application" "illumio_app" {
 
 # Service Principal for the Application
 resource "azuread_service_principal" "illumio_sp" {
-  client_id   = azuread_application.illumio_app.client_id
+  count       = local.use_existing_app ? 0 : 1
+  client_id   = azuread_application.illumio_app[0].client_id
   description = "Service Principal for Illumio CloudSecure Azure Subscription Integration"
   owners      = [data.azuread_client_config.current.object_id]
   tags        = var.tags
 }
 
 resource "time_rotating" "secret_rotation" {
+  count         = local.use_existing_app ? 0 : 1
   rotation_days = var.azure_secret_expiration_days
 }
 
 # Application Password
 resource "azuread_application_password" "illumio_secret" {
-  application_id = azuread_application.illumio_app.id
+  count          = local.use_existing_app ? 0 : 1
+  application_id = azuread_application.illumio_app[0].id
   display_name   = "${var.iam_name_prefix}Secret"
   rotate_when_changed = {
-    rotation = time_rotating.secret_rotation.id
+    rotation = time_rotating.secret_rotation[0].id
   }
 }
 
 # Assigning Reader Role for Subscription Scope
 resource "azurerm_role_assignment" "illumio_reader_role" {
-  principal_id         = azuread_service_principal.illumio_sp.object_id
+  principal_id         = local.service_principal_object_id
   description          = "Illumio Reader role assignment"
   role_definition_name = "Reader"
   scope                = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
@@ -86,7 +118,7 @@ resource "azurerm_role_definition" "illumio_fw_role" {
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
   count              = var.mode == "ReadWrite" ? 1 : 0
-  principal_id       = azuread_service_principal.illumio_sp.object_id
+  principal_id       = local.service_principal_object_id
   description        = "Illumio Firewall role assignment"
   role_definition_id = azurerm_role_definition.illumio_fw_role[0].role_definition_resource_id
   scope              = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
@@ -121,7 +153,7 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
   count              = var.mode == "ReadWrite" ? 1 : 0
-  principal_id       = azuread_service_principal.illumio_sp.object_id
+  principal_id       = local.service_principal_object_id
   description        = "Illumio NSG role assignment"
   role_definition_id = azurerm_role_definition.illumio_nsg_role[0].role_definition_resource_id
   scope              = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
@@ -131,8 +163,8 @@ resource "azurerm_role_assignment" "illumio_nsg_assignment" {
 data "azurerm_subscription" "current" {}
 
 resource "illumio-cloudsecure_azure_subscription" "subscription" {
-  client_id       = azuread_application.illumio_app.client_id
-  client_secret   = base64encode(azuread_application_password.illumio_secret.value)
+  client_id       = local.client_id
+  client_secret   = base64encode(local.client_secret)
   name            = var.name
   subscription_id = data.azurerm_subscription.current.subscription_id
   tenant_id       = data.azurerm_subscription.current.tenant_id

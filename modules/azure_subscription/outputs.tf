@@ -1,6 +1,6 @@
 output "service_principal_client_id" {
   value       = local.service_principal_object_id
-  description = "The object ID of the service principal used for Illumio CloudSecure (either the newly created one or the pre-existing one looked up via existing_client_id)."
+  description = "The object ID of the service principal used for Illumio CloudSecure (either a newly created one or a pre-existing one identified by service_principal_client_id)."
 }
 
 output "iam_name_prefix" {

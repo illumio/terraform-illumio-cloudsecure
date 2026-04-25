@@ -11,6 +11,11 @@ module "aws_account_dev" {
   source  = "illumio/cloudsecure/illumio//modules/aws_account"
   version = "1.6.7"
   name    = "Test Account"
+
+  # Optional attributes
+  iam_name_prefix = "IllumioCloudIntegration"
+  mode            = "ReadWrite"
+
   tags    = {
     Name  = "CloudSecure Account Policy"
     Owner = "Engineering"

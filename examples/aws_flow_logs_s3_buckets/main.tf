@@ -28,4 +28,7 @@ module "aws_flow_logs_s3_buckets" {
     "arn:aws:s3:::flows-bucket-4/custom-path/first",
     "arn:aws:s3:::flows-bucket-5/custom-path/second"
   ]
+
+  # Optional attributes
+  iam_name_prefix = "IllumioCloudIntegration"
 }

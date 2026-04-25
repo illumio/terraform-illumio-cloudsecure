@@ -18,13 +18,16 @@ module "gcp_project_dev" {
 }
 
 module "gcp_flow_logs_pubsub_topic_dev" {
-  source  = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
-  version = "1.6.7"
-
+  source                = "illumio/cloudsecure/illumio//modules/gcp_flow_logs_pubsub_topic"
+  version               = "1.6.7"
   project_id            = "my-project-id"
   service_account_email = module.gcp_project_dev.service_account_email
-  pubsub_topic_ids      = [
+
+  pubsub_topic_ids = [
     "projects/my-project/topics/vpc-flow-logs-topic-1",
     "projects/my-project/topics/vpc-flow-logs-topic-2"
   ]
+
+  # Optional attributes
+  iam_name_prefix = "IllumioCloudIntegration"
 }

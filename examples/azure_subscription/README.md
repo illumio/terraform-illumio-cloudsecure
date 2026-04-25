@@ -3,6 +3,7 @@
 
 | Name | Version |
 |------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.2.0 |
@@ -17,6 +18,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.6.7 |
+| <a name="module_azure_subscription_existing_sp"></a> [azure\_subscription\_existing\_sp](#module\_azure\_subscription\_existing\_sp) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.6.7 |
 
 ## Resources
 
@@ -32,6 +34,8 @@ No resources.
 | <a name="input_azure_tenant_id"></a> [azure\_tenant\_id](#input\_azure\_tenant\_id) | The Azure Tenant ID. | `string` | n/a | yes |
 | <a name="input_illumio_cloudsecure_client_id"></a> [illumio\_cloudsecure\_client\_id](#input\_illumio\_cloudsecure\_client\_id) | The OAuth 2 client identifier used to authenticate against the CloudSecure Config API. | `string` | n/a | yes |
 | <a name="input_illumio_cloudsecure_client_secret"></a> [illumio\_cloudsecure\_client\_secret](#input\_illumio\_cloudsecure\_client\_secret) | The OAuth 2 client secret used to authenticate against the CloudSecure Config API. | `string` | n/a | yes |
+| <a name="input_illumio_service_principal_client_id"></a> [illumio\_service\_principal\_client\_id](#input\_illumio\_service\_principal\_client\_id) | The client ID (application ID) of a pre-existing Azure AD application/service principal to wire into the second example module instance. | `string` | n/a | yes |
+| <a name="input_illumio_service_principal_client_secret"></a> [illumio\_service\_principal\_client\_secret](#input\_illumio\_service\_principal\_client\_secret) | The client secret for the pre-existing Azure AD application referenced by illumio\_service\_principal\_client\_id. | `string` | n/a | yes |
 
 ## Outputs
 

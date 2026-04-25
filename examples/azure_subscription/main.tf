@@ -31,3 +31,20 @@ module "azure_subscription_dev" {
     "Owner=John Doe"
   ]
 }
+
+# Reuse a pre-existing Azure AD application/service principal instead of
+# letting the module create one. service_principal_client_id and
+# service_principal_client_secret must both be set (or both null).
+module "azure_subscription_existing_sp" {
+  source                          = "illumio/cloudsecure/illumio//modules/azure_subscription"
+  version                         = "1.6.7"
+  name                            = "Test Azure Subscription (existing service principal)"
+  mode                            = "ReadWrite"
+  service_principal_client_id     = var.illumio_service_principal_client_id
+  service_principal_client_secret = var.illumio_service_principal_client_secret
+
+  tags = [
+    "Environment=Dev",
+    "Owner=John Doe"
+  ]
+}

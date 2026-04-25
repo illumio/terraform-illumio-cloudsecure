@@ -10,9 +10,11 @@ provider "illumio-cloudsecure" {
 module "gcp_project_dev" {
   source  = "illumio/cloudsecure/illumio//modules/gcp_project"
   version = "1.6.7"
-
-  project_id      = "my-project-id"
-  organization_id = "123456789012"
   name            = "Example GCP Project"
-  mode            = "ReadWrite"
+  organization_id = "123456789012"
+  project_id      = "my-project-id"
+
+  # Optional attributes
+  iam_name_prefix = "illumio_cloud_integration"
+  mode            = "ReadWrite"  
 }

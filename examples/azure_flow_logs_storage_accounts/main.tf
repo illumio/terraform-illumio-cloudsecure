@@ -51,4 +51,7 @@ module "azure_flow_logs_storage_accounts" {
       resource_group_name = "demo3"
     }
   ]
+
+  # Optional attributes
+  iam_name_prefix = "IllumioCloudIntegration"
 }

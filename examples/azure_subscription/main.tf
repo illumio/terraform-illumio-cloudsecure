@@ -18,13 +18,14 @@ provider "illumio-cloudsecure" {
 }
 
 module "azure_subscription_dev" {
-  source                 = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version                = "1.6.7"
-  name                   = "Test Azure Subscription"
-  mode                   = "ReadWrite"
-  secret_expiration_days = 365
-  subscription_id        = "1681e851-ba2d-410b-a66a-9511887e1c1a" # Azure Subscription ID
-  tenant_id              = "b563cc25-a007-4837-981a-cbe2017228a4" # Azure Tenant ID
+  source  = "illumio/cloudsecure/illumio//modules/azure_subscription"
+  version = "1.6.7"
+  name    = "Test Azure Subscription"
+
+  # Optional attributes
+  azure_secret_expiration_days = 365
+  iam_name_prefix              = "IllumioCloudIntegration"
+  mode                         = "ReadWrite"
 
   tags = [
     "Environment=Dev",

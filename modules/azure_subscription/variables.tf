@@ -42,3 +42,26 @@ variable "tags" {
   type        = set(string)
   default     = []
 }
+
+variable "service_principal_client_id" {
+  description = "Optional. The client ID (application ID) of a pre-existing Azure AD application to use instead of creating a new one. When set, the module skips creating the azuread_application, azuread_service_principal, and azuread_application_password resources and looks up the existing service principal by client_id (which requires the executing identity to have directory read access). service_principal_client_secret must also be set."
+  type        = string
+  nullable    = true
+  default     = null
+  validation {
+    condition     = (var.service_principal_client_id == null) == (var.service_principal_client_secret == null)
+    error_message = "service_principal_client_id and service_principal_client_secret must both be set or both be null."
+  }
+}
+
+variable "service_principal_client_secret" {
+  description = "Optional. The client secret for the pre-existing Azure AD application identified by service_principal_client_id. Required when service_principal_client_id is set. Rotation of this secret is the caller's responsibility; azure_secret_expiration_days is ignored in this mode."
+  type        = string
+  nullable    = true
+  default     = null
+  sensitive   = true
+  validation {
+    condition     = (var.service_principal_client_id == null) == (var.service_principal_client_secret == null)
+    error_message = "service_principal_client_id and service_principal_client_secret must both be set or both be null."
+  }
+}

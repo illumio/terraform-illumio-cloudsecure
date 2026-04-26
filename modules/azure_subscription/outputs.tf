@@ -1,6 +1,6 @@
 output "service_principal_client_id" {
-  value       = azuread_service_principal.illumio_sp.object_id
-  description = "The ID of the service principal created for Illumio CloudSecure."
+  value       = local.service_principal_object_id
+  description = "The object ID of the service principal used for Illumio CloudSecure (either a newly created one or a pre-existing one identified by service_principal_client_id)."
 }
 
 output "iam_name_prefix" {

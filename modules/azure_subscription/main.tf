@@ -5,6 +5,8 @@ locals {
   client_id                      = local.use_existing_service_principal ? var.service_principal_client_id : azuread_application.illumio_app[0].client_id
   client_secret                  = local.use_existing_service_principal ? var.service_principal_client_secret : azuread_application_password.illumio_secret[0].value
   service_principal_object_id    = local.use_existing_service_principal ? data.azuread_service_principal.existing[0].object_id : azuread_service_principal.illumio_sp[0].object_id
+  subscription_id                = var.subscription_id != null ? var.subscription_id : data.azurerm_subscription.current[0].subscription_id
+  tenant_id                      = var.tenant_id != null ? var.tenant_id : data.azurerm_subscription.current[0].tenant_id
 }
 
 # Look up the pre-existing service principal when the caller supplies an app registration.
@@ -48,15 +50,16 @@ resource "azuread_application_password" "illumio_secret" {
 
 # Assigning Reader Role for Subscription Scope
 resource "azurerm_role_assignment" "illumio_reader_role" {
+  count                = var.skip_azure_rbac_assignments ? 0 : 1
   principal_id         = local.service_principal_object_id
   description          = "Illumio Reader role assignment"
   role_definition_name = "Reader"
-  scope                = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
+  scope                = "/subscriptions/${local.subscription_id}"
 }
 
 # Role Definitions for Firewall
 resource "azurerm_role_definition" "illumio_fw_role" {
-  count       = var.mode == "ReadWrite" ? 1 : 0
+  count       = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   name        = "${var.iam_name_prefix}FirewallRole"
   description = "Illumio Firewall Administrator role"
 
@@ -96,22 +99,22 @@ resource "azurerm_role_definition" "illumio_fw_role" {
     ]
   }
 
-  assignable_scopes = ["/subscriptions/${data.azurerm_subscription.current.subscription_id}"]
-  scope             = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
+  assignable_scopes = ["/subscriptions/${local.subscription_id}"]
+  scope             = "/subscriptions/${local.subscription_id}"
 }
 
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
-  count              = var.mode == "ReadWrite" ? 1 : 0
+  count              = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   principal_id       = local.service_principal_object_id
   description        = "Illumio Firewall role assignment"
   role_definition_id = azurerm_role_definition.illumio_fw_role[0].role_definition_resource_id
-  scope              = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
+  scope              = "/subscriptions/${local.subscription_id}"
 }
 
 # Role Definitions for NSG
 resource "azurerm_role_definition" "illumio_nsg_role" {
-  count       = var.mode == "ReadWrite" ? 1 : 0
+  count       = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   name        = "${var.iam_name_prefix}NSGRole"
   description = "Illumio Network Security Administrator role"
 
@@ -131,28 +134,30 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
     ]
   }
 
-  assignable_scopes = ["/subscriptions/${data.azurerm_subscription.current.subscription_id}"]
-  scope             = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
+  assignable_scopes = ["/subscriptions/${local.subscription_id}"]
+  scope             = "/subscriptions/${local.subscription_id}"
 }
 
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
-  count              = var.mode == "ReadWrite" ? 1 : 0
+  count              = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   principal_id       = local.service_principal_object_id
   description        = "Illumio NSG role assignment"
   role_definition_id = azurerm_role_definition.illumio_nsg_role[0].role_definition_resource_id
-  scope              = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
+  scope              = "/subscriptions/${local.subscription_id}"
 }
 
 
-data "azurerm_subscription" "current" {}
+data "azurerm_subscription" "current" {
+  count = var.subscription_id == null ? 1 : 0
+}
 
 resource "illumio-cloudsecure_azure_subscription" "subscription" {
   client_id       = local.client_id
   client_secret   = base64encode(local.client_secret)
   name            = var.name
-  subscription_id = data.azurerm_subscription.current.subscription_id
-  tenant_id       = data.azurerm_subscription.current.tenant_id
+  subscription_id = local.subscription_id
+  tenant_id       = local.tenant_id
   mode            = var.mode
 
   depends_on = [

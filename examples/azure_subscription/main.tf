@@ -49,3 +49,20 @@ module "azure_subscription_existing_sp" {
     "Owner=John Doe"
   ]
 }
+
+# At-scale pattern: BYO service principal, RBAC managed at management group level,
+# and explicit subscription/tenant IDs to avoid one ARM data-source call per subscription.
+# This is the recommended pattern when onboarding hundreds of subscriptions via for_each.
+module "azure_subscription_at_scale" {
+  source  = "illumio/cloudsecure/illumio//modules/azure_subscription"
+  version = "1.6.8"
+  name    = "Test Azure Subscription (at-scale pattern)"
+  mode    = "Read"
+
+  service_principal_client_id     = var.illumio_service_principal_client_id
+  service_principal_client_secret = var.illumio_service_principal_client_secret
+
+  skip_azure_rbac_assignments = true
+  subscription_id             = var.azure_subscription_id
+  tenant_id                   = var.azure_tenant_id
+}

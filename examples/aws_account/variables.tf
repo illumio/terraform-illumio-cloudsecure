@@ -16,3 +16,40 @@ variable "illumio_cloudsecure_client_secret" {
     error_message = "The illumio_cloudsecure_client_secret value must not be empty."
   }
 }
+
+variable "illumio_role_arn" {
+  type        = string
+  description = "The ARN of a pre-existing IAM role to wire into the BYO-role example module instances."
+  validation {
+    condition     = length(var.illumio_role_arn) > 0
+    error_message = "The illumio_role_arn value must not be empty."
+  }
+}
+
+variable "illumio_role_external_id" {
+  type        = string
+  sensitive   = true
+  description = "The sts:ExternalId expected by the pre-existing IAM role referenced by illumio_role_arn."
+  validation {
+    condition     = length(var.illumio_role_external_id) > 0
+    error_message = "The illumio_role_external_id value must not be empty."
+  }
+}
+
+variable "aws_account_id" {
+  type        = string
+  description = "The 12-digit AWS Account ID used by the at-scale example to skip the aws_caller_identity data source."
+  validation {
+    condition     = length(var.aws_account_id) == 12
+    error_message = "The aws_account_id value must be a 12-digit number."
+  }
+}
+
+variable "aws_organization_id" {
+  type        = string
+  description = "The AWS Organizations organization ID (e.g., o-xxxxxxxxxx) used by the at-scale example to skip the aws_organizations_organization data source."
+  validation {
+    condition     = length(var.aws_organization_id) > 0
+    error_message = "The aws_organization_id value must not be empty."
+  }
+}

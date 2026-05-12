@@ -1,6 +1,17 @@
-data "aws_partition" "current" {}
+locals {
+  use_existing_role = var.role_arn != null
+  role_arn          = local.use_existing_role ? var.role_arn : aws_iam_role.role[0].arn
+  role_external_id  = local.use_existing_role ? var.role_external_id : random_password.role_secret[0].result
+  account_id        = var.account_id != null ? var.account_id : data.aws_caller_identity.current[0].account_id
+  organization_id   = var.organization_id != null ? var.organization_id : data.aws_organizations_organization.current[0].id
+}
+
+data "aws_partition" "current" {
+  count = local.use_existing_role ? 0 : 1
+}
 
 resource "random_password" "role_secret" {
+  count       = local.use_existing_role ? 0 : 1
   length      = 36
   special     = false
   upper       = false
@@ -8,14 +19,15 @@ resource "random_password" "role_secret" {
 }
 
 resource "aws_iam_role_policy" "read" {
-  name = "${var.iam_name_prefix}Policy"
-  role = aws_iam_role.role.id
+  count = local.use_existing_role ? 0 : 1
+  name  = "${var.iam_name_prefix}Policy"
+  role  = aws_iam_role.role[0].id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "apigateway:GET",
           "autoscaling:Describe*",
           "cloudtrail:DescribeTrails",
@@ -100,15 +112,15 @@ resource "aws_iam_role_policy" "read" {
 }
 
 resource "aws_iam_role_policy" "protection" {
-  count = var.mode == "ReadWrite" ? 1 : 0
-  name = "${var.iam_name_prefix}ProtectionPolicy"
-  role = aws_iam_role.role.id
+  count = (!local.use_existing_role && var.mode == "ReadWrite") ? 1 : 0
+  name  = "${var.iam_name_prefix}ProtectionPolicy"
+  role  = aws_iam_role.role[0].id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "ec2:AuthorizeSecurityGroupIngress",
           "ec2:RevokeSecurityGroupIngress",
           "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
@@ -138,20 +150,21 @@ resource "aws_iam_role_policy" "protection" {
 }
 
 resource "aws_iam_role" "role" {
-  name = "${var.iam_name_prefix}Role"
-  tags = var.tags
+  count = local.use_existing_role ? 0 : 1
+  name  = "${var.iam_name_prefix}Role"
+  tags  = var.tags
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect    = "Allow"
+        Effect = "Allow"
         Principal = {
-          AWS = "arn:${data.aws_partition.current.partition}:iam::${var.illumio_cloudsecure_account_id}:root"
+          AWS = "arn:${data.aws_partition.current[0].partition}:iam::${var.illumio_cloudsecure_account_id}:root"
         }
-        Action    = "sts:AssumeRole"
+        Action = "sts:AssumeRole"
         Condition = {
           StringEquals = {
-            "sts:ExternalId" = random_password.role_secret.result
+            "sts:ExternalId" = random_password.role_secret[0].result
           }
         }
       }
@@ -160,22 +173,27 @@ resource "aws_iam_role" "role" {
 }
 
 resource "aws_iam_role_policy_attachment" "attachment" {
-  role       = aws_iam_role.role.name
+  count      = local.use_existing_role ? 0 : 1
+  role       = aws_iam_role.role[0].name
   policy_arn = "arn:aws:iam::aws:policy/SecurityAudit"
 }
 
 # Data source to get the AWS account ID.
-data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "current" {
+  count = var.account_id == null ? 1 : 0
+}
 
 # Data source to get the AWS org.
-data "aws_organizations_organization" "current" {}
+data "aws_organizations_organization" "current" {
+  count = var.organization_id == null ? 1 : 0
+}
 
 // Onboards this AWS account with CloudSecure.
 resource "illumio-cloudsecure_aws_account" "account" {
-  account_id       = data.aws_caller_identity.current.account_id
+  account_id       = local.account_id
   mode             = var.mode
   name             = var.name
-  organization_id  = data.aws_organizations_organization.current.id
-  role_arn         = aws_iam_role.role.arn
-  role_external_id = random_password.role_secret.result
+  organization_id  = local.organization_id
+  role_arn         = local.role_arn
+  role_external_id = local.role_external_id
 }

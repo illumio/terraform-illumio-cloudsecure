@@ -3,6 +3,7 @@
 
 | Name | Version |
 |------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 | <a name="requirement_illumio-cloudsecure"></a> [illumio-cloudsecure](#requirement\_illumio-cloudsecure) | >= 1.0.11 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0 |
@@ -37,15 +38,19 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | Optional. The 12-digit AWS Account ID. When set, the module skips the aws\_caller\_identity data source lookup. Recommended for at-scale for\_each patterns over many accounts. | `string` | `null` | no |
 | <a name="input_iam_name_prefix"></a> [iam\_name\_prefix](#input\_iam\_name\_prefix) | The prefix given to all AWS IAM resource names. | `string` | `"IllumioCloudIntegration"` | no |
 | <a name="input_illumio_cloudsecure_account_id"></a> [illumio\_cloudsecure\_account\_id](#input\_illumio\_cloudsecure\_account\_id) | The CloudSecure AWS account ID that is given the IAM role. | `string` | `"712001342241"` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". | `string` | `"ReadWrite"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of this account in CloudSecure. | `string` | n/a | yes |
+| <a name="input_organization_id"></a> [organization\_id](#input\_organization\_id) | Optional. The AWS Organizations organization ID (e.g., o-xxxxxxxxxx). When set, the module skips the aws\_organizations\_organization data source lookup, which is useful when the calling identity lacks organizations:DescribeOrganization or when running at scale. | `string` | `null` | no |
+| <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | Optional. The ARN of a pre-existing IAM role to use instead of creating a new one. When set, the module skips creating the IAM role, its inline read/protection policies, the SecurityAudit attachment, and the random external ID. The supplied role must already trust the CloudSecure account via sts:AssumeRole with the supplied role\_external\_id and must carry the equivalent read (and, when mode = "ReadWrite", protection) permissions. role\_external\_id must also be set. | `string` | `null` | no |
+| <a name="input_role_external_id"></a> [role\_external\_id](#input\_role\_external\_id) | Optional. The sts:ExternalId expected by the pre-existing IAM role identified by role\_arn. Required when role\_arn is set. Rotation of this value is the caller's responsibility. | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured AWS resource. | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | The ID of the IAM role granted to the CloudSecure account. |
+| <a name="output_role_id"></a> [role\_id](#output\_role\_id) | The ID (or ARN, when role\_arn is supplied) of the IAM role granted to the CloudSecure account. |
 <!-- END_TF_DOCS -->

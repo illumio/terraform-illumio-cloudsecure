@@ -50,7 +50,7 @@ resource "azuread_application_password" "illumio_secret" {
 
 # Assigning Reader Role for Subscription Scope
 resource "azurerm_role_assignment" "illumio_reader_role" {
-  count                = var.skip_azure_rbac_assignments ? 0 : 1
+  count                = var.create_azure_rbac_assignments ? 1 : 0
   principal_id         = local.service_principal_object_id
   description          = "Illumio Reader role assignment"
   role_definition_name = "Reader"
@@ -59,7 +59,7 @@ resource "azurerm_role_assignment" "illumio_reader_role" {
 
 # Role Definitions for Firewall
 resource "azurerm_role_definition" "illumio_fw_role" {
-  count       = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
+  count       = (var.create_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   name        = "${var.iam_name_prefix}FirewallRole"
   description = "Illumio Firewall Administrator role"
 
@@ -105,7 +105,7 @@ resource "azurerm_role_definition" "illumio_fw_role" {
 
 # Assigning Role for Firewall
 resource "azurerm_role_assignment" "illumio_fw_assignment" {
-  count              = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
+  count              = (var.create_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   principal_id       = local.service_principal_object_id
   description        = "Illumio Firewall role assignment"
   role_definition_id = azurerm_role_definition.illumio_fw_role[0].role_definition_resource_id
@@ -114,7 +114,7 @@ resource "azurerm_role_assignment" "illumio_fw_assignment" {
 
 # Role Definitions for NSG
 resource "azurerm_role_definition" "illumio_nsg_role" {
-  count       = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
+  count       = (var.create_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   name        = "${var.iam_name_prefix}NSGRole"
   description = "Illumio Network Security Administrator role"
 
@@ -140,7 +140,7 @@ resource "azurerm_role_definition" "illumio_nsg_role" {
 
 # Assigning Role for NSG
 resource "azurerm_role_assignment" "illumio_nsg_assignment" {
-  count              = (!var.skip_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
+  count              = (var.create_azure_rbac_assignments && var.mode == "ReadWrite") ? 1 : 0
   principal_id       = local.service_principal_object_id
   description        = "Illumio NSG role assignment"
   role_definition_id = azurerm_role_definition.illumio_nsg_role[0].role_definition_resource_id

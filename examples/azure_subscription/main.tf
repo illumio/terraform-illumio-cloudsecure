@@ -7,9 +7,9 @@ provider "azurerm" {
 }
 
 provider "azuread" {
-  client_id       = var.azure_client_id
-  client_secret   = var.azure_client_secret
-  tenant_id       = var.azure_tenant_id
+  client_id     = var.azure_client_id
+  client_secret = var.azure_client_secret
+  tenant_id     = var.azure_tenant_id
 }
 
 provider "illumio-cloudsecure" {
@@ -62,7 +62,7 @@ module "azure_subscription_at_scale" {
   service_principal_client_id     = var.illumio_service_principal_client_id
   service_principal_client_secret = var.illumio_service_principal_client_secret
 
-  skip_azure_rbac_assignments = true
-  subscription_id             = var.azure_subscription_id
-  tenant_id                   = var.azure_tenant_id
+  create_azure_rbac_assignments = false
+  subscription_id               = var.azure_subscription_id
+  tenant_id                     = var.azure_tenant_id
 }

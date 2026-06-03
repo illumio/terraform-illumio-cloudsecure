@@ -62,10 +62,10 @@ variable "service_principal_client_secret" {
   }
 }
 
-variable "skip_azure_rbac_assignments" {
-  description = "When true, skip all Azure RBAC role definitions and assignments. Use this when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments."
+variable "create_azure_rbac_assignments" {
+  description = "When true (default), create all Azure RBAC role definitions and assignments. Set this to false when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "subscription_id" {

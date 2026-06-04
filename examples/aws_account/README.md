@@ -14,9 +14,9 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_account_at_scale"></a> [aws\_account\_at\_scale](#module\_aws\_account\_at\_scale) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.8 |
-| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.8 |
-| <a name="module_aws_account_existing_role"></a> [aws\_account\_existing\_role](#module\_aws\_account\_existing\_role) | illumio/cloudsecure/illumio//modules/aws_account | 1.6.8 |
+| <a name="module_aws_account_at_scale"></a> [aws\_account\_at\_scale](#module\_aws\_account\_at\_scale) | illumio/cloudsecure/illumio//modules/aws_account | 1.7.0 |
+| <a name="module_aws_account_dev"></a> [aws\_account\_dev](#module\_aws\_account\_dev) | illumio/cloudsecure/illumio//modules/aws_account | 1.7.0 |
+| <a name="module_aws_account_existing_role"></a> [aws\_account\_existing\_role](#module\_aws\_account\_existing\_role) | illumio/cloudsecure/illumio//modules/aws_account | 1.7.0 |
 
 ## Resources
 

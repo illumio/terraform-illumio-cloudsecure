@@ -1,3 +1,19 @@
+variable "azure_secret_expiration_days" {
+  type        = number
+  default     = 365
+  description = "The number of days the Azure service principal secret remains valid before requiring renewal."
+  validation {
+    condition     = var.azure_secret_expiration_days > 0
+    error_message = "The azure_secret_expiration_days value must be greater than 0."
+  }
+}
+
+variable "create_azure_rbac_assignments" {
+  description = "When true (default), create all Azure RBAC role definitions and assignments. Set this to false when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments."
+  type        = bool
+  default     = true
+}
+
 variable "iam_name_prefix" {
   description = "The prefix given to all Azure resource names."
   type        = string
@@ -27,22 +43,6 @@ variable "name" {
   }
 }
 
-variable "azure_secret_expiration_days" {
-  type        = number
-  default     = 365
-  description = "The number of days the Azure service principal secret remains valid before requiring renewal."
-  validation {
-    condition     = var.azure_secret_expiration_days > 0
-    error_message = "The azure_secret_expiration_days value must be greater than 0."
-  }
-}
-
-variable "tags" {
-  description = "The optional tags added to every configured Azure resource."
-  type        = set(string)
-  default     = []
-}
-
 variable "service_principal_client_id" {
   description = "Optional. The client ID (application ID) of a pre-existing Azure AD application to use instead of creating a new one. When set, the module skips creating the azuread_application, azuread_service_principal, and azuread_application_password resources and looks up the existing service principal by client_id (which requires the executing identity to have directory read access). service_principal_client_secret must also be set."
   type        = string
@@ -62,12 +62,6 @@ variable "service_principal_client_secret" {
   }
 }
 
-variable "create_azure_rbac_assignments" {
-  description = "When true (default), create all Azure RBAC role definitions and assignments. Set this to false when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments."
-  type        = bool
-  default     = true
-}
-
 variable "subscription_id" {
   description = "Optional. The Azure Subscription ID. When set together with tenant_id, the module skips the azurerm_subscription data source lookup, reducing ARM API calls per subscription. Recommended for at-scale for_each patterns over many subscriptions."
   type        = string
@@ -77,6 +71,12 @@ variable "subscription_id" {
     condition     = (var.subscription_id == null) == (var.tenant_id == null)
     error_message = "subscription_id and tenant_id must both be set or both be null."
   }
+}
+
+variable "tags" {
+  description = "The optional tags added to every configured Azure resource."
+  type        = set(string)
+  default     = []
 }
 
 variable "tenant_id" {

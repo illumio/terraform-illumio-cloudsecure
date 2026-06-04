@@ -48,10 +48,6 @@ variable "service_principal_client_id" {
   type        = string
   nullable    = true
   default     = null
-  validation {
-    condition     = (var.service_principal_client_id == null) == (var.service_principal_client_secret == null)
-    error_message = "service_principal_client_id and service_principal_client_secret must both be set or both be null."
-  }
 }
 
 variable "service_principal_client_secret" {
@@ -64,4 +60,28 @@ variable "service_principal_client_secret" {
     condition     = (var.service_principal_client_id == null) == (var.service_principal_client_secret == null)
     error_message = "service_principal_client_id and service_principal_client_secret must both be set or both be null."
   }
+}
+
+variable "create_azure_rbac_assignments" {
+  description = "When true (default), create all Azure RBAC role definitions and assignments. Set this to false when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments."
+  type        = bool
+  default     = true
+}
+
+variable "subscription_id" {
+  description = "Optional. The Azure Subscription ID. When set together with tenant_id, the module skips the azurerm_subscription data source lookup, reducing ARM API calls per subscription. Recommended for at-scale for_each patterns over many subscriptions."
+  type        = string
+  nullable    = true
+  default     = null
+  validation {
+    condition     = (var.subscription_id == null) == (var.tenant_id == null)
+    error_message = "subscription_id and tenant_id must both be set or both be null."
+  }
+}
+
+variable "tenant_id" {
+  description = "Optional. The Azure Tenant ID. When set together with subscription_id, the module skips the azurerm_subscription data source lookup."
+  type        = string
+  nullable    = true
+  default     = null
 }

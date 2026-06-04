@@ -45,12 +45,15 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_azure_secret_expiration_days"></a> [azure\_secret\_expiration\_days](#input\_azure\_secret\_expiration\_days) | The number of days the Azure service principal secret remains valid before requiring renewal. | `number` | `365` | no |
+| <a name="input_create_azure_rbac_assignments"></a> [create\_azure\_rbac\_assignments](#input\_create\_azure\_rbac\_assignments) | When true (default), create all Azure RBAC role definitions and assignments. Set this to false when RBAC is managed centrally at the management group level to avoid redundant subscription-scoped assignments. | `bool` | `true` | no |
 | <a name="input_iam_name_prefix"></a> [iam\_name\_prefix](#input\_iam\_name\_prefix) | The prefix given to all Azure resource names. | `string` | `"IllumioCloudIntegration"` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The account's access mode, must be "ReadWrite" (default) or "Read". | `string` | `"ReadWrite"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of this subscription in CloudSecure. | `string` | n/a | yes |
 | <a name="input_service_principal_client_id"></a> [service\_principal\_client\_id](#input\_service\_principal\_client\_id) | Optional. The client ID (application ID) of a pre-existing Azure AD application to use instead of creating a new one. When set, the module skips creating the azuread\_application, azuread\_service\_principal, and azuread\_application\_password resources and looks up the existing service principal by client\_id (which requires the executing identity to have directory read access). service\_principal\_client\_secret must also be set. | `string` | `null` | no |
 | <a name="input_service_principal_client_secret"></a> [service\_principal\_client\_secret](#input\_service\_principal\_client\_secret) | Optional. The client secret for the pre-existing Azure AD application identified by service\_principal\_client\_id. Required when service\_principal\_client\_id is set. Rotation of this secret is the caller's responsibility; azure\_secret\_expiration\_days is ignored in this mode. | `string` | `null` | no |
+| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | Optional. The Azure Subscription ID. When set together with tenant\_id, the module skips the azurerm\_subscription data source lookup, reducing ARM API calls per subscription. Recommended for at-scale for\_each patterns over many subscriptions. | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured Azure resource. | `set(string)` | `[]` | no |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Optional. The Azure Tenant ID. When set together with subscription\_id, the module skips the azurerm\_subscription data source lookup. | `string` | `null` | no |
 
 ## Outputs
 

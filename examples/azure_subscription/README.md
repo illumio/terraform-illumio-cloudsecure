@@ -17,6 +17,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_azure_subscription_at_scale"></a> [azure\_subscription\_at\_scale](#module\_azure\_subscription\_at\_scale) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.6.8 |
 | <a name="module_azure_subscription_dev"></a> [azure\_subscription\_dev](#module\_azure\_subscription\_dev) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.6.8 |
 | <a name="module_azure_subscription_existing_sp"></a> [azure\_subscription\_existing\_sp](#module\_azure\_subscription\_existing\_sp) | illumio/cloudsecure/illumio//modules/azure_subscription | 1.6.8 |
 

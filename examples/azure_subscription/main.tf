@@ -19,7 +19,7 @@ provider "illumio-cloudsecure" {
 
 module "azure_subscription_dev" {
   source  = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version = "1.6.8"
+  version = "1.7.0"
   name    = "Test Azure Subscription"
 
   # Optional attributes
@@ -38,7 +38,7 @@ module "azure_subscription_dev" {
 # service_principal_client_secret must both be set (or both null).
 module "azure_subscription_existing_sp" {
   source                          = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version                         = "1.6.8"
+  version                         = "1.7.0"
   name                            = "Test Azure Subscription (existing service principal)"
   mode                            = "ReadWrite"
   service_principal_client_id     = var.illumio_service_principal_client_id
@@ -55,7 +55,7 @@ module "azure_subscription_existing_sp" {
 # This is the recommended pattern when onboarding hundreds of subscriptions via for_each.
 module "azure_subscription_at_scale" {
   source  = "illumio/cloudsecure/illumio//modules/azure_subscription"
-  version = "1.6.8"
+  version = "1.7.0"
   name    = "Test Azure Subscription (at-scale pattern)"
   mode    = "Read"
 

@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "aws_account_dev" {
   source  = "illumio/cloudsecure/illumio//modules/aws_account"
-  version = "1.6.8"
+  version = "1.7.0"
   name    = "Test Account"
 
   # Optional attributes
@@ -27,7 +27,7 @@ module "aws_account_dev" {
 # role_arn and role_external_id must both be set (or both null).
 module "aws_account_existing_role" {
   source           = "illumio/cloudsecure/illumio//modules/aws_account"
-  version          = "1.6.8"
+  version          = "1.7.0"
   name             = "Test Account (existing role)"
   mode             = "ReadWrite"
   role_arn         = var.role_arn
@@ -46,7 +46,7 @@ module "aws_account_existing_role" {
 # organizations:DescribeOrganization.
 module "aws_account_at_scale" {
   source  = "illumio/cloudsecure/illumio//modules/aws_account"
-  version = "1.6.8"
+  version = "1.7.0"
   name    = "Test Account (at-scale pattern)"
   mode    = "Read"
 

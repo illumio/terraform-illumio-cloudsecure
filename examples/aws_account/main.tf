@@ -30,8 +30,8 @@ module "aws_account_existing_role" {
   version          = "1.6.8"
   name             = "Test Account (existing role)"
   mode             = "ReadWrite"
-  role_arn         = var.illumio_role_arn
-  role_external_id = var.illumio_role_external_id
+  role_arn         = var.role_arn
+  role_external_id = var.role_external_id
 
   tags = {
     Name  = "CloudSecure Account Policy"
@@ -50,9 +50,9 @@ module "aws_account_at_scale" {
   name    = "Test Account (at-scale pattern)"
   mode    = "Read"
 
-  role_arn         = var.illumio_role_arn
-  role_external_id = var.illumio_role_external_id
+  role_arn         = var.role_arn
+  role_external_id = var.role_external_id
 
-  account_id      = var.aws_account_id
-  organization_id = var.aws_organization_id
+  account_id      = var.account_id
+  organization_id = var.organization_id
 }

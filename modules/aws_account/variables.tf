@@ -42,3 +42,40 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "role_arn" {
+  description = "Optional. The ARN of a pre-existing IAM role to use instead of creating a new one. When set, the module skips creating the IAM role, its inline read/protection policies, the SecurityAudit attachment, and the random external ID. The supplied role must already trust the CloudSecure account via sts:AssumeRole with the supplied role_external_id and must carry the equivalent read (and, when mode = \"ReadWrite\", protection) permissions. role_external_id must also be set."
+  type        = string
+  nullable    = true
+  default     = null
+}
+
+variable "role_external_id" {
+  description = "Optional. The sts:ExternalId expected by the pre-existing IAM role identified by role_arn. Required when role_arn is set. Rotation of this value is the caller's responsibility."
+  type        = string
+  nullable    = true
+  default     = null
+  sensitive   = true
+  validation {
+    condition     = (var.role_arn == null) == (var.role_external_id == null)
+    error_message = "role_arn and role_external_id must both be set or both be null."
+  }
+}
+
+variable "account_id" {
+  description = "Optional. The 12-digit AWS Account ID. When set, the module skips the aws_caller_identity data source lookup. Recommended for at-scale for_each patterns over many accounts."
+  type        = string
+  nullable    = true
+  default     = null
+  validation {
+    condition     = var.account_id == null || length(var.account_id) == 12
+    error_message = "The account_id value must be a 12-digit number."
+  }
+}
+
+variable "organization_id" {
+  description = "Optional. The AWS Organizations organization ID (e.g., o-xxxxxxxxxx). When set, the module skips the aws_organizations_organization data source lookup, which is useful when the calling identity lacks organizations:DescribeOrganization or when running at scale."
+  type        = string
+  nullable    = true
+  default     = null
+}

@@ -1,4 +1,4 @@
 output "role_id" {
-  value       = aws_iam_role.role.id
-  description = "The ID of the IAM role granted to the CloudSecure account."
+  value       = local.use_existing_role ? var.role_arn : aws_iam_role.role[0].id
+  description = "The ID (or ARN, when role_arn is supplied) of the IAM role granted to the CloudSecure account."
 }

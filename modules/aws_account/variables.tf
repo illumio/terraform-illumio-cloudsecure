@@ -9,6 +9,54 @@ variable "account_id" {
   }
 }
 
+variable "cloudtrail_enable_log_file_validation" {
+  description = "Whether log file integrity validation is enabled on the CloudTrail trail created when create_cloudtrail is true."
+  type        = bool
+  default     = true
+}
+
+variable "cloudtrail_include_global_service_events" {
+  description = "Whether the CloudTrail trail created when create_cloudtrail is true records events from global services such as IAM."
+  type        = bool
+  default     = true
+}
+
+variable "cloudtrail_is_multi_region_trail" {
+  description = "Whether the CloudTrail trail created when create_cloudtrail is true is a multi-region trail."
+  type        = bool
+  default     = true
+}
+
+variable "cloudtrail_name" {
+  description = "The name of the CloudTrail trail created when create_cloudtrail is true. Defaults to \"<iam_name_prefix>Trail\" when null."
+  type        = string
+  nullable    = true
+  default     = null
+}
+
+variable "cloudtrail_s3_bucket_name" {
+  description = "The name of a pre-existing S3 bucket that the CloudTrail trail delivers logs to. Required when create_cloudtrail is true. The bucket must already grant CloudTrail (cloudtrail.amazonaws.com) permission to deliver logs."
+  type        = string
+  nullable    = true
+  default     = null
+  validation {
+    condition     = !var.create_cloudtrail || (var.cloudtrail_s3_bucket_name != null && var.cloudtrail_s3_bucket_name != "")
+    error_message = "cloudtrail_s3_bucket_name must be set when create_cloudtrail is true."
+  }
+}
+
+variable "create_cloudtrail" {
+  description = "Whether to create a CloudTrail trail as part of onboarding. Defaults to false because most accounts already have a trail. When true, cloudtrail_s3_bucket_name must be set."
+  type        = bool
+  default     = false
+}
+
+variable "existing_cloudtrail_present" {
+  description = "Whether a CloudTrail trail already exists in this account. Used together with require_cloudtrail to gate onboarding. The provider exposes no data source to detect trails, so this is a caller-supplied assertion. Ignored unless require_cloudtrail is true."
+  type        = bool
+  default     = false
+}
+
 variable "iam_name_prefix" {
   description = "The prefix given to all AWS IAM resource names."
   type        = string
@@ -53,6 +101,12 @@ variable "organization_id" {
   type        = string
   nullable    = true
   default     = null
+}
+
+variable "require_cloudtrail" {
+  description = "Whether onboarding requires a CloudTrail trail. When true, onboarding fails unless a trail is created (create_cloudtrail) or asserted to exist (existing_cloudtrail_present). Defaults to false to preserve existing behavior."
+  type        = bool
+  default     = false
 }
 
 variable "role_arn" {

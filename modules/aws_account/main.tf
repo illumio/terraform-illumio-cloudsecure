@@ -1,9 +1,11 @@
 locals {
-  use_existing_role = var.role_arn != null
-  role_arn          = local.use_existing_role ? var.role_arn : aws_iam_role.role[0].arn
-  role_external_id  = local.use_existing_role ? var.role_external_id : random_password.role_secret[0].result
-  account_id        = var.account_id != null ? var.account_id : data.aws_caller_identity.current[0].account_id
-  organization_id   = var.organization_id != null ? var.organization_id : data.aws_organizations_organization.current[0].id
+  use_existing_role  = var.role_arn != null
+  role_arn           = local.use_existing_role ? var.role_arn : aws_iam_role.role[0].arn
+  role_external_id   = local.use_existing_role ? var.role_external_id : random_password.role_secret[0].result
+  account_id         = var.account_id != null ? var.account_id : data.aws_caller_identity.current[0].account_id
+  organization_id    = var.organization_id != null ? var.organization_id : data.aws_organizations_organization.current[0].id
+  cloudtrail_name    = var.cloudtrail_name != null ? var.cloudtrail_name : "${var.iam_name_prefix}Trail"
+  cloudtrail_present = var.create_cloudtrail || var.existing_cloudtrail_present
 }
 
 data "aws_partition" "current" {
@@ -178,6 +180,18 @@ resource "aws_iam_role_policy_attachment" "attachment" {
   policy_arn = "arn:aws:iam::aws:policy/SecurityAudit"
 }
 
+# Optionally create a CloudTrail trail as part of onboarding. The trail delivers
+# to a pre-existing bucket that already grants CloudTrail delivery permission.
+resource "aws_cloudtrail" "this" {
+  count                         = var.create_cloudtrail ? 1 : 0
+  name                          = local.cloudtrail_name
+  s3_bucket_name                = var.cloudtrail_s3_bucket_name
+  is_multi_region_trail         = var.cloudtrail_is_multi_region_trail
+  include_global_service_events = var.cloudtrail_include_global_service_events
+  enable_log_file_validation    = var.cloudtrail_enable_log_file_validation
+  tags                          = var.tags
+}
+
 # Data source to get the AWS account ID.
 data "aws_caller_identity" "current" {
   count = var.account_id == null ? 1 : 0
@@ -196,4 +210,11 @@ resource "illumio-cloudsecure_aws_account" "account" {
   organization_id  = local.organization_id
   role_arn         = local.role_arn
   role_external_id = local.role_external_id
+
+  lifecycle {
+    precondition {
+      condition     = !var.require_cloudtrail || local.cloudtrail_present
+      error_message = "Onboarding requires an AWS CloudTrail trail, but none was found and create_cloudtrail is false. Set create_cloudtrail = true to create one, or existing_cloudtrail_present = true if a trail already exists."
+    }
+  }
 }

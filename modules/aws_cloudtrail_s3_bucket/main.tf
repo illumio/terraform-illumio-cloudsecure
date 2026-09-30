@@ -119,8 +119,6 @@ resource "aws_s3_bucket_policy" "this" {
 resource "illumio-cloudsecure_aws_cloudtrail_s3_bucket" "this" {
   account_id    = data.aws_caller_identity.current.account_id
   s3_bucket_arn = aws_s3_bucket.this.arn
-  # An empty prefix means "no prefix" everywhere else in this module, see local.log_prefix.
-  s3_key_prefix = var.s3_key_prefix == "" ? null : var.s3_key_prefix
 
   depends_on = [aws_s3_bucket_policy.this]
 }

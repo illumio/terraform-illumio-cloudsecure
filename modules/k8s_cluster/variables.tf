@@ -94,7 +94,7 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.3.13"
+  default     = "v1.5.1"
   validation {
     condition     = length(var.operator_version) > 0
     error_message = "The operator_version value must not be empty."

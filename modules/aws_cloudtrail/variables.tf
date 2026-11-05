@@ -208,7 +208,7 @@ variable "is_multi_region_trail" {
 }
 
 variable "is_organization_trail" {
-  description = "If true, creates an organization trail. Requires running in the management account or in a delegated administrator account."
+  description = "If true, creates an organization trail. Requires running in the management account or in a delegated administrator account. Either way the trail belongs to the management account, so the log bucket policy uses the management account ID (see management_account_id)."
   type        = bool
   default     = false
 }
@@ -218,6 +218,17 @@ variable "kms_key_id" {
   type        = string
   nullable    = true
   default     = null
+}
+
+variable "management_account_id" {
+  description = "The ID of the organization's management account, which owns organization trails even when a delegated administrator creates them. The log bucket policy uses it in the trail ARN of the aws:SourceArn condition and in the AWSLogs/<account-id>/ path. When null and both is_organization_trail and create_s3_bucket are true, the module looks the ID up with the aws_organizations_organization data source. Ignored unless is_organization_trail is true."
+  type        = string
+  nullable    = true
+  default     = null
+  validation {
+    condition     = var.management_account_id == null || can(regex("^[0-9]{12}$", var.management_account_id))
+    error_message = "The management_account_id value must be a 12-digit AWS account ID."
+  }
 }
 
 variable "name" {
@@ -230,7 +241,7 @@ variable "name" {
 }
 
 variable "organization_id" {
-  description = "The AWS Organizations organization ID (e.g., o-xxxxxxxxxx) whose AWSLogs/<organization-id>/ path the log bucket policy grants. When null and both is_organization_trail and create_s3_bucket are true, the module looks the ID up with the aws_organizations_organization data source, which requires the organizations:DescribeOrganization permission."
+  description = "The AWS Organizations organization ID (e.g., o-xxxxxxxxxx) whose AWSLogs/<organization-id>/ path the log bucket policy grants. When null and both is_organization_trail and create_s3_bucket are true, the module looks the ID up with the aws_organizations_organization data source, which needs read access to AWS Organizations. Set both organization_id and management_account_id to skip that lookup."
   type        = string
   nullable    = true
   default     = null

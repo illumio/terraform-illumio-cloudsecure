@@ -44,12 +44,12 @@ No modules.
 | <a name="input_cross_account_reader_arns"></a> [cross\_account\_reader\_arns](#input\_cross\_account\_reader\_arns) | The ARNs of the IAM principals from other accounts that are granted access to the bucket. If empty, no cross-account statement is added to the bucket policy. | `list(string)` | `[]` | no |
 | <a name="input_force_destroy"></a> [force\_destroy](#input\_force\_destroy) | If true, allows Terraform to delete the bucket even when it still contains log files. | `bool` | `false` | no |
 | <a name="input_kms_master_key_id"></a> [kms\_master\_key\_id](#input\_kms\_master\_key\_id) | The KMS key used for the bucket's default encryption. Only applied when sse\_algorithm is "aws:kms". | `string` | `null` | no |
-| <a name="input_log_account_id"></a> [log\_account\_id](#input\_log\_account\_id) | The ID of the AWS account whose logs land in the bucket, i.e. the AWSLogs/<account-id>/ path granted by the bucket policy. If null, defaults to the caller's account. | `string` | `null` | no |
+| <a name="input_log_account_id"></a> [log\_account\_id](#input\_log\_account\_id) | The ID of the AWS account whose logs land in the bucket, i.e. the AWSLogs/<account-id>/ path granted by the bucket policy. If null, defaults to the caller's account. For an organization trail, use the management account ID. | `string` | `null` | no |
 | <a name="input_organization_id"></a> [organization\_id](#input\_organization\_id) | The AWS Organizations organization ID (e.g., o-xxxxxxxxxx). When set, the bucket policy also grants the AWSLogs/<organization-id>/ path used by organization trails. | `string` | `null` | no |
 | <a name="input_s3_key_prefix"></a> [s3\_key\_prefix](#input\_s3\_key\_prefix) | The prefix prepended to the AWSLogs/ path inside the bucket. If null, no prefix is used. | `string` | `null` | no |
 | <a name="input_sse_algorithm"></a> [sse\_algorithm](#input\_sse\_algorithm) | The bucket's default server-side encryption algorithm. Must be one of: `AES256`, `aws:kms`. | `string` | `"AES256"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured AWS resource. | `map(string)` | `{}` | no |
-| <a name="input_trail_arn"></a> [trail\_arn](#input\_trail\_arn) | The ARN of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. | `string` | n/a | yes |
+| <a name="input_trail_arn"></a> [trail\_arn](#input\_trail\_arn) | The ARN of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. An organization trail's ARN contains the management account ID, even when a delegated administrator creates the trail. | `string` | n/a | yes |
 | <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | If true, enables S3 versioning on the bucket. If false, no versioning configuration is managed at all. | `bool` | `false` | no |
 
 ## Outputs

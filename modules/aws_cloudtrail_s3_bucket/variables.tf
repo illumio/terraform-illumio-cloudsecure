@@ -50,7 +50,7 @@ variable "kms_master_key_id" {
 }
 
 variable "log_account_id" {
-  description = "The ID of the AWS account whose logs land in the bucket, i.e. the AWSLogs/<account-id>/ path granted by the bucket policy. If null, defaults to the caller's account."
+  description = "The ID of the AWS account whose logs land in the bucket, i.e. the AWSLogs/<account-id>/ path granted by the bucket policy. If null, defaults to the caller's account. For an organization trail, use the management account ID."
   type        = string
   nullable    = true
   default     = null
@@ -99,7 +99,7 @@ variable "tags" {
 }
 
 variable "trail_arn" {
-  description = "The ARN of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy."
+  description = "The ARN of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. An organization trail's ARN contains the management account ID, even when a delegated administrator creates the trail."
   type        = string
   validation {
     condition     = length(var.trail_arn) > 0

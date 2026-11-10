@@ -140,7 +140,8 @@ variable "insight_types" {
 variable "is_multi_region_trail" {
   description = "If true, captures events from every Region. If false, only the trail's home Region is captured, and global service events are delivered only if the home Region is the partition's leader Region (e.g., us-east-1), even when include_global_service_events is true."
   type        = bool
-  default     = true
+  # It's recommended to use multi-Region trails for better threat detection.
+  default = true
 }
 
 variable "is_organization_trail" {

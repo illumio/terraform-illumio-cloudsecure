@@ -30,6 +30,7 @@ module "aws_cloudtrail_dev" {
   s3_bucket_name = module.aws_cloudtrail_s3_bucket_dev.s3_bucket_name
 
   # Optional attributes
+  # It's recommended to use multi-Region trails for better threat detection.
   is_multi_region_trail = true
   s3_key_prefix         = module.aws_cloudtrail_s3_bucket_dev.s3_key_prefix
 

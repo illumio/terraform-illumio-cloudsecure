@@ -6,22 +6,13 @@ variable "blocked_encryption_types" {
 }
 
 variable "bucket_key_enabled" {
-  description = "If true, enables S3 Bucket Keys, which cut the cost of SSE-KMS requests. Has no effect while sse_algorithm is \"AES256\"."
+  description = "If true, enables S3 Bucket Keys, which cut the cost of SSE-KMS requests."
   type        = bool
   default     = true
 }
 
-variable "bucket_name" {
-  description = "The name of the S3 bucket to create."
-  type        = string
-  validation {
-    condition     = length(var.bucket_name) > 0
-    error_message = "The bucket_name value must not be empty."
-  }
-}
-
 variable "cross_account_reader_actions" {
-  description = "The S3 actions granted to cross_account_reader_arns. The default is read-only; widening it lets the other account delete log files or replace the bucket policy."
+  description = "The S3 actions granted to cross_account_reader_arns. The default is read-only; widening it can let those principals delete or overwrite log files."
   type        = list(string)
   default     = ["s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation"]
   validation {
@@ -42,6 +33,12 @@ variable "force_destroy" {
   default     = false
 }
 
+variable "is_organization_trail" {
+  description = "If true, grants write access to an organization trail instead of a trail of the bucket's account. The bucket policy then uses the ID of the organization's management account, which owns the trail even when a delegated administrator creates it, and also grants the `AWSLogs/<organization-id>/` path. Both IDs are looked up with the aws_organizations_organization data source, which requires the organizations:DescribeOrganization permission and returns the organization of the bucket's account, so the bucket's account must belong to the trail's organization. Must be the same as the is_organization_trail value of the aws_cloudtrail module."
+  type        = bool
+  default     = false
+}
+
 variable "kms_master_key_id" {
   description = "The KMS key used for the bucket's default encryption. Only applied when sse_algorithm is \"aws:kms\"."
   type        = string
@@ -49,25 +46,12 @@ variable "kms_master_key_id" {
   default     = null
 }
 
-variable "log_account_id" {
-  description = "The ID of the AWS account whose logs land in the bucket, i.e. the AWSLogs/<account-id>/ path granted by the bucket policy. If null, defaults to the caller's account. For an organization trail, use the management account ID."
+variable "name" {
+  description = "The name of the S3 bucket to create."
   type        = string
-  nullable    = true
-  default     = null
   validation {
-    condition     = var.log_account_id == null || length(var.log_account_id) == 12
-    error_message = "The log_account_id value must be a 12-digit number."
-  }
-}
-
-variable "organization_id" {
-  description = "The AWS Organizations organization ID (e.g., o-xxxxxxxxxx). When set, the bucket policy also grants the AWSLogs/<organization-id>/ path used by organization trails."
-  type        = string
-  nullable    = true
-  default     = null
-  validation {
-    condition     = var.organization_id == null || can(regex("^o-[a-z0-9]{10,32}$", var.organization_id))
-    error_message = "The organization_id value must be an AWS Organizations organization ID, e.g. \"o-abc1234567\"."
+    condition     = length(var.name) > 0
+    error_message = "The name value must not be empty."
   }
 }
 
@@ -77,7 +61,8 @@ variable "s3_key_prefix" {
   nullable    = true
   default     = null
   validation {
-    condition     = var.s3_key_prefix == null || (length(var.s3_key_prefix) <= 200 && !can(regex("^/|/$|//", var.s3_key_prefix)))
+    # A conditional instead of ||, which evaluates both operands before Terraform 1.12.
+    condition     = var.s3_key_prefix == null ? true : length(var.s3_key_prefix) <= 200 && !can(regex("^/|/$|//", var.s3_key_prefix))
     error_message = "The s3_key_prefix value must be at most 200 characters long and must not start with, end with, or contain repeated \"/\" characters."
   }
 }
@@ -98,13 +83,20 @@ variable "tags" {
   default     = {}
 }
 
-variable "trail_arn" {
-  description = "The ARN of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. An organization trail's ARN contains the management account ID, even when a delegated administrator creates the trail."
+variable "trail_name" {
+  description = "The name of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. Must be the same as the name value of the aws_cloudtrail module. Unless is_organization_trail is true, the trail must belong to the same AWS account as the bucket."
   type        = string
   validation {
-    condition     = length(var.trail_arn) > 0
-    error_message = "The trail_arn value must not be empty."
+    condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$", var.trail_name))
+    error_message = "The trail_name value must be 3 to 128 characters long, start with a letter or a digit, and contain only letters, digits, \".\", \"_\", or \"-\"."
   }
+}
+
+variable "trail_region" {
+  description = "The home Region of the CloudTrail trail, i.e., the Region of the AWS provider used by the aws_cloudtrail module. If null, defaults to the Region of the bucket. Only needed when the trail is created in a different Region than the bucket."
+  type        = string
+  nullable    = true
+  default     = null
 }
 
 variable "versioning_enabled" {

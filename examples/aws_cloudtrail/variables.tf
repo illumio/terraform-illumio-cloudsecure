@@ -1,12 +1,3 @@
-variable "s3_bucket_name" {
-  type        = string
-  description = "The globally unique name of the S3 bucket created by the example to receive the CloudTrail log files."
-  validation {
-    condition     = length(var.s3_bucket_name) > 0
-    error_message = "The s3_bucket_name value must not be empty."
-  }
-}
-
 variable "illumio_cloudsecure_client_id" {
   type        = string
   description = "The OAuth 2 client identifier used to authenticate against the CloudSecure Config API."

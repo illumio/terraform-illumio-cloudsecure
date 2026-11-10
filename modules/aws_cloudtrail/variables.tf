@@ -91,50 +91,8 @@ variable "advanced_event_selectors" {
   }
 }
 
-variable "bucket_blocked_encryption_types" {
-  description = "The encryption types rejected on upload into the log bucket. If null, the S3 default is left in place. Only used when create_s3_bucket is true."
-  type        = list(string)
-  nullable    = true
-  default     = ["SSE-C"]
-}
-
-variable "bucket_force_destroy" {
-  description = "If true, allows Terraform to delete the log bucket even when it still contains log files. Only used when create_s3_bucket is true."
-  type        = bool
-  default     = false
-}
-
-variable "bucket_key_enabled" {
-  description = "If true, enables S3 Bucket Keys on the log bucket, which cut the cost of SSE-KMS requests. Has no effect while bucket_sse_algorithm is \"AES256\". Only used when create_s3_bucket is true."
-  type        = bool
-  default     = true
-}
-
-variable "bucket_kms_master_key_id" {
-  description = "The KMS key used for the log bucket's default encryption. Only applied when create_s3_bucket is true and bucket_sse_algorithm is \"aws:kms\"."
-  type        = string
-  nullable    = true
-  default     = null
-}
-
-variable "bucket_sse_algorithm" {
-  description = "The log bucket's default server-side encryption algorithm. Must be one of: `AES256`, `aws:kms`. Only used when create_s3_bucket is true."
-  type        = string
-  default     = "AES256"
-  validation {
-    condition     = contains(["AES256", "aws:kms"], var.bucket_sse_algorithm)
-    error_message = "The bucket_sse_algorithm value must be \"AES256\" or \"aws:kms\"."
-  }
-}
-
-variable "bucket_versioning_enabled" {
-  description = "If true, enables S3 versioning on the log bucket. Only used when create_s3_bucket is true."
-  type        = bool
-  default     = false
-}
-
 variable "cloud_watch_logs_group_arn" {
-  description = "The ARN of the CloudWatch Logs log stream the trail delivers events to. Must be set together with cloud_watch_logs_role_arn."
+  description = "The ARN of the CloudWatch Logs log group the trail delivers events to, followed by the log stream wildcard `:*`. Must be set together with cloud_watch_logs_role_arn."
   type        = string
   nullable    = true
   default     = null
@@ -149,28 +107,6 @@ variable "cloud_watch_logs_role_arn" {
     condition     = (var.cloud_watch_logs_group_arn == null) == (var.cloud_watch_logs_role_arn == null)
     error_message = "The cloud_watch_logs_group_arn and cloud_watch_logs_role_arn values must both be set or both be null."
   }
-}
-
-variable "create_s3_bucket" {
-  description = "If true, creates the log bucket, its bucket policy, encryption and public access block in this module. Set to false to reuse an existing bucket, e.g. a bucket in another Region, which a module cannot create because it cannot select a provider conditionally."
-  type        = bool
-  default     = true
-}
-
-variable "cross_account_reader_actions" {
-  description = "The S3 actions granted to cross_account_reader_arns. The default is read-only; widening it lets the other account delete log files or replace the bucket policy. Only used when create_s3_bucket is true."
-  type        = list(string)
-  default     = ["s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation"]
-  validation {
-    condition     = length(var.cross_account_reader_actions) > 0
-    error_message = "The cross_account_reader_actions value must not be empty."
-  }
-}
-
-variable "cross_account_reader_arns" {
-  description = "The ARNs of the IAM principals from other accounts that are granted access to the log bucket. Only used when create_s3_bucket is true."
-  type        = list(string)
-  default     = []
 }
 
 variable "enable_log_file_validation" {
@@ -202,37 +138,26 @@ variable "insight_types" {
 }
 
 variable "is_multi_region_trail" {
-  description = "If true, captures events from every Region. If false, only the trail's home Region is captured, although global service events still arrive when include_global_service_events is true."
+  description = "If true, captures events from every Region. If false, only the trail's home Region is captured, and global service events are delivered only if the home Region is the partition's leader Region (e.g., us-east-1), even when include_global_service_events is true."
   type        = bool
   default     = true
 }
 
 variable "is_organization_trail" {
-  description = "If true, creates an organization trail. Requires running in the management account or in a delegated administrator account. Either way the trail belongs to the management account, so the log bucket policy uses the management account ID (see management_account_id)."
+  description = "If true, creates an organization trail. Requires running in the management account or in a delegated administrator account. Must be the same as the is_organization_trail value of the aws_cloudtrail_s3_bucket module."
   type        = bool
   default     = false
 }
 
 variable "kms_key_id" {
-  description = "The ARN or ID of the KMS key used for SSE-KMS on the delivered log files. If null, CloudTrail uses SSE-S3."
+  description = "The ARN of the KMS key used for SSE-KMS on the delivered log files. The key must be in the same Region as the S3 bucket. If null, CloudTrail uses SSE-S3."
   type        = string
   nullable    = true
   default     = null
-}
-
-variable "management_account_id" {
-  description = "The ID of the organization's management account, which owns organization trails even when a delegated administrator creates them. The log bucket policy uses it in the trail ARN of the aws:SourceArn condition and in the AWSLogs/<account-id>/ path. When null and both is_organization_trail and create_s3_bucket are true, the module looks the ID up with the aws_organizations_organization data source. Ignored unless is_organization_trail is true."
-  type        = string
-  nullable    = true
-  default     = null
-  validation {
-    condition     = var.management_account_id == null || can(regex("^[0-9]{12}$", var.management_account_id))
-    error_message = "The management_account_id value must be a 12-digit AWS account ID."
-  }
 }
 
 variable "name" {
-  description = "The name of the CloudTrail trail."
+  description = "The name of the CloudTrail trail. Must be the same as the trail_name value of the aws_cloudtrail_s3_bucket module."
   type        = string
   validation {
     condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$", var.name))
@@ -240,19 +165,8 @@ variable "name" {
   }
 }
 
-variable "organization_id" {
-  description = "The AWS Organizations organization ID (e.g., o-xxxxxxxxxx) whose AWSLogs/<organization-id>/ path the log bucket policy grants. When null and both is_organization_trail and create_s3_bucket are true, the module looks the ID up with the aws_organizations_organization data source, which needs read access to AWS Organizations. Set both organization_id and management_account_id to skip that lookup."
-  type        = string
-  nullable    = true
-  default     = null
-  validation {
-    condition     = var.organization_id == null || can(regex("^o-[a-z0-9]{10,32}$", var.organization_id))
-    error_message = "The organization_id value must be an AWS Organizations organization ID, e.g. \"o-abc1234567\"."
-  }
-}
-
 variable "s3_bucket_name" {
-  description = "The name of the S3 bucket that receives the log files. Created by this module when create_s3_bucket is true, otherwise it must already exist and already grant CloudTrail write access."
+  description = "The name of the S3 bucket that receives the log files. The bucket must be created with the aws_cloudtrail_s3_bucket module, which also onboards it with CloudSecure. Must be set from the s3_bucket_name output of that module, so that the trail is created after the bucket policy and after the bucket is onboarded."
   type        = string
   validation {
     condition     = length(var.s3_bucket_name) > 0
@@ -261,12 +175,13 @@ variable "s3_bucket_name" {
 }
 
 variable "s3_key_prefix" {
-  description = "The prefix prepended to the AWSLogs/ path inside the log bucket. If null, no prefix is used."
+  description = "The prefix prepended to the AWSLogs/ path inside the log bucket. Must be set from the s3_key_prefix output of the aws_cloudtrail_s3_bucket module. If null, no prefix is used."
   type        = string
   nullable    = true
   default     = null
   validation {
-    condition     = var.s3_key_prefix == null || (length(var.s3_key_prefix) <= 200 && !can(regex("^/|/$|//", var.s3_key_prefix)))
+    # A conditional instead of ||, which evaluates both operands before Terraform 1.12.
+    condition     = var.s3_key_prefix == null ? true : length(var.s3_key_prefix) <= 200 && !can(regex("^/|/$|//", var.s3_key_prefix))
     error_message = "The s3_key_prefix value must be at most 200 characters long and must not start with, end with, or contain repeated \"/\" characters."
   }
 }

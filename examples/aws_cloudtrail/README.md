@@ -14,7 +14,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_cloudtrail_dev"></a> [aws\_cloudtrail\_dev](#module\_aws\_cloudtrail\_dev) | illumio/cloudsecure/illumio//modules/aws_cloudtrail | 1.7.0 |
+| <a name="module_aws_cloudtrail_dev"></a> [aws\_cloudtrail\_dev](#module\_aws\_cloudtrail\_dev) | illumio/cloudsecure/illumio//modules/aws_cloudtrail | 1.7.1 |
+| <a name="module_aws_cloudtrail_s3_bucket_dev"></a> [aws\_cloudtrail\_s3\_bucket\_dev](#module\_aws\_cloudtrail\_s3\_bucket\_dev) | illumio/cloudsecure/illumio//modules/aws_cloudtrail_s3_bucket | 1.7.1 |
 
 ## Resources
 
@@ -26,7 +27,6 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_illumio_cloudsecure_client_id"></a> [illumio\_cloudsecure\_client\_id](#input\_illumio\_cloudsecure\_client\_id) | The OAuth 2 client identifier used to authenticate against the CloudSecure Config API. | `string` | n/a | yes |
 | <a name="input_illumio_cloudsecure_client_secret"></a> [illumio\_cloudsecure\_client\_secret](#input\_illumio\_cloudsecure\_client\_secret) | The OAuth 2 client secret used to authenticate against the CloudSecure Config API. | `string` | n/a | yes |
-| <a name="input_s3_bucket_name"></a> [s3\_bucket\_name](#input\_s3\_bucket\_name) | The globally unique name of the S3 bucket created by the example to receive the CloudTrail log files. | `string` | n/a | yes |
 
 ## Outputs
 

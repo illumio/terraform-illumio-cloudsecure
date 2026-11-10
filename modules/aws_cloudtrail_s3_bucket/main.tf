@@ -3,18 +3,30 @@ data "aws_partition" "current" {}
 # Data source to get the AWS account ID.
 data "aws_caller_identity" "current" {}
 
+# Data source to get the AWS org, used for the organization trail's bucket policy.
+data "aws_organizations_organization" "current" {
+  count                    = var.is_organization_trail ? 1 : 0
+  return_organization_only = true
+}
+
 locals {
-  account_id = coalesce(var.log_account_id, data.aws_caller_identity.current.account_id)
-  bucket_arn = "arn:${data.aws_partition.current.partition}:s3:::${var.bucket_name}"
-  log_prefix = var.s3_key_prefix == null || var.s3_key_prefix == "" ? "" : "${var.s3_key_prefix}/"
+  # An organization trail belongs to the management account even when a delegated
+  # administrator creates it, so the bucket policy must use that account's ID.
+  trail_account_id = var.is_organization_trail ? one(data.aws_organizations_organization.current[*].master_account_id) : data.aws_caller_identity.current.account_id
+  # Built from its parts instead of read from the trail: the bucket policy must exist
+  # before the trail is created, so taking the ARN from the trail would be a cycle.
+  trail_arn       = "arn:${data.aws_partition.current.partition}:cloudtrail:${coalesce(var.trail_region, aws_s3_bucket.this.region)}:${local.trail_account_id}:trail/${var.trail_name}"
+  organization_id = one(data.aws_organizations_organization.current[*].id)
+  bucket_arn      = "arn:${data.aws_partition.current.partition}:s3:::${var.name}"
+  log_prefix      = var.s3_key_prefix == null || var.s3_key_prefix == "" ? "" : "${var.s3_key_prefix}/"
   write_resources = concat(
-    ["${local.bucket_arn}/${local.log_prefix}AWSLogs/${local.account_id}/*"],
-    var.organization_id == null ? [] : ["${local.bucket_arn}/${local.log_prefix}AWSLogs/${var.organization_id}/*"]
+    ["${local.bucket_arn}/${local.log_prefix}AWSLogs/${local.trail_account_id}/*"],
+    local.organization_id == null ? [] : ["${local.bucket_arn}/${local.log_prefix}AWSLogs/${local.organization_id}/*"]
   )
 }
 
 resource "aws_s3_bucket" "this" {
-  bucket        = var.bucket_name
+  bucket        = var.name
   force_destroy = var.force_destroy
   tags          = var.tags
 }
@@ -67,7 +79,7 @@ data "aws_iam_policy_document" "this" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [var.trail_arn]
+      values   = [local.trail_arn]
     }
   }
 
@@ -88,7 +100,7 @@ data "aws_iam_policy_document" "this" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [var.trail_arn]
+      values   = [local.trail_arn]
     }
   }
 

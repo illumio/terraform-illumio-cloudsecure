@@ -10,60 +10,22 @@ resource "helm_release" "helm_cloud_operator" {
   namespace        = var.operator_namespace
   create_namespace = var.create_operator_namespace
 
-  set = [
-    {
-      name  = "awsVpcCni.autoModeNodeProxyLogCollection.grantNodesProxy"
-      value = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_grant_nodes_proxy
-    },
-    {
-      name  = "awsVpcCni.autoModeNodeProxyLogCollection.maxConcurrentNodePolls"
-      value = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls
-    },
-    {
-      name  = "awsVpcCni.autoModeNodeProxyLogCollection.pollInterval"
-      value = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval
-    },
-    {
-      name  = "cluster.name"
-      value = var.cluster_name
-    },
-    {
-      name  = "clusterCredsSecret.clientId"
-      value = illumio-cloudsecure_k8s_cluster.this.client_id
-    },
-    {
-      name  = "env.flowCache.activeTimeout"
-      value = var.flow_cache_active_timeout
-    },
-    {
-      name  = "env.flowCache.maxSize"
-      value = var.flow_cache_max_size
-    },
-    {
-      name  = "env.httpsProxy"
-      value = var.https_proxy
-    },
-    {
-      name  = "env.statsLogPeriod"
-      value = var.stats_log_period
-    },
-    {
-      name  = "openshift.createAnyuidSccRoleBinding"
-      value = var.openshift_create_anyuid_scc_role_binding
-    },
-    {
-      name  = "openshift.ovnkNamespace"
-      value = var.openshift_ovnk_namespace
-    }
-  ]
-
-  dynamic "set" {
-    for_each = var.additional_labels
-    content {
-      name  = "additionalLabels.${set.key}"
-      value = set.value
-    }
-  }
+  values = [yamlencode({
+    "additionalLabels"                                                = var.additional_labels
+    "awsVpcCni.autoModeNodeProxyLogCollection.grantNodesProxy"        = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_grant_nodes_proxy
+    "awsVpcCni.autoModeNodeProxyLogCollection.maxConcurrentNodePolls" = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls
+    "awsVpcCni.autoModeNodeProxyLogCollection.pollInterval"           = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval
+    "cilium.namespaces"                                               = var.cilium_namespaces
+    "cluster.name"                                                    = var.cluster_name
+    "clusterCredsSecret.clientId"                                     = illumio-cloudsecure_k8s_cluster.this.client_id
+    "env.flowCache.activeTimeout"                                     = var.flow_cache_active_timeout
+    "env.flowCache.maxSize"                                           = var.flow_cache_max_size
+    "env.httpsProxy"                                                  = var.https_proxy
+    "env.statsLogPeriod"                                              = var.stats_log_period
+    "openshift.createAnyuidSccRoleBinding"                            = var.openshift_create_anyuid_scc_role_binding
+    "openshift.ovnkNamespace"                                         = var.openshift_ovnk_namespace
+    "openshift.workerNodeCidrs"                                       = var.openshift_worker_node_cidrs
+  })]
 
   set_sensitive = [
     {
@@ -71,19 +33,4 @@ resource "helm_release" "helm_cloud_operator" {
       value = illumio-cloudsecure_k8s_cluster.this.client_secret
     }
   ]
-
-  set_list = flatten([
-    length(var.cilium_namespaces) > 0 ? [
-      {
-        name  = "cilium.namespaces"
-        value = var.cilium_namespaces
-      }
-    ] : [],
-    length(var.openshift_worker_node_cidrs) > 0 ? [
-      {
-        name  = "openshift.workerNodeCidrs"
-        value = var.openshift_worker_node_cidrs
-      }
-    ] : []
-  ])
 }

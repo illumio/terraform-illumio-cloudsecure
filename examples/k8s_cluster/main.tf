@@ -16,15 +16,21 @@ module "k8s_cluster_dev" {
   name             = "example-release"
 
   # Optional attributes
-  cilium_namespaces           = ["kube-system", "gke-managed-dpv2-observability"]
-  cluster_name                = "test-cluster-12"
-  create_operator_namespace   = true
-  enable_falco                = false
-  https_proxy                 = "http://proxy.example.com:8080"
-  log_level                   = "Info"
-  openshift_ovnk_namespace    = "openshift-ovn-kubernetes"
-  openshift_worker_node_cidrs = ["10.4.0.0/16"]
-  operator_namespace          = "illumio-cloud"
-  operator_version            = "v1.3.13"
-  stats_log_period            = "2m"
+  additional_labels                                                         = {env = "Prod"}
+  aws_vpc_cni_auto_mode_node_proxy_log_collection_grant_nodes_proxy         = true
+  aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls = 10
+  aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval             = "10s"
+  cilium_namespaces                                                         = ["kube-system", "gke-managed-dpv2-observability", "cilium"]
+  cluster_name                                                              = "test-cluster-12"
+  create_operator_namespace                                                 = true
+  flow_cache_active_timeout                                                 = "20s"
+  flow_cache_max_size                                                       = 1000
+  https_proxy                                                               = "http://proxy.example.com:8080"
+  log_level                                                                 = "Info"
+  openshift_create_anyuid_scc_role_binding                                  = true
+  openshift_ovnk_namespace                                                  = "openshift-ovn-kubernetes"
+  openshift_worker_node_cidrs                                               = ["10.4.0.0/16"]
+  operator_namespace                                                        = "illumio-cloud"
+  operator_version                                                          = "v1.6,0"
+  stats_log_period                                                          = "30m"
 }

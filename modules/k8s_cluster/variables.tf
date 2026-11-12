@@ -16,7 +16,7 @@ variable "aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_po
   default     = 10
   validation {
     condition     = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls > 0
-    error_message = "The aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls value must >0."
+    error_message = "The aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls value must be >0."
   }
 }
 
@@ -73,7 +73,7 @@ variable "flow_cache_max_size" {
   default     = 1000
   validation {
     condition     = var.flow_cache_max_size > 1
-    error_message = "The flow_cache_max_size value must >1."
+    error_message = "The flow_cache_max_size value must be >1."
   }
 }
 

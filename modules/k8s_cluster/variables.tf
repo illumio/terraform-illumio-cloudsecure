@@ -1,9 +1,42 @@
+variable "additional_labels" {
+  description = "Optional k8s labels added to every cloud-operator resource."
+  type        = map(string)
+  default     = {}
+}
+
+variable "aws_vpc_cni_auto_mode_node_proxy_log_collection_grant_nodes_proxy" {
+  description = "If true, grants the broad nodes/proxy RBAC permission for reading AWS EKS Auto Mode Network Policy Agent logs, in addition to nodes/log. Set to false on clusters running k8s >=1.33 to drop the broad permission and rely solely on nodes/log."
+  type        = bool
+  default     = true
+}
+
+variable "aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls" {
+  description = "The maximum number of AWS EKS Auto Mode Network Policy Agents polled concurrently."
+  type        = number
+  default     = 10
+  validation {
+    condition     = var.aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls > 0
+    error_message = "The aws_vpc_cni_auto_mode_node_proxy_log_collection_max_concurrent_node_polls value must be >0."
+  }
+}
+
+variable "aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval" {
+  description = "The interval between polls of each AWS EKS Auto Mode Network Policy Agent log."
+  type        = string
+  default     = "10s"
+  validation {
+    condition     = can(regex("^[0-9]+(ns|us|ms|s|m|h)$", var.aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval))
+    error_message = "The aws_vpc_cni_auto_mode_node_proxy_log_collection_poll_interval value must be a valid Go duration string (e.g., 1h, 30m, 10s)."
+  }
+}
+
 variable "cilium_namespaces" {
   description = "The namespaces in which Cilium may be deployed."
   type        = list(string)
   default     = [
     "kube-system",
-    "gke-managed-dpv2-observability"
+    "gke-managed-dpv2-observability",
+    "cilium"
   ]
   validation {
     condition     = length(var.cilium_namespaces) > 0
@@ -24,10 +57,24 @@ variable "create_operator_namespace" {
   default     = true
 }
 
-variable "enable_falco" {
-  description = "If true, deploys the Falco agent along with cloud-operator to collect network flows."
-  type        = bool
-  default     = false
+variable "flow_cache_active_timeout" {
+  description = "The maximum duration a flow stays in in-memory cache before being sent to Illumio CloudSecure."
+  type        = string
+  default     = "20s"
+  validation {
+    condition     = can(regex("^[0-9]+(ns|us|ms|s|m|h)$", var.flow_cache_active_timeout))
+    error_message = "The flow_cache_active_timeout value must be a valid Go duration string (e.g., 1h, 30m, 10s)."
+  }
+}
+
+variable "flow_cache_max_size" {
+  description = "The maximum number of flows that can be held in in-memory cache."
+  type        = number
+  default     = 1000
+  validation {
+    condition     = var.flow_cache_max_size > 1
+    error_message = "The flow_cache_max_size value must be >1."
+  }
 }
 
 variable "https_proxy" {
@@ -65,6 +112,12 @@ variable "name" {
   }
 }
 
+variable "openshift_create_anyuid_scc_role_binding" {
+  description = "If true, creates a k8s RoleBinding to OpenShift's system:openshift:scc:anyuid ClusterRole to allow cloud-operator to run with a non-root user."
+  type        = bool
+  default     = true
+}
+
 variable "openshift_ovnk_namespace" {
   description = "The namespace in which OpenShift OVN-k is deployed."
   type        = string
@@ -94,7 +147,7 @@ variable "operator_namespace" {
 variable "operator_version" {
   description = "The version of cloud-operator to be deployed into the k8s cluster."
   type        = string
-  default     = "v1.5.1"
+  default     = "v1.6.0"
   validation {
     condition     = length(var.operator_version) > 0
     error_message = "The operator_version value must not be empty."

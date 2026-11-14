@@ -84,7 +84,7 @@ variable "tags" {
 }
 
 variable "trail_name" {
-  description = "The name of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. Must be the same as the name value of the aws_cloudtrail module. Unless is_organization_trail is true, the trail must belong to the same AWS account as the bucket."
+  description = "The name of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. The name value of the aws_cloudtrail module must be set from the trail_name output of this module. Unless is_organization_trail is true, the trail must belong to the same AWS account as the bucket."
   type        = string
   validation {
     condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$", var.trail_name))

@@ -158,7 +158,7 @@ variable "kms_key_id" {
 }
 
 variable "name" {
-  description = "The name of the CloudTrail trail. Must be the same as the trail_name value of the aws_cloudtrail_s3_bucket module."
+  description = "The name of the CloudTrail trail. Must be set from the trail_name output of the aws_cloudtrail_s3_bucket module, so that it matches the trail name in the bucket policy."
   type        = string
   validation {
     condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$", var.name))

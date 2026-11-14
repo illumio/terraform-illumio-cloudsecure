@@ -49,7 +49,7 @@ No modules.
 | <a name="input_s3_key_prefix"></a> [s3\_key\_prefix](#input\_s3\_key\_prefix) | The prefix prepended to the AWSLogs/ path inside the bucket. If null, no prefix is used. | `string` | `null` | no |
 | <a name="input_sse_algorithm"></a> [sse\_algorithm](#input\_sse\_algorithm) | The bucket's default server-side encryption algorithm. Must be one of: `AES256`, `aws:kms`. | `string` | `"AES256"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The optional tags added to every configured AWS resource. | `map(string)` | `{}` | no |
-| <a name="input_trail_name"></a> [trail\_name](#input\_trail\_name) | The name of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. Must be the same as the name value of the aws\_cloudtrail module. Unless is\_organization\_trail is true, the trail must belong to the same AWS account as the bucket. | `string` | n/a | yes |
+| <a name="input_trail_name"></a> [trail\_name](#input\_trail\_name) | The name of the CloudTrail trail allowed to write into the bucket, used in the aws:SourceArn condition of the bucket policy. The name value of the aws\_cloudtrail module must be set from the trail\_name output of this module. Unless is\_organization\_trail is true, the trail must belong to the same AWS account as the bucket. | `string` | n/a | yes |
 | <a name="input_trail_region"></a> [trail\_region](#input\_trail\_region) | The home Region of the CloudTrail trail, i.e., the Region of the AWS provider used by the aws\_cloudtrail module. If null, defaults to the Region of the bucket. Only needed when the trail is created in a different Region than the bucket. | `string` | `null` | no |
 | <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | If true, enables S3 versioning on the bucket. If false, no versioning configuration is managed at all. | `bool` | `false` | no |
 
@@ -60,4 +60,5 @@ No modules.
 | <a name="output_id"></a> [id](#output\_id) | The CloudSecure ID of the registered S3 bucket. |
 | <a name="output_s3_bucket_name"></a> [s3\_bucket\_name](#output\_s3\_bucket\_name) | The name of the S3 bucket, to be used as the s3\_bucket\_name of the aws\_cloudtrail module. |
 | <a name="output_s3_key_prefix"></a> [s3\_key\_prefix](#output\_s3\_key\_prefix) | The prefix prepended to the AWSLogs/ path inside the bucket, to be used as the s3\_key\_prefix of the aws\_cloudtrail module. |
+| <a name="output_trail_name"></a> [trail\_name](#output\_trail\_name) | The name of the CloudTrail trail allowed to write into the bucket, to be used as the name of the aws\_cloudtrail module. |
 <!-- END_TF_DOCS -->

@@ -19,3 +19,11 @@ output "s3_key_prefix" {
   # Same ordering as for s3_bucket_name, in case the trail only uses this output.
   depends_on = [aws_s3_bucket_policy.this, illumio-cloudsecure_aws_cloudtrail_s3_bucket.this]
 }
+
+output "trail_name" {
+  value       = var.trail_name
+  description = "The name of the CloudTrail trail allowed to write into the bucket, to be used as the name of the aws_cloudtrail module."
+
+  # Same ordering as for s3_bucket_name, in case the trail only uses this output.
+  depends_on = [aws_s3_bucket_policy.this, illumio-cloudsecure_aws_cloudtrail_s3_bucket.this]
+}

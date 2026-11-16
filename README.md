@@ -4,6 +4,8 @@ Terraform submodules that add functionality to Illumio's CloudSecure Terraform p
 ## Available Nested Modules
 * [`aws_account`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/aws_account): onboarding of an AWS account with CloudSecure.
 * [`aws_flow_logs_s3_buckets`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/aws_flow_logs_s3_buckets): onboarding of AWS S3 buckets with CloudSecure to access flow logs.
+* [`aws_cloudtrail_s3_bucket`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/aws_cloudtrail_s3_bucket): creation of the S3 bucket an AWS CloudTrail trail delivers log files to, and its onboarding with CloudSecure.
+* [`aws_cloudtrail`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/aws_cloudtrail): creation of an AWS CloudTrail trail that delivers log files to an S3 bucket created with `aws_cloudtrail_s3_bucket`.
 * [`azure_subscription`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/azure_subscription): onboarding of an Azure subscription with CloudSecure.
 * [`azure_flow_logs_storage_accounts`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/azure_flow_logs_storage_accounts): onboarding of Azure Storage Accounts with CloudSecure to access flow logs.
 * [`gcp_project`](https://registry.terraform.io/modules/illumio/cloudsecure/illumio/latest/submodules/gcp_project): onboarding of a GCP project with CloudSecure.

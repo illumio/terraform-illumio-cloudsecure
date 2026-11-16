@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_cloudtrail_s3_bucket_dev"></a> [aws\_cloudtrail\_s3\_bucket\_dev](#module\_aws\_cloudtrail\_s3\_bucket\_dev) | illumio/cloudsecure/illumio//modules/aws_cloudtrail_s3_bucket | 1.7.1 |
+| <a name="module_aws_cloudtrail_s3_bucket_dev"></a> [aws\_cloudtrail\_s3\_bucket\_dev](#module\_aws\_cloudtrail\_s3\_bucket\_dev) | illumio/cloudsecure/illumio//modules/aws_cloudtrail_s3_bucket | 1.8.0 |
 
 ## Resources
 

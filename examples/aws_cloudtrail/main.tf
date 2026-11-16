@@ -9,7 +9,7 @@ provider "illumio-cloudsecure" {
 
 module "aws_cloudtrail_s3_bucket_dev" {
   source     = "illumio/cloudsecure/illumio//modules/aws_cloudtrail_s3_bucket"
-  version    = "1.7.1"
+  version    = "1.8.0"
   name       = "example-cloudtrail-logs"
   trail_name = "example-trail"
 
@@ -25,7 +25,7 @@ module "aws_cloudtrail_s3_bucket_dev" {
 
 module "aws_cloudtrail_dev" {
   source         = "illumio/cloudsecure/illumio//modules/aws_cloudtrail"
-  version        = "1.7.1"
+  version        = "1.8.0"
   name           = module.aws_cloudtrail_s3_bucket_dev.trail_name
   s3_bucket_name = module.aws_cloudtrail_s3_bucket_dev.s3_bucket_name
 
